@@ -1,0 +1,66 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "db"
+  },
+  "AccessToken": {
+    "dataSource": "db",
+    "public": false
+  },
+  "ACL": {
+    "dataSource": "db",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "db",
+    "public": false,
+    "options": {
+      "strictObjectIDCoercion": true
+    }
+  },
+  "Role": {
+    "dataSource": "db",
+    "public": false
+  },
+  "Conference": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Enquete": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Option": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Participant": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Questionnaire": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Attachment": {
+    "dataSource": "db",
+    "public": true
+  },
+  "Vote": {
+    "dataSource": "db",
+    "public": false
+  }
+}

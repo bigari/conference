@@ -1,0 +1,32 @@
+{
+  "name": "Enquete",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "intituleEnquete": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "conference": {
+      "type": "belongsTo",
+      "model": "Conference",
+      "foreignKey": "conferenceId"
+    },
+    "options": {
+      "type": "hasMany",
+      "model": "Option",
+      "foreignKey": "",
+      "options": {
+        "nestRemoting": true
+      }
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

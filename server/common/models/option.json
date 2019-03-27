@@ -1,0 +1,33 @@
+{
+  "name": "Option",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "intituleOption": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "enquete": {
+      "type": "belongsTo",
+      "model": "Enquete",
+      "foreignKey": "enqueteId"
+    },
+    "participants": {
+      "type": "hasMany",
+      "model": "Participant",
+      "foreignKey": "",
+      "options": {
+        "nestRemoting": true
+      },
+      "through": "Vote"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

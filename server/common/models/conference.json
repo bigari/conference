@@ -1,0 +1,64 @@
+{
+  "name": "Conference",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "nom": {
+      "type": "string",
+      "required": true
+    },
+    "date": {
+      "type": "date"
+    },
+    "lieu": {
+      "type": "string"
+    },
+    "nbInteresses": {
+      "type": "number",
+      "default": 0
+    },
+    "nbNonInteresses": {
+      "type": "number",
+      "default": 0
+    },
+    "description": {
+      "type": "string"
+    },
+    "codeAcces": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "enquetes": {
+      "type": "hasMany",
+      "model": "Enquete",
+      "foreignKey": "",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "questionnaires": {
+      "type": "hasMany",
+      "model": "Questionnaire",
+      "foreignKey": "",
+      "options": {
+        "nestRemoting": true
+      }
+    },
+    "user": {
+      "type": "hasOne",
+      "model": "User",
+      "foreignKey": "userId",
+      "options": {
+        "nestRemoting": true
+      }
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
