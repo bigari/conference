@@ -37,17 +37,17 @@
     "enquetes": {
       "type": "hasMany",
       "model": "Enquete",
-      "foreignKey": "",
+      "foreignKey": ""
     },
     "questionnaires": {
       "type": "hasMany",
       "model": "Questionnaire",
-      "foreignKey": "",
+      "foreignKey": ""
     },
     "user": {
       "type": "hasOne",
       "model": "User",
-      "foreignKey": "userId",
+      "foreignKey": "userId"
     }
   },
   "acls": [],
