@@ -38,25 +38,16 @@
       "type": "hasMany",
       "model": "Enquete",
       "foreignKey": "",
-      "options": {
-        "nestRemoting": true
-      }
     },
     "questionnaires": {
       "type": "hasMany",
       "model": "Questionnaire",
       "foreignKey": "",
-      "options": {
-        "nestRemoting": true
-      }
     },
     "user": {
       "type": "hasOne",
       "model": "User",
       "foreignKey": "userId",
-      "options": {
-        "nestRemoting": true
-      }
     }
   },
   "acls": [],
