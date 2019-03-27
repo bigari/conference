@@ -62,5 +62,9 @@
   "Vote": {
     "dataSource": "db",
     "public": false
+  },
+  "Question": {
+    "dataSource": "db",
+    "public": true
   }
 }

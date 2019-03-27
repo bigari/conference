@@ -53,6 +53,11 @@
       "type": "hasMany",
       "model": "Attachment",
       "foreignKey": "conferenceId"
+    },
+    "questions": {
+      "type": "hasMany",
+      "model": "Question",
+      "foreignKey": "conferenceId"
     }
   },
   "acls": [],
