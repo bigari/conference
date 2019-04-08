@@ -1,4 +1,4 @@
-package com.example.interactiveconference;
+package com.example.mobile;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
