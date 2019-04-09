@@ -31,14 +31,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Conference>> call, Response<List<Conference>> response) {
                 List<Conference> conferenceList = response.body();
+                if(conferenceList == null){
+                    return;
+                }
                 for(Conference conference : conferenceList){
-                    Log.e(TAG, "onResponse: " + conferenceList.get(0).getNom());
+                    Log.w(TAG, "onResponse: " + conference.getNom());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Conference>> call, Throwable t) {
-                Log.w(TAG, "onFailure: failed to load conference list", t);
+                Log.e(TAG, "onFailure: failed to load conference list", t);
             }
         });
     }

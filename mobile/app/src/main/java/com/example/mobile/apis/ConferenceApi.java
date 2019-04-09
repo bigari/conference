@@ -10,9 +10,9 @@ import retrofit2.http.Path;
 
 public interface ConferenceApi {
 
-    @GET("conferences")
+    @GET("api/conferences")
     Call<List<Conference>> getConferences();
 
-    @GET("conferences/{id}")
+    @GET("api/conferences/{id}")
     Call<List<Conference>> getConferenceById(@Path("id") int id);
 }
