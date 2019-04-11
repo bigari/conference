@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 
 
-import com.example.mobile.apis.ConferenceApi;
-import com.example.mobile.models.Conference;
+import com.example.mobile.Repositories.apis.ConferenceApi;
+import com.example.mobile.Repositories.models.Conference;
 
 import java.util.List;
 

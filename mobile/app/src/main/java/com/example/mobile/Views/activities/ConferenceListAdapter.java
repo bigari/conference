@@ -1,4 +1,4 @@
-package com.example.mobile.activities;
+package com.example.mobile.Views.activities;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.mobile.R;
-import com.example.mobile.models.Conference;
+import com.example.mobile.Repositories.models.Conference;
 
 import java.util.List;
 
