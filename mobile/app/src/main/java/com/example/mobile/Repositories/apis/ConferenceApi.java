@@ -1,6 +1,6 @@
-package com.example.mobile.apis;
+package com.example.mobile.Repositories.apis;
 
-import com.example.mobile.models.Conference;
+import com.example.mobile.Repositories.models.Conference;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public interface ConferenceApi {
     Call<List<Conference>> getConferences();
 
     @GET("api/conferences/{id}")
-    Call<List<Conference>> getConferenceById(@Path("id") int id);
+    Call<Conference> getConferenceById(@Path("id") int id);
 
     @POST("api/conferences")
     Call<Conference> createConference(@Body Conference conference);

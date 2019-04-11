@@ -1,14 +1,10 @@
-package com.example.mobile.apis;
+package com.example.mobile.Repositories.apis;
 
-import com.example.mobile.models.Participant;
-
-import java.util.List;
+import com.example.mobile.Repositories.models.Participant;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 
 public interface ParticipantApi {
 

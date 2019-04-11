@@ -1,4 +1,4 @@
-package com.example.mobile.models;
+package com.example.mobile.Repositories.models;
 
 public class Participant {
     private String accessKey;

@@ -1,4 +1,4 @@
-package com.example.mobile.models;
+package com.example.mobile.Repositories.models;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
