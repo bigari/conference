@@ -1,6 +1,7 @@
 package com.example.mobile.Repositories.models;
 
 import java.util.Date;
+import java.util.List;
 
 public class Conference {
     private int id;
@@ -11,8 +12,17 @@ public class Conference {
     private int nbNonInteresses;
     private String description;
     private String codeAcces;
+    private List<Attachment> attachments;
 
     public Conference(){}
+
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
+    }
 
     public int getId() {
         return id;

@@ -2,18 +2,15 @@ package com.example.mobile.Repositories.models;
 
 import java.util.ArrayList;
 
-/**
- * Created by neron on 4/10/19.
- */
-
 public class Option {
 
     private int id;
     private String intituleOption;
-    private ArrayList<Vote> votes;
+    private int voteCount;
+
 
     public Option() {
-        this.votes = new ArrayList();
+//        this.votes = new ArrayList();
     }
 
     public int getId() {
@@ -32,15 +29,19 @@ public class Option {
         this.intituleOption = intituleOption;
     }
 
-    public ArrayList<Vote> getVotes() {
-        return votes;
-    }
+//    public ArrayList<Vote> getVotes() {
+//        return votes;
+//    }
+//
+//    public void setVotes(ArrayList<Vote> votes) {
+//        this.votes = votes;
+//    }
+//
+//    public int getVoteCount() {
+//        return this.votes.size();
+//    }
 
-    public void setVotes(ArrayList<Vote> votes) {
-        this.votes = votes;
-    }
+    public int getVoteCount(){return voteCount;}
 
-    public int getVoteCount() {
-        return this.votes.size();
-    }
+    public void setVoteCount(int voteCount){this.voteCount = voteCount;}
 }

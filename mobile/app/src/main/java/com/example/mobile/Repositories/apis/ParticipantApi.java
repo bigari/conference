@@ -9,5 +9,5 @@ import retrofit2.http.POST;
 public interface ParticipantApi {
 
     @POST("api/participants")
-    Call<Participant> createParticipant(@Body Participant participant);
+    Call<Participant> createParticipant();
 }

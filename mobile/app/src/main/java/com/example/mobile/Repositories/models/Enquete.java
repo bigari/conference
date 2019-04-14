@@ -9,7 +9,6 @@ import java.util.ArrayList;
 public class Enquete {
     private int id;
     private String intituleEnquete;
-
     private ArrayList<Option> options;
 
     public Enquete() {
