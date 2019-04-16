@@ -9,6 +9,9 @@
     "intituleEnquete": {
       "type": "string",
       "required": true
+    },
+    "etat": {
+      "type": "boolean"
     }
   },
   "validations": [],
