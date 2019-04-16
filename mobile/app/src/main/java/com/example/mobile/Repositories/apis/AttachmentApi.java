@@ -11,8 +11,9 @@ import retrofit2.http.Path;
 
 public interface AttachmentApi {
 
+    // Downloads an attachment
     @GET("api/attachments/{id}")
-    Call<Attachment> getAttachment(@Path("id") int attachmentId);
+    Call<ResponseBody> getAttachment(@Path("id") int attachmentId);
 
     @DELETE("api/attachment/{id}")
     Call<Void> deleteAttachment(@Path("id") int attachmentId);

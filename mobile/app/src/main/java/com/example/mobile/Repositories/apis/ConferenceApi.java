@@ -3,19 +3,25 @@ package com.example.mobile.Repositories.apis;
 import com.example.mobile.Repositories.models.Attachment;
 import com.example.mobile.Repositories.models.Conference;
 import com.example.mobile.Repositories.models.Enquete;
+import com.example.mobile.Repositories.models.Participant;
 import com.example.mobile.Repositories.models.Question;
 import com.example.mobile.Repositories.models.Questionnaire;
 
 import java.util.List;
+import java.util.Map;
 
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 
 public interface ConferenceApi {
@@ -35,13 +41,13 @@ public interface ConferenceApi {
     @GET("api/conferences/{id}/questionnaires")
     Call<List<Questionnaire>> getQuestionnaire(@Path("id") int conferenceId);
 
+    // TODO define in loopback
     @Multipart
     @POST("api/conferences")
-    Call<ResponseBody> createConference(@Body Conference conference);
+    Call<ResponseBody> createConference(@PartMap Map<String, RequestBody> partMap);
 
-    @Multipart
     @DELETE("api/conferences/{id}")
-    Call<Void> deleteConference(@Body Conference conference);
+    Call<Void> deleteConference(@Path("id") int conferenceId);
 
     @DELETE("api/conferences/{id}/enquetes")
     Call<Void> deleteEnquetes(@Path("id") int conferenceId);
@@ -49,10 +55,16 @@ public interface ConferenceApi {
     @DELETE("api/conferences/{id}/questionnaires")
     Call<Void> deleteQuestionnaires(@Path("id") int conferenceId);
 
-    @PUT("api/conferences/{id}")
-    Call<Void> updateConference(@Path("id") int conferenceId, @Body Conference conference);
-
     // TODO define in loopback
     @GET("api/conferences/{id}/participants/count")
     Call<ResponseBody> getParticipantCount(@Path("id") int conferenceId);
+
+    // TODO define in loopback
+    @POST("api/conferences/{id}/join")
+    Call<Void> joinConference(@Path("id") int conferenceId, int participantId);
+
+    // TODO define in loopback
+    @POST("api/conferences/{id}/leave")
+    Call<Void> leaveConference(@Path("id") int conferenceId, int participantId);
+
 }

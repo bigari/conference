@@ -10,7 +10,12 @@ public interface OptionApi {
     @DELETE("api/options/{id}")
     Call<Void> deleteOption(@Path("id") int optionId);
 
-    @PUT("api/options/{id}/add")
-    Call<Void> vote(@Path("id") int optionId);
+    // TODO define this endpoint (increments the voteCount)
+    @PUT("api/options/{id}/increment")
+    Call<Void> incrementVoteCount(@Path("id") int optionId);
+
+    // TODO define this endpoint (decrements the voteCount)
+    @PUT("api/options/{id}/decrement")
+    Call<Void> decrementVoteCount(@Path("id") int optionId);
 
 }
