@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/action_search"
-        android:title="@string/menu_search"
-        android:icon="@drawable/ic_search" />
-    <item android:id="@+id/action_settings"
-        android:title="@string/menu_settings"
-        android:icon="@drawable/ic_add" />
-    <item android:id="@+id/action_navigation"
-        android:title="@string/menu_navigation"
-        android:icon="@drawable/ic_action_navigation_menu" />
+    <item android:id="@+id/action_survey"
+        android:title="survey"
+        android:enabled="true"
+        android:icon="@drawable/outline_bar_chart_24"
+       />
+    <item android:id="@+id/action_quiz"
+        android:enabled="true"
+        android:icon="@drawable/baseline_question_answer_24"
+        android:title="quiz"/>
+    <item android:id="@+id/action_question"
+        android:enabled="true"
+        android:icon="@drawable/baseline_contact_support_24"
+        android:title="question" />
 </menu>
