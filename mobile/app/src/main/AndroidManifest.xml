@@ -12,9 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Views.activities.ConferenceActivity"></activity>
+        <activity android:name=".Views.activities.ConferenceListActivity"></activity>
+        <activity android:name=".Views.activities.ConferenceActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".Views.activities.ConferenceListActivity">
+        <activity android:name=".Views.activities.CreateConferenceActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

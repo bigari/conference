@@ -41,7 +41,6 @@ public interface ConferenceApi {
     @GET("api/conferences/{id}/questionnaires")
     Call<List<Questionnaire>> getQuestionnaire(@Path("id") int conferenceId);
 
-    // TODO define in loopback
     @Multipart
     @POST("api/conferences")
     Call<ResponseBody> createConference(@PartMap Map<String, RequestBody> partMap);

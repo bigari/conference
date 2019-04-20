@@ -8,5 +8,4 @@ public interface ConferenceView {
 
     void showConference(Conference conference);
     void showError();
-
 }
