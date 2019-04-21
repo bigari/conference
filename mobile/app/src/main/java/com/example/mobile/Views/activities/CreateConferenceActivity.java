@@ -80,7 +80,6 @@ public class CreateConferenceActivity extends AppCompatActivity implements Creat
         startDateV.setText(now);
         endDateV.setText(now);
         FragmentManager manager = getSupportFragmentManager();
-        dpd.show(manager, "");
 
         startDateV.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -99,7 +98,7 @@ public class CreateConferenceActivity extends AppCompatActivity implements Creat
                 if(hasFocus){
                     hideKeyboard();
                     dpd.setOnDateSetListener(endDatePickerListener);
-                    dpd.show();
+//                    dpd.show();
                 }
             }
         });
@@ -169,7 +168,7 @@ public class CreateConferenceActivity extends AppCompatActivity implements Creat
         public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
             try{
                 Date date = new SimpleDateFormat("dd-MM-YYYY", Locale.ENGLISH)
-                        .parse(dayOfMonth + "-" + month + "-" + year);
+                        .parse(dayOfMonth + "-" + monthOfYear + "-" + year);
                 startDateV.setText(new SimpleDateFormat("MMMM dd, YYYY", Locale.ENGLISH).format(date));
             }catch(Exception ex){
                 Log.e(TAG, "onDateSet: " + ex.getMessage(), ex);
@@ -178,20 +177,17 @@ public class CreateConferenceActivity extends AppCompatActivity implements Creat
     }
 
     private class EndDatePickerListener implements DatePickerDialog.OnDateSetListener {
-
-
         @Override
-        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
             try{
                 Date date = new SimpleDateFormat("dd-MM-YYYY", Locale.ENGLISH)
-                        .parse(dayOfMonth + "-" + month + "-" + year);
+                        .parse(dayOfMonth + "-" + monthOfYear + "-" + year);
 
                 endDateV.setText(new SimpleDateFormat("MMMM dd, YYYY", Locale.ENGLISH).format(date));
             }catch(Exception ex){
                 Log.e(TAG, "onDateSet: " + ex.getMessage(), ex);
             }
         }
-
     }
 
 }
