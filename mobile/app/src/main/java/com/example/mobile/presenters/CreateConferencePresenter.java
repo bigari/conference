@@ -4,6 +4,8 @@ import com.example.mobile.Repositories.ConferenceRepository;
 import com.example.mobile.Repositories.models.Conference;
 import com.example.mobile.Views.CreateConferenceView;
 
+import java.sql.Date;
+
 public class CreateConferencePresenter {
 
     private CreateConferenceView view;
@@ -15,22 +17,32 @@ public class CreateConferencePresenter {
     }
 
     public void createConference(){
-        String errorMessage = validateTitle();
-        if(errorMessage != null){
-            view.showError(errorMessage);
+        String title = view.getConfTitle();
+
+        String error = validateTitle(title);
+        if(error != null){
+            view.showError(error);
+            return;
         }
+//        error = validateStartDate();
+//        if(error != null){
+//            view.showError(error);
+//            return;
+//        }
+//        error = validateEndDate();
+//        if(error != null){
+//            view.showError(error);
+//            return;
+//        }
 
-
-
-        Conference conference = new Conference();
+        Conference conference = new Conference(title, null, null);
         view.showProgressBar();
         repository.createConference(conference);
         view.hideProgressBar();
 
     }
 
-    private String validateTitle(){
-        String title = view.getConfTitle();
+    private String validateTitle(String title){
         if(title == null){
             return "This field is required.";
         }
@@ -40,36 +52,13 @@ public class CreateConferencePresenter {
         return null;
     }
 
-    private String validateDescription(){
-        String title = view.getConfDescription();
-        if(title == null){
-            return "This field is required.";
-        }
-        else if(title.isEmpty()){
-            return "This field must be at least 8 characters long.";
-        }
+    private String validateStartDate(Date startDate){
         return null;
     }
 
-    private String validateDate(){
-        String title = view.getConfDate();
-        if(title == null){
-            return "This field is required.";
-        }
-        else if(title.isEmpty()){
-            return "This field must be at least 8 characters long.";
-        }
+    private String validateEndDate(Date endDate){
         return null;
     }
-
-    private String validateAddress(){
-        return null;
-    }
-
-    private String validateAttachment(){
-        return null;
-    }
-
 
 
 }

@@ -9,10 +9,8 @@ public interface CreateConferenceView {
     void showProgressBar();
     void hideProgressBar();
     void addAttachmentField(Attachment attachment);
+
     String getConfTitle();
-    String getConfDescription();
-    String getConfAddress();
-    String getConfDate();
-
-
+    String getConfStartDate();
+    String getConfEndDate();
 }

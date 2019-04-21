@@ -1,20 +1,26 @@
 package com.example.mobile.Repositories.models;
 
-import java.util.Date;
+import com.google.gson.annotations.SerializedName;
+
+import java.sql.Date;
 import java.util.List;
 
 public class Conference {
     private int id;
-    private String nom;
-    private Date date;
-    private String lieu;
-    private int nbInteresses;
-    private int nbNonInteresses;
-    private String description;
+    @SerializedName("nom")
+    private String title;
+    private Date startDate;
+    private Date endDate;
     private String codeAcces;
     private List<Attachment> attachments;
 
     public Conference(){}
+
+    public Conference(String title, Date startDate, Date endDate){
+        this.title = title;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
 
     public List<Attachment> getAttachments() {
         return attachments;
@@ -32,52 +38,28 @@ public class Conference {
         this.id = id;
     }
 
-    public String getNom() {
-        return nom;
+    public String getTitle() {
+        return title;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public String getLieu() {
-        return lieu;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setLieu(String lieu) {
-        this.lieu = lieu;
-    }
-
-    public int getNbInteresses() {
-        return nbInteresses;
-    }
-
-    public void setNbInteresses(int nbInteresses) {
-        this.nbInteresses = nbInteresses;
-    }
-
-    public int getNbNonInteresses() {
-        return nbNonInteresses;
-    }
-
-    public void setNbNonInteresses(int nbNonInteresses) {
-        this.nbNonInteresses = nbNonInteresses;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public String getCodeAcces() {

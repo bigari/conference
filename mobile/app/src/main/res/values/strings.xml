@@ -2,7 +2,6 @@
     <string name="app_name">Mobile</string>
     <!--conference creation from-->
     <string name="conference_title_hint">Title</string>
-    <string name="conference_description_hint">Description</string>
-    <string name="conference_date_hint">DD/MM/YYYY</string>
-    <string name="conference_address_hint">address</string>
+    <string name="conference_start_date_hint">start date</string>
+    <string name="conference_end_date_hint">end date</string>
 </resources>

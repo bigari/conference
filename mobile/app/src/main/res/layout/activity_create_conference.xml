@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:style="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Views.activities.CreateConferenceActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:navigationIcon="@drawable/ic_baseline_arrow_back_24px"
+            style="@style/ThemeOverlay.AppCompat.Dark"
+            android:background="?colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <android.support.design.widget.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
@@ -30,61 +33,53 @@
 
         <android.support.design.widget.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-            android:id="@+id/inputlayout_conference_create_description"
+            android:id="@+id/inputlayout_conference_create_start_date"
             android:layout_width="match_parent"
             app:errorEnabled="true"
             android:layout_height="wrap_content">
 
             <android.support.design.widget.TextInputEditText
-                android:id="@+id/edittext_conference_create_description"
+                android:id="@+id/edittext_conference_create_start_date"
                 android:layout_width="match_parent"
-                android:hint="@string/conference_description_hint"
-                android:layout_height="wrap_content"
-                android:inputType="textMultiLine"/>
-
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-            android:id="@+id/inputlayout_conference_create_date"
-            android:layout_width="match_parent"
-            app:errorEnabled="true"
-            android:layout_height="wrap_content">
-
-            <android.support.design.widget.TextInputEditText
-                android:id="@+id/edittext_conference_create_date"
-                android:layout_width="match_parent"
-                android:hint="@string/conference_date_hint"
+                android:hint="@string/conference_start_date_hint"
+                android:editable="false"
+                android:inputType="none"
                 android:layout_height="wrap_content" />
 
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-            android:id="@+id/inputlayout_conference_create_address"
+            android:id="@+id/inputlayout_conference_create_end_date"
             android:layout_width="match_parent"
             app:errorEnabled="true"
             android:layout_height="wrap_content">
 
             <android.support.design.widget.TextInputEditText
-                android:id="@+id/edittext_conference_create_address"
+                android:id="@+id/edittext_conference_create_end_date"
                 android:layout_width="match_parent"
-                android:hint="@string/conference_address_hint"
+                android:editable="false"
+                android:inputType="none"
+                android:hint="@string/conference_end_date_hint"
                 android:layout_height="wrap_content" />
 
         </android.support.design.widget.TextInputLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Attendees are able to join your event within the dates you select."/>
 
 
-        <Button
-            android:id="@+id/button_conference_create_validate"
-            android:text="validate"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+    <Button
+        android:id="@+id/button_conference_create_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        android:layout_gravity="center_horizontal"/>
         
-    </LinearLayout>
+</LinearLayout>
 
 
 
 
-</ScrollView>
