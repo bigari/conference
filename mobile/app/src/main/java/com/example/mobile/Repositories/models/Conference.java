@@ -1,5 +1,6 @@
 package com.example.mobile.Repositories.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,9 @@ public class Conference {
     private String description;
     private String codeAcces;
     private List<Attachment> attachments;
+    private ArrayList<Question> questions;
+    private ArrayList<Enquete> enquetes;
+    private ArrayList<Questionnaire> questionnaires;
 
     public Conference(){}
 

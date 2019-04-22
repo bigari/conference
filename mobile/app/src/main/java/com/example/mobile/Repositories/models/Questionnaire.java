@@ -3,18 +3,18 @@ package com.example.mobile.Repositories.models;
 
 public class Questionnaire {
 
-    public String intituleQustionnaire;
+    public String intituleQuestionnaire;
     public int id;
 
 
     public Questionnaire(){}
 
-    public String getIntituleQustionnaire() {
-        return intituleQustionnaire;
+    public String getIntituleQuestionnaire() {
+        return intituleQuestionnaire;
     }
 
-    public void setIntituleQustionnaire(String intituleQustionnaire) {
-        this.intituleQustionnaire = intituleQustionnaire;
+    public void setIntituleQustionnaire(String intituleQuestionnaire) {
+        this.intituleQuestionnaire = intituleQuestionnaire;
     }
 
     public int getId() {
