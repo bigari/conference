@@ -6,59 +6,59 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.mobile.R;
 import com.example.mobile.Repositories.models.Conference;
+import com.example.mobile.Repositories.models.Questionnaire;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ConferenceListAdapter extends RecyclerView.Adapter<ConferenceListAdapter.ViewHolder> {
+public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.ViewHolder> {
 
-    private List<Conference> conferences;
+    private ArrayList<Questionnaire> questionnaires;
     private Context context;
 
-    public ConferenceListAdapter(Context context, List<Conference> conferences){
-        this.conferences = conferences;
+    public QuizAdapter(Context context, ArrayList<Questionnaire> questionnaires){
+        this.questionnaires = questionnaires;
         this.context = context;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view  = LayoutInflater.from(context).inflate(R.layout.item_conference_info, viewGroup, false);
+        View view  = LayoutInflater.from(context).inflate(R.layout.item_quiz, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        Conference conference = conferences.get(i);
-        viewHolder.conferenceNameView.setText(conference.getNom());
-        viewHolder.conferenceDescriptionView.setText(conference.getDescription());
-        viewHolder.conferenceDateView.setText(conference.getDate().toString());
-        viewHolder.conferenceLocationView.setText(conference.getLieu());
+        Questionnaire questionnaire = questionnaires.get(i);
+        viewHolder.intituleView.setText(questionnaire.getIntituleQuestionnaire());
+        //viewHolder.sendButton.setOnClickListener();
+
     }
 
     @Override
     public int getItemCount() {
-        return conferences.size();
+        return questionnaires.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        // TODO add like dislike button
+        private TextView intituleView;
+        private EditText answerEditText;
+        private Button sendButton;
 
-        private TextView conferenceNameView;
-        private TextView conferenceDescriptionView;
-        private TextView conferenceDateView;
-        private TextView conferenceLocationView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            conferenceNameView = itemView.findViewById(R.id.item_conference_title);
-            conferenceDescriptionView = itemView.findViewById(R.id.item_conference_description);
-            conferenceDateView = itemView.findViewById(R.id.item_conference_date);
-            conferenceLocationView = itemView.findViewById(R.id.item_conference_location);
+            intituleView = itemView.findViewById(R.id.item_quiz_intitule);
+            answerEditText = (EditText) itemView.findViewById(R.id.item_quiz_answer);
+            sendButton = itemView.findViewById(R.id.item_quiz_send);
         }
     }
 }
