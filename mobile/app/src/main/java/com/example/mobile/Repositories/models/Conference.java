@@ -1,5 +1,6 @@
 package com.example.mobile.Repositories.models;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.sql.Date;
@@ -7,27 +8,34 @@ import java.util.List;
 
 public class Conference {
     private int id;
+    @Expose
     @SerializedName("nom")
     private String title;
+    @Expose
+    @SerializedName("dateDebut")
     private Date startDate;
+    @Expose
+    @SerializedName("dateFin")
     private Date endDate;
-    private String codeAcces;
-    private List<Attachment> attachments;
+    @Expose
+    private int userId;
+    private String accessCode;
 
     public Conference(){}
 
-    public Conference(String title, Date startDate, Date endDate){
+    public Conference(int userId, String title, Date startDate, Date endDate){
         this.title = title;
+        this.userId = userId;
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
-    public List<Attachment> getAttachments() {
-        return attachments;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setAttachments(List<Attachment> attachments) {
-        this.attachments = attachments;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public int getId() {
@@ -62,11 +70,11 @@ public class Conference {
         this.endDate = endDate;
     }
 
-    public String getCodeAcces() {
-        return codeAcces;
+    public String getAccessCode() {
+        return accessCode;
     }
 
-    public void setCodeAcces(String codeAcces) {
-        this.codeAcces = codeAcces;
+    public void setAccessCode(String accessCode) {
+        this.accessCode = accessCode;
     }
 }

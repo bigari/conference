@@ -10,22 +10,13 @@
       "type": "string",
       "required": true
     },
-    "date": {
-      "type": "date"
+    "dateDebut": {  
+      "type": "date",
+      "required": true
     },
-    "lieu": {
-      "type": "string"
-    },
-    "nbInteresses": {
-      "type": "number",
-      "default": 0
-    },
-    "nbNonInteresses": {
-      "type": "number",
-      "default": 0
-    },
-    "description": {
-      "type": "string"
+    "dateFin": {
+      "type": "date",
+      "required": true
     },
     "codeAcces": {
       "type": "string",
@@ -45,9 +36,9 @@
       "foreignKey": ""
     },
     "user": {
-      "type": "hasOne",
+      "type": "belongsTo",
       "model": "User",
-      "foreignKey": "userId"
+      "foreignKey": ""
     },
     "attachments": {
       "type": "hasMany",

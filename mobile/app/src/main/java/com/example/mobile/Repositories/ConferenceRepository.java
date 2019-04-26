@@ -7,6 +7,7 @@ import com.example.mobile.Repositories.models.Conference;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -35,8 +36,8 @@ public class ConferenceRepository{
 
     }
 
-    public void getConferences(final Callback<List<Conference>> callback) {
-        conferenceApi.getConferences().enqueue(new retrofit2.Callback<List<Conference>>() {
+    public void getConferences(int userId, final Callback<List<Conference>> callback) {
+        conferenceApi.getConferences(userId).enqueue(new retrofit2.Callback<List<Conference>>() {
             @Override
             public void onResponse(Call<List<Conference>> call, Response<List<Conference>> response) {
                 callback.onSuccess(response.body());
@@ -49,7 +50,19 @@ public class ConferenceRepository{
         });
     }
 
-    public void createConference(Conference conference){}
+    public void createConference(Conference conference, Callback<ResponseBody> cb){
+        conferenceApi.createConference(conference).enqueue(new retrofit2.Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                cb.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                cb.onError(t);
+            }
+        });
+    }
 
     public void deleteConference(int id) {
 

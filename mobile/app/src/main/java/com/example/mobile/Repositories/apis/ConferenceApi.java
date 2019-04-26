@@ -26,8 +26,8 @@ import retrofit2.http.Path;
 
 public interface ConferenceApi {
 
-    @GET("api/conferences")
-    Call<List<Conference>> getConferences();
+    @GET("api/conferences/{id}")
+    Call<List<Conference>> getConferences(@Path("id") int userId);
 
     @GET("api/conferences/{id}")
     Call<Conference> getConferenceById(@Path("id") int conferenceId);
@@ -41,9 +41,8 @@ public interface ConferenceApi {
     @GET("api/conferences/{id}/questionnaires")
     Call<List<Questionnaire>> getQuestionnaire(@Path("id") int conferenceId);
 
-    @Multipart
     @POST("api/conferences")
-    Call<ResponseBody> createConference(@PartMap Map<String, RequestBody> partMap);
+    Call<ResponseBody> createConference(@Body Conference conference);
 
     @DELETE("api/conferences/{id}")
     Call<Void> deleteConference(@Path("id") int conferenceId);

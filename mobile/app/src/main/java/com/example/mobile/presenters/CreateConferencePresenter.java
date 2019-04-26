@@ -1,10 +1,13 @@
 package com.example.mobile.presenters;
 
+import com.example.mobile.Callback;
 import com.example.mobile.Repositories.ConferenceRepository;
 import com.example.mobile.Repositories.models.Conference;
 import com.example.mobile.Views.CreateConferenceView;
 
 import java.sql.Date;
+
+import okhttp3.ResponseBody;
 
 public class CreateConferencePresenter {
 
@@ -18,6 +21,8 @@ public class CreateConferencePresenter {
 
     public void createConference(){
         String title = view.getConfTitle();
+        Date startDate = view.getConfStartDate();
+        Date endDate = view.getConfEndDate();
 
         String error = validateTitle(title);
         if(error != null){
@@ -34,11 +39,18 @@ public class CreateConferencePresenter {
 //            view.showError(error);
 //            return;
 //        }
-
-        Conference conference = new Conference(title, null, null);
-        view.showProgressBar();
-        repository.createConference(conference);
-        view.hideProgressBar();
+        Conference conference = new Conference(0, title, startDate, endDate);
+        view.showProgressbar();
+        repository.createConference(conference, new Callback<ResponseBody>() {
+            @Override
+            public void onSuccess(ResponseBody value) {
+                view.hideProgressbar();
+            }
+            @Override
+            public void onError(Throwable error) {
+                view.hideProgressbar();
+            }
+        });
 
     }
 
