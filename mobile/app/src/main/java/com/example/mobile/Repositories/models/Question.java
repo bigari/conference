@@ -9,17 +9,18 @@ import java.util.Date;
 
 
 public class Question {
-    private int id;
+    private Integer id;
     private String intitule;
     private Date timestamp;
+    private Integer participantId;
 
 
     public Question(){}
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -44,5 +45,13 @@ public class Question {
         DateTimeFormatter timeFormatter = DateTimeFormatter.ISO_DATE_TIME;
         TemporalAccessor accessor = timeFormatter.parse(timestamp);
         this.timestamp = Date.from(Instant.from(accessor));
+    }
+
+    public Integer getParticipantId() {
+        return participantId;
+    }
+
+    public void setParticipantId(Integer participantId) {
+        this.participantId = participantId;
     }
 }

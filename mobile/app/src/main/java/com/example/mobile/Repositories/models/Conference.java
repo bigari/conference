@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.sql.Date;
+
 import java.util.List;
 
 public class Conference {
@@ -20,6 +21,7 @@ public class Conference {
     @Expose
     private int userId;
     private String accessCode;
+
 
     public Conference(){}
 

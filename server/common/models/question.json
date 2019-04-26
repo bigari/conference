@@ -20,6 +20,11 @@
       "type": "belongsTo",
       "model": "Conference",
       "foreignKey": ""
+    },
+    "participant": {
+      "type": "hasOne",
+      "model": "Participant",
+      "foreignKey": "participantId"
     }
   },
   "acls": [],
