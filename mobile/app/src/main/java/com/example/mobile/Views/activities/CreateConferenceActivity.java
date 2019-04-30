@@ -1,7 +1,10 @@
 package com.example.mobile.Views.activities;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
@@ -43,6 +46,7 @@ public class CreateConferenceActivity extends AppCompatActivity implements Creat
     private java.sql.Date endDate;
     private DatePickerDialog dpd;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,8 +68,8 @@ public class CreateConferenceActivity extends AppCompatActivity implements Creat
         endDateV  = findViewById(R.id.edittext_conference_create_end_date);
         submitBtn = findViewById(R.id.button_conference_create_submit);
 
-        StartDatePickerListener startDatePickerListener = new StartDatePickerListener();
-        EndDatePickerListener endDatePickerListener = new EndDatePickerListener();
+        final StartDatePickerListener startDatePickerListener = new StartDatePickerListener();
+        final EndDatePickerListener endDatePickerListener = new EndDatePickerListener();
 
 
         Calendar calendar = Calendar.getInstance();
@@ -179,6 +183,7 @@ public class CreateConferenceActivity extends AppCompatActivity implements Creat
     }
 
     private class StartDatePickerListener implements DatePickerDialog.OnDateSetListener {
+        @SuppressLint("LongLogTag")
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
             try{
@@ -197,6 +202,7 @@ public class CreateConferenceActivity extends AppCompatActivity implements Creat
     }
 
     private class EndDatePickerListener implements DatePickerDialog.OnDateSetListener {
+        @SuppressLint("LongLogTag")
         @Override
         public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
             try{
