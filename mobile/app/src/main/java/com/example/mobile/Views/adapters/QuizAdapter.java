@@ -21,7 +21,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.ViewHolder> {
 
     private ArrayList<Questionnaire> questionnaires;
     private Context context;
-
+    
     public QuizAdapter(Context context, ArrayList<Questionnaire> questionnaires){
         this.questionnaires = questionnaires;
         this.context = context;
@@ -38,7 +38,11 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Questionnaire questionnaire = questionnaires.get(i);
         viewHolder.intituleView.setText(questionnaire.getIntituleQuestionnaire());
-        //viewHolder.sendButton.setOnClickListener();
+        viewHolder.sendButton.setOnClickListener(
+                v -> {
+                    // TODO send Answer
+                }
+        );
 
     }
 
@@ -59,6 +63,10 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.ViewHolder> {
             intituleView = itemView.findViewById(R.id.item_quiz_intitule);
             answerEditText = (EditText) itemView.findViewById(R.id.item_quiz_answer);
             sendButton = itemView.findViewById(R.id.item_quiz_send);
+        }
+
+        public String getAnswer () {
+            return answerEditText.getText().toString();
         }
     }
 }

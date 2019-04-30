@@ -6,11 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.mobile.R;
+import com.example.mobile.Repositories.models.Participant;
 import com.example.mobile.Repositories.models.Question;
 
 import java.util.ArrayList;
@@ -28,15 +27,19 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view  = LayoutInflater.from(context).inflate(R.layout.item_question, viewGroup, false);
+        View view;
+        if (questions.get(i).getParticipantId() == Participant.current.getId()) {
+            view  = LayoutInflater.from(context).inflate(R.layout.item_question_sent, viewGroup, false);
+        } else {
+            view  = LayoutInflater.from(context).inflate(R.layout.item_question_others, viewGroup, false);
+        }
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        Question Question = questions.get(i);
-        viewHolder.intituleView.setText(Question.getIntitule());
-
+        Question question = questions.get(i);
+        viewHolder.intituleView.setText(question.getIntitule());
     }
 
     @Override
@@ -46,6 +49,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView intituleView;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

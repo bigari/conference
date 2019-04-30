@@ -1,16 +1,23 @@
 package com.example.mobile.Repositories.models;
 
+import android.content.SharedPreferences;
+
+import com.example.mobile.utils.RandomString;
+import com.google.gson.annotations.Expose;
+
 public class Participant {
+    @Expose
     private String accessKey;
-    private int id;
+    @Expose
+    private Integer id;
 
 
     public Participant(){}
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -20,5 +27,22 @@ public class Participant {
 
     public void setAccessKey(String accessKey) {
         this.accessKey = accessKey;
+    }
+
+    public static Participant current = new Participant();
+
+    public static void create (SharedPreferences prefs) {
+        current.accessKey =  RandomString.generate(32);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("accessKey", current.accessKey).apply();
+    }
+
+    public static void retrieve (SharedPreferences prefs) {
+        current.accessKey =  prefs.getString("accessKey", "");
+        if(current.accessKey == "") {
+            create(prefs);
+            return;
+        }
+        current.id = Integer.parseInt( prefs.getString("participantId", "0"));
     }
 }
