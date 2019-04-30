@@ -1,4 +1,4 @@
-package com.example.mobile.Views.activities;
+package com.example.mobile.Views.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,17 +11,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.mobile.R;
-import com.example.mobile.Repositories.models.Conference;
 import com.example.mobile.Repositories.models.Questionnaire;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.ViewHolder> {
 
     private ArrayList<Questionnaire> questionnaires;
     private Context context;
-    
+
     public QuizAdapter(Context context, ArrayList<Questionnaire> questionnaires){
         this.questionnaires = questionnaires;
         this.context = context;

@@ -1,4 +1,4 @@
-package com.example.mobile.Views.activities;
+package com.example.mobile.Views.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,33 +11,32 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.mobile.R;
-import com.example.mobile.Repositories.models.Conference;
-import com.example.mobile.Repositories.models.Questionnaire;
+import com.example.mobile.Repositories.models.Enquete;
+import com.example.mobile.Repositories.models.Enquete;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.ViewHolder> {
+public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.ViewHolder> {
 
-    private ArrayList<Questionnaire> questionnaires;
+    private ArrayList<Enquete> enquetes;
     private Context context;
     
-    public QuizAdapter(Context context, ArrayList<Questionnaire> questionnaires){
-        this.questionnaires = questionnaires;
+    public SurveyAdapter(Context context, ArrayList<Enquete> enquetes){
+        this.enquetes = enquetes;
         this.context = context;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view  = LayoutInflater.from(context).inflate(R.layout.item_quiz, viewGroup, false);
+        View view  = LayoutInflater.from(context).inflate(R.layout.item_survey, viewGroup, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        Questionnaire questionnaire = questionnaires.get(i);
-        viewHolder.intituleView.setText(questionnaire.getIntituleQuestionnaire());
+        Enquete enquete = enquetes.get(i);
+        viewHolder.intituleView.setText(enquete.getIntituleEnquete());
         viewHolder.sendButton.setOnClickListener(
                 v -> {
                     // TODO send Answer
@@ -48,25 +47,24 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return questionnaires.size();
+        return enquetes.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView intituleView;
-        private EditText answerEditText;
+
         private Button sendButton;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            intituleView = itemView.findViewById(R.id.item_quiz_intitule);
-            answerEditText = (EditText) itemView.findViewById(R.id.item_quiz_answer);
-            sendButton = itemView.findViewById(R.id.item_quiz_send);
+            intituleView = itemView.findViewById(R.id.item_survey_intitule);
+            sendButton = itemView.findViewById(R.id.item_survey_send);
         }
 
-        public String getAnswer () {
-            return answerEditText.getText().toString();
+        public String getChosenOption () {
+            return "";
         }
     }
 }
