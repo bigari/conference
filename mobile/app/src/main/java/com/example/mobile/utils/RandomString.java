@@ -22,3 +22,5 @@ public class RandomString {
         }
         return sb.toString();
     }
+
+}
