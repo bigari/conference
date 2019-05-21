@@ -11,7 +11,11 @@ import android.widget.TextView;
 import com.example.mobile.R;
 import com.example.mobile.Repositories.models.Conference;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 
 public class ConferenceListAdapter extends RecyclerView.Adapter<ConferenceListAdapter.ConfViewHolder> {
@@ -37,8 +41,23 @@ public class ConferenceListAdapter extends RecyclerView.Adapter<ConferenceListAd
 
         holder.titleV.setText(conf.getTitle());
         holder.accessCodeV.setText(conf.getAccessCode());
-        holder.startDateV.setText(conf.getStartDate().toString());
-        holder.endDateV.setText(conf.getEndDate().toString());
+
+        Date startDate = conf.getStartDate();
+        Date endDate = conf.getEndDate();
+
+        if(startDate.getMonth() == endDate.getMonth()){
+            holder.dateIntV.setText(
+                    new SimpleDateFormat("dd - ", Locale.ENGLISH).format(startDate) +
+                    new SimpleDateFormat("dd MMM YYYY", Locale.ENGLISH).format(endDate)
+            );
+        }
+        else{
+            holder.dateIntV.setText(
+                    new SimpleDateFormat("dd MMM", Locale.ENGLISH).format(startDate)
+                            + " - "
+                            + new SimpleDateFormat("dd MMM YYYY", Locale.ENGLISH).format(endDate)
+            );
+        }
     }
 
     @Override
@@ -50,16 +69,14 @@ public class ConferenceListAdapter extends RecyclerView.Adapter<ConferenceListAd
 
         private TextView titleV;
         private TextView accessCodeV;
-        private TextView startDateV;
-        private TextView endDateV;
+        private TextView dateIntV;
 
 
         public ConfViewHolder(@NonNull View itemView) {
             super(itemView);
-            titleV = itemView.findViewById(R.id.item_conference_title);
-//            accessCodeV = itemView.findViewById(R.id.item_conference_access_code);
-//            startDateV = itemView.findViewById(R.id.item_conference_start_date);
-//            endDateV = itemView.findViewById(R.id.item_conference_end_date);
+            titleV = itemView.findViewById(R.id.textview_item_conf_title);
+            accessCodeV = itemView.findViewById(R.id.textview_item_conf_access_code);
+            dateIntV = itemView.findViewById(R.id.textview_item_date_interval);
         }
     }
 }

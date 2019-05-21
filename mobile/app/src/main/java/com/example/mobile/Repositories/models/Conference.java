@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.util.List;
 
 public class Conference {
+    @Expose(serialize = false, deserialize = true)
     private int id;
     @Expose
     @SerializedName("nom")
@@ -20,6 +21,8 @@ public class Conference {
     private Date endDate;
     @Expose
     private int userId;
+    @Expose(serialize = false, deserialize = true)
+    @SerializedName("codeAcces")
     private String accessCode;
 
 

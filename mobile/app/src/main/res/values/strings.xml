@@ -4,4 +4,9 @@
     <string name="conference_title_hint">Title</string>
     <string name="conference_start_date_hint">start date</string>
     <string name="conference_end_date_hint">end date</string>
+
+
+    <string name="conference_list_active_title">Active</string>
+    <string name="conference_list_past_title">Past</string>
+    <string name="create_conf_title">Create an event</string>
 </resources>

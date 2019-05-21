@@ -15,7 +15,9 @@ public class RetrofitClient {
         if(retrofit == null){
             GsonBuilder builder = new GsonBuilder();
             builder.excludeFieldsWithoutExposeAnnotation();
-            Gson gson = builder.create();
+            Gson gson = builder
+                        .setDateFormat("yyyy-MM-dd hh:mm:ss a")
+                        .create();
 
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)

@@ -1,5 +1,7 @@
 package com.example.mobile.presenters;
 
+import android.util.Log;
+
 import com.example.mobile.Callback;
 import com.example.mobile.Repositories.ConferenceRepository;
 import com.example.mobile.Repositories.models.Conference;
@@ -24,6 +26,7 @@ public class CreateConferencePresenter {
         Date startDate = view.getConfStartDate();
         Date endDate = view.getConfEndDate();
 
+
         String error = validateTitle(title);
         if(error != null){
             view.showError(error);
@@ -39,7 +42,7 @@ public class CreateConferencePresenter {
 //            view.showError(error);
 //            return;
 //        }
-        Conference conference = new Conference(0, title, startDate, endDate);
+        Conference conference = new Conference(1, title, startDate, endDate);
         view.showProgressbar();
         repository.createConference(conference, new Callback<ResponseBody>() {
             @Override

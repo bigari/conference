@@ -26,7 +26,7 @@ import retrofit2.http.Path;
 
 public interface ConferenceApi {
 
-    @GET("api/conferences/{id}")
+    @GET("api/users/{id}/conferences?filter[order]=dateFin%20DESC")
     Call<List<Conference>> getConferences(@Path("id") int userId);
 
     @GET("api/conferences/{id}")
