@@ -7,11 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.mobile.R;
-import com.example.mobile.Repositories.models.Enquete;
 import com.example.mobile.Repositories.models.Enquete;
 
 import java.util.ArrayList;
