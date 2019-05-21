@@ -8,6 +8,7 @@ import com.example.mobile.Repositories.models.Conference;
 import com.example.mobile.Views.CreateConferenceView;
 
 import java.sql.Date;
+import java.util.function.ToDoubleBiFunction;
 
 import okhttp3.ResponseBody;
 
@@ -47,6 +48,8 @@ public class CreateConferencePresenter {
         repository.createConference(conference, new Callback<ResponseBody>() {
             @Override
             public void onSuccess(ResponseBody value) {
+                view.navToConfList();
+//                TODO implement progressbar
                 view.hideProgressbar();
             }
             @Override

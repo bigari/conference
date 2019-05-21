@@ -3,6 +3,7 @@ package com.example.mobile.Views.activities;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TextInputEditText;
@@ -236,6 +237,12 @@ public class CreateConferenceActivity extends AppCompatActivity implements Creat
     private void setEndDate(long date){
         this.endDate = new java.sql.Date(date);
     }
+
+    @Override
+    public void navToConfList(){
+        startActivity(new Intent(this, ConferenceListActivity.class));
+    }
+
 }
 
 

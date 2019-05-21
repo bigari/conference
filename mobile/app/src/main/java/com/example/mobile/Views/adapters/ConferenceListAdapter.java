@@ -40,7 +40,7 @@ public class ConferenceListAdapter extends RecyclerView.Adapter<ConferenceListAd
         Conference conf = confs.get(position);
 
         holder.titleV.setText(conf.getTitle());
-        holder.accessCodeV.setText(conf.getAccessCode());
+        holder.accessCodeV.setText("#" + conf.getAccessCode());
 
         Date startDate = conf.getStartDate();
         Date endDate = conf.getEndDate();

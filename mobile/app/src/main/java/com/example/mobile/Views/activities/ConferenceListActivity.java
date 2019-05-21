@@ -70,4 +70,5 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
         pastConfList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
     }
+
 }

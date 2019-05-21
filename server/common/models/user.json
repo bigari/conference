@@ -4,11 +4,9 @@
     "realm": {
       "type": "string"
     },
-    "firstname": {
-      "type": "string"
-    },
-    "lastname":{
-      "type": "string"
+    "username": {
+      "type": "string",
+      "required": true
     },
     "password": {
       "type": "string",
