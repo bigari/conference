@@ -35,6 +35,8 @@ public class Participant {
         current.accessKey =  RandomString.generate(32);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("accessKey", current.accessKey).apply();
+
+        // send to server and get Id
     }
 
     public static void retrieve (SharedPreferences prefs) {

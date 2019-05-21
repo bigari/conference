@@ -24,12 +24,13 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/item_quiz_answer"
+                <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Answer" />
+                    android:hint="Answer"
+                    android:id="@+id/item_quiz_answer"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    />
 
             </android.support.design.widget.TextInputLayout>
             <Button

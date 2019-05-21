@@ -15,7 +15,6 @@ import com.example.mobile.Repositories.models.Question;
 import java.util.ArrayList;
 
 public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHolder> {
-
     private ArrayList<Question> questions;
     private Context context;
 
