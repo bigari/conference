@@ -136,8 +136,6 @@ public class CreateConferenceActivity extends AppCompatActivity implements Creat
             }
         });
 
-
-
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -93,10 +93,6 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
                 startActivity(new Intent(ConferenceListActivity.this, CreateConferenceActivity.class));
             }
         });
-
-
-
-
     }
 
     @Override

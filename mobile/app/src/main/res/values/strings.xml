@@ -11,4 +11,5 @@
     <string name="create_conf_title">Create an event</string>
     <string name="empty_conf_list">No conference yet</string>
     <string name="conflist_emptylist_addconf">create an event</string>
+    <string name="createconf_availability_note">Attendees are able to join your event within the dates you select.</string>
 </resources>

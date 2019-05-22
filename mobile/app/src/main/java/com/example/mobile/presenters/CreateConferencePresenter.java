@@ -3,6 +3,7 @@ package com.example.mobile.presenters;
 import android.util.Log;
 
 import com.example.mobile.Callback;
+import com.example.mobile.Repositories.ConfListCache;
 import com.example.mobile.Repositories.ConferenceRepository;
 import com.example.mobile.Repositories.models.Conference;
 import com.example.mobile.Views.CreateConferenceView;
@@ -16,10 +17,12 @@ public class CreateConferencePresenter {
 
     private CreateConferenceView view;
     private ConferenceRepository repository;
+    private ConfListCache confListCache;
 
     public CreateConferencePresenter(CreateConferenceView view, ConferenceRepository repository){
         this.view = view;
         this.repository = repository;
+        this.confListCache = ConfListCache.getInstance();
     }
 
     public void createConference(){
@@ -45,9 +48,10 @@ public class CreateConferencePresenter {
 //        }
         Conference conference = new Conference(1, title, startDate, endDate);
         view.showProgressbar();
-        repository.createConference(conference, new Callback<ResponseBody>() {
+        repository.createConference(conference, new Callback<Conference>() {
             @Override
-            public void onSuccess(ResponseBody value) {
+            public void onSuccess(Conference conf) {
+                confListCache.addConf(conf);
                 view.navToConfList();
 //                TODO implement progressbar
                 view.hideProgressbar();
