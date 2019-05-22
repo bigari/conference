@@ -29,13 +29,29 @@ public class ConferenceListPresenter {
             public void onSuccess(List<Conference> confs) {
                 List<Conference> activeConfs = new ArrayList<>();
                 List<Conference> pastConfs = new ArrayList<>();
+
+                int confsSize = confs.size();
+                if(confs.isEmpty()){
+                    view.showEmptyListView();
+                    return;
+                }
+
                 Date now = new Date(Calendar.getInstance().getTimeInMillis());
                 int i = 0;
-                while(i < confs.size() && confs.get(i).getEndDate().after(now)){
+                while(i < confsSize && confs.get(i).getEndDate().after(now)){
                     activeConfs.add(confs.get(i));
                     i++;
                 }
                 pastConfs = confs.subList(i, confs.size());
+
+                if(activeConfs.isEmpty()){
+                    view.showConfs(pastConfs, "active");
+                    return;
+                }
+                else if(pastConfs.isEmpty()){
+                    view.showConfs(activeConfs, "past");
+                    return;
+                }
                 view.showConfs(activeConfs, pastConfs);
             }
 
