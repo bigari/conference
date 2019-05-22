@@ -8,7 +8,7 @@ public interface CreateConferenceView {
 
     void showProgressbar();
     void hideProgressbar();
-    void showError(String error);
+    void showErrorView();
     void navToConfList();
 
     String getConfTitle();

@@ -14,6 +14,29 @@
         android:layout_height="wrap_content">
     </android.support.v7.widget.Toolbar>
 
+
+    <LinearLayout
+        android:id="@+id/layout_conflist_error"
+        android:layout_below="@id/toolbar_conference_list"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/conflist_error"/>
+
+        <Button
+            android:id="@+id/button_conflist_tryagain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/conflist_tryagain"/>
+
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/layout_conflist_emptylist"
         android:layout_below="@id/toolbar_conference_list"

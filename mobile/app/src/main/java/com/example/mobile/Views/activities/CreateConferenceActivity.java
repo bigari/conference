@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 import com.example.mobile.R;
 import com.example.mobile.Repositories.ConferenceRepository;
@@ -153,8 +154,8 @@ public class CreateConferenceActivity extends AppCompatActivity implements Creat
     }
 
     @Override
-    public void showError(String error) {
-
+    public void showErrorView() {
+        Toast.makeText(this, "An error has occured, please try again.", Toast.LENGTH_LONG).show();
     }
 
     @Override

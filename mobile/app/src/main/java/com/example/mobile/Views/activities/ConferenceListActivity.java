@@ -31,6 +31,8 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
     private RecyclerView pastConfList;
     private FloatingActionButton createConfBtn;
 
+    private ConferenceListPresenter presenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +46,7 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
         ConferenceRepository repository = new ConferenceRepository();
-        ConferenceListPresenter presenter = new ConferenceListPresenter(this, repository);
+        presenter = new ConferenceListPresenter(this, repository);
 
         createConfBtn = findViewById(R.id.button_conflist_addconf);
 
@@ -65,6 +67,11 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
 
     @Override
     public void showConfs(List<Conference> activeConfs, List<Conference> pastConfs) {
+        TextView activeListTitle = findViewById(R.id.textview_active_confs);
+        TextView pastListTitle = findViewById(R.id.textview_past_confs);
+
+        pastListTitle.setVisibility(View.VISIBLE);
+        activeListTitle.setVisibility(View.VISIBLE);
 
         activeConfList.setAdapter(new ConferenceListAdapter(activeConfs, this));
         activeConfList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -97,17 +104,21 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
 
     @Override
     public void showConfs(List<Conference> confs, String type) {
-        if(type.equals("active")){
-            TextView activeListTitle = findViewById(R.id.textview_active_confs);
+        TextView pastListTitle = findViewById(R.id.textview_past_confs);
+        TextView activeListTitle = findViewById(R.id.textview_active_confs);
+
+
+        if(type.equals("past")){
 
             activeListTitle.setVisibility(View.GONE);
+            pastListTitle.setVisibility(View.VISIBLE);
+
 
             pastConfList.setAdapter(new ConferenceListAdapter(confs, this));
             pastConfList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             pastConfList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         }else{
-            TextView pastListTitle = findViewById(R.id.textview_past_confs);
-
+            activeListTitle.setVisibility(View.VISIBLE);
             pastListTitle.setVisibility(View.GONE);
 
             activeConfList.setAdapter(new ConferenceListAdapter(confs, this));
@@ -116,5 +127,28 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
         }
 
     }
+
+    @Override
+    public void showErrorView() {
+        ViewGroup errorView = findViewById(R.id.layout_conflist_error);
+        ViewGroup listView = findViewById(R.id.layout_conflist_list);
+        Button retryBtn = findViewById(R.id.button_conflist_tryagain);
+
+        errorView.setVisibility(View.VISIBLE);
+        listView.setVisibility(View.GONE);
+
+        retryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                errorView.setVisibility(View.GONE);
+                listView.setVisibility(View.VISIBLE);
+
+                int uid = 1;
+                presenter.loadConfs(1);
+
+            }
+        });
+    }
+
 
 }

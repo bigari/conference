@@ -55,11 +55,11 @@ public class ConferenceListPresenter {
                     confListCache.setPastConfs(pastConfs);
 
                     if(activeConfs.isEmpty()){
-                        view.showConfs(pastConfs, "active");
+                        view.showConfs(pastConfs, "past");
                         return;
                     }
                     else if(pastConfs.isEmpty()){
-                        view.showConfs(activeConfs, "past");
+                        view.showConfs(activeConfs, "active");
                         return;
                     }
                     view.showConfs(activeConfs, pastConfs);
@@ -68,6 +68,7 @@ public class ConferenceListPresenter {
                 @Override
                 public void onError(Throwable error) {
                     Log.e("conference list", "loading conference list failed", error);
+                    view.showErrorView();
                 }
             });
         }

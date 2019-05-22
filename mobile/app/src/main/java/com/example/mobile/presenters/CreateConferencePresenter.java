@@ -33,7 +33,6 @@ public class CreateConferencePresenter {
 
         String error = validateTitle(title);
         if(error != null){
-            view.showError(error);
             return;
         }
 //        error = validateStartDate();
@@ -53,12 +52,10 @@ public class CreateConferencePresenter {
             public void onSuccess(Conference conf) {
                 confListCache.addConf(conf);
                 view.navToConfList();
-//                TODO implement progressbar
-                view.hideProgressbar();
             }
             @Override
             public void onError(Throwable error) {
-                view.hideProgressbar();
+                view.showErrorView();
             }
         });
 
