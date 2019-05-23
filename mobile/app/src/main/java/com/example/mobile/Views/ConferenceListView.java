@@ -7,5 +7,7 @@ import java.util.List;
 public interface ConferenceListView {
 
     void showConfs(List<Conference> activeConfs, List<Conference> pastConfs);
-
+    void showEmptyListView();
+    void showConfs(List<Conference> confs, String type);
+    void showErrorView();
 }

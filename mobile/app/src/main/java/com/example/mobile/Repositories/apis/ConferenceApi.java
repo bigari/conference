@@ -42,7 +42,7 @@ public interface ConferenceApi {
     Call<List<Questionnaire>> getQuestionnaire(@Path("id") int conferenceId);
 
     @POST("api/conferences")
-    Call<ResponseBody> createConference(@Body Conference conference);
+    Call<Conference> createConference(@Body Conference conference);
 
     @DELETE("api/conferences/{id}")
     Call<Void> deleteConference(@Path("id") int conferenceId);

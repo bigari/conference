@@ -3,6 +3,7 @@ package com.example.mobile.Views.activities;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TextInputEditText;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 import com.example.mobile.R;
 import com.example.mobile.Repositories.ConferenceRepository;
@@ -135,8 +137,6 @@ public class CreateConferenceActivity extends AppCompatActivity implements Creat
             }
         });
 
-
-
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,8 +154,8 @@ public class CreateConferenceActivity extends AppCompatActivity implements Creat
     }
 
     @Override
-    public void showError(String error) {
-
+    public void showErrorView() {
+        Toast.makeText(this, "An error has occured, please try again.", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -236,6 +236,12 @@ public class CreateConferenceActivity extends AppCompatActivity implements Creat
     private void setEndDate(long date){
         this.endDate = new java.sql.Date(date);
     }
+
+    @Override
+    public void navToConfList(){
+        startActivity(new Intent(this, ConferenceListActivity.class));
+    }
+
 }
 
 

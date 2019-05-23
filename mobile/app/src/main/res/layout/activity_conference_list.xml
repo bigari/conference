@@ -14,52 +14,110 @@
         android:layout_height="wrap_content">
     </android.support.v7.widget.Toolbar>
 
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:paddingRight="16dp"
-        android:paddingLeft="16dp"
+        android:id="@+id/layout_conflist_error"
         android:layout_below="@id/toolbar_conference_list"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/active_confs"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="@string/conference_list_active_title"/>
+            android:text="@string/conflist_error"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerview_active_conference_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/button_conflist_tryagain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/conflist_tryagain"/>
 
-        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_conflist_emptylist"
+        android:layout_below="@id/toolbar_conference_list"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/past_confs"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="@string/conference_list_past_title"/>
+            android:text="@string/empty_conf_list"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerview_past_conference_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/button_conflist_emptylist_addconf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/conflist_emptylist_addconf"/>
 
-        </android.support.v7.widget.RecyclerView>
     </LinearLayout>
 
 
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/layout_conflist_list"
+        android:layout_width="match_parent"
+        android:layout_below="@id/layout_conflist_emptylist"
+        android:visibility="visible"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/textview_active_confs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:text="@string/conference_list_active_title"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview_active_conference_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/textview_past_confs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:text="@string/conference_list_past_title"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview_past_conference_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/button_conf_list_add_btn"
+        android:id="@+id/button_conflist_addconf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
+        android:visibility="visible"
+        android:src="@drawable/ic_baseline_add_24px"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"/>
+
+
 
 
 

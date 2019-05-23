@@ -3,11 +3,13 @@ package com.example.mobile.presenters;
 import android.util.Log;
 
 import com.example.mobile.Callback;
+import com.example.mobile.Repositories.ConfListCache;
 import com.example.mobile.Repositories.ConferenceRepository;
 import com.example.mobile.Repositories.models.Conference;
 import com.example.mobile.Views.CreateConferenceView;
 
 import java.sql.Date;
+import java.util.function.ToDoubleBiFunction;
 
 import okhttp3.ResponseBody;
 
@@ -15,10 +17,12 @@ public class CreateConferencePresenter {
 
     private CreateConferenceView view;
     private ConferenceRepository repository;
+    private ConfListCache confListCache;
 
     public CreateConferencePresenter(CreateConferenceView view, ConferenceRepository repository){
         this.view = view;
         this.repository = repository;
+        this.confListCache = ConfListCache.getInstance();
     }
 
     public void createConference(){
@@ -29,7 +33,6 @@ public class CreateConferencePresenter {
 
         String error = validateTitle(title);
         if(error != null){
-            view.showError(error);
             return;
         }
 //        error = validateStartDate();
@@ -44,14 +47,15 @@ public class CreateConferencePresenter {
 //        }
         Conference conference = new Conference(1, title, startDate, endDate);
         view.showProgressbar();
-        repository.createConference(conference, new Callback<ResponseBody>() {
+        repository.createConference(conference, new Callback<Conference>() {
             @Override
-            public void onSuccess(ResponseBody value) {
-                view.hideProgressbar();
+            public void onSuccess(Conference conf) {
+                confListCache.addConf(conf);
+                view.navToConfList();
             }
             @Override
             public void onError(Throwable error) {
-                view.hideProgressbar();
+                view.showErrorView();
             }
         });
 

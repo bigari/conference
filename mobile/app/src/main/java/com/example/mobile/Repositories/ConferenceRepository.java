@@ -50,15 +50,15 @@ public class ConferenceRepository{
         });
     }
 
-    public void createConference(Conference conference, Callback<ResponseBody> cb){
-        conferenceApi.createConference(conference).enqueue(new retrofit2.Callback<ResponseBody>() {
+    public void createConference(Conference conference, Callback<Conference> cb){
+        conferenceApi.createConference(conference).enqueue(new retrofit2.Callback<Conference>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<Conference> call, Response<Conference> response) {
                 cb.onSuccess(response.body());
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<Conference> call, Throwable t) {
                 cb.onError(t);
             }
         });

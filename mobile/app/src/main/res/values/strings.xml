@@ -9,4 +9,9 @@
     <string name="conference_list_active_title">Active</string>
     <string name="conference_list_past_title">Past</string>
     <string name="create_conf_title">Create an event</string>
+    <string name="empty_conf_list">No conference yet</string>
+    <string name="conflist_emptylist_addconf">create an event</string>
+    <string name="createconf_availability_note">Attendees are able to join your event within the dates you select.</string>
+    <string name="conflist_tryagain">Try Again</string>
+    <string name="conflist_error">An error has occurred while loading the conference list.</string>
 </resources>
