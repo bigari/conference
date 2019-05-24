@@ -26,3 +26,9 @@
 //     });
 //   });
 // }
+
+// module.exports = function (app) {
+//   app.get('/users/:id/conferences', function(req, res) {
+    
+//   });
+// }

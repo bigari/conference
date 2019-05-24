@@ -10,7 +10,7 @@
       "type": "string",
       "required": true
     },
-    "dateDebut": {  
+    "dateDebut": {
       "type": "date",
       "required": true
     },
@@ -35,10 +35,10 @@
       "model": "Questionnaire",
       "foreignKey": ""
     },
-    "user": {
+    "speaker": {
       "type": "belongsTo",
-      "model": "User",
-      "foreignKey": ""
+      "model": "Speaker",
+      "foreignKey": "speakerId"
     },
     "attachments": {
       "type": "hasMany",

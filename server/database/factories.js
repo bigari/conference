@@ -15,9 +15,7 @@ function genCode(len) {
 		'w','x','y','z'
 	];
 	
-	let codeLength = len;
-
-	for (var i = 0; i < codeLength; i++) { 
+	for (var i = 0; i < len; i++) { 
 		let rndNum = Math.ceil(Math.random() * codeAlph.length) - 1;
 		accessCode = accessCode + codeAlph[rndNum];
 	};
@@ -25,7 +23,7 @@ function genCode(len) {
 	return accessCode;
 }
 
-app.seeder.createFactory('User', {
+app.seeder.createFactory('Speaker', {
   'username': '{{internet.userName}}',
   'email': '{{internet.email}}',
   'password': '000000'
@@ -36,5 +34,5 @@ app.seeder.createFactory('Conference', {
     'dateDebut': '{{date.recent}}',
     'dateFin': '{{date.future}}',
     'codeAcces': genCode(5),
-    'userId': 1
+    'speakerId': 1
 });

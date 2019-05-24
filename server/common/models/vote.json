@@ -1,22 +1,15 @@
 {
   "name": "Vote",
   "base": "PersistedModel",
-  "idInjection": true,
-  "options": {
-    "validateUpsert": true
-  },
-  "properties": {
-    "participantId": {
-      "type": "number",
-      "required": true
-    },
-    "optionId": {
-      "type": "number",
-      "required": true
+  "properties": {},
+  "validations": [],
+  "relations": {
+    "conferences": {
+      "type": "hasMany",
+      "model": "Conferences",
+      "foreignKey": "presenterId"
     }
   },
-  "validations": [],
-  "relations": {},
   "acls": [],
   "methods": {}
 }
