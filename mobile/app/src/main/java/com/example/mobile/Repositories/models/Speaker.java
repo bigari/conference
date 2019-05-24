@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by neron on 5/23/19.
  */
 
-public class User {
+public class Speaker {
 
     @Expose(deserialize = false)
     @SerializedName("email")
@@ -27,16 +27,16 @@ public class User {
     private Integer id;
 
 
-    /*private static User current;
+    /*private static Speaker current;
 
-    public static User getCurrent () {
+    public static Speaker getCurrent () {
         if (current == null) {
-            current = new User();
+            current = new Speaker();
         }
         return current;
     }*/
 
-    public User (String email ,String password) {
+    public Speaker(String email , String password) {
         this.email = email;
         this.password = password;
     }
