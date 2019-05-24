@@ -2,29 +2,29 @@ package com.example.mobile.presenters;
 
 
 import com.example.mobile.Callback;
-import com.example.mobile.Repositories.UserRepository;
-import com.example.mobile.Repositories.models.User;
-import com.example.mobile.Views.UserLoginView;
+import com.example.mobile.Repositories.SpeakerRepository;
+import com.example.mobile.Repositories.models.Speaker;
+import com.example.mobile.Views.SpeakerLoginView;
 
 /**
  * Created by neron on 5/23/19.
  */
 
-public class UserLoginPresenter {
+public class SpeakerLoginPresenter {
 
-    private UserLoginView view;
-    private UserRepository repository;
+    private SpeakerLoginView view;
+    private SpeakerRepository repository;
 
-    public UserLoginPresenter(UserLoginView view, UserRepository repository) {
+    public SpeakerLoginPresenter(SpeakerLoginView view, SpeakerRepository repository) {
         this.view = view;
         this.repository = repository;
     }
 
-    public void login(User user) {
+    public void login(Speaker speaker) {
 
-        repository.login(user, new Callback<User>() {
+        repository.login(speaker, new Callback<Speaker>() {
             @Override
-            public void onSuccess(User value) {
+            public void onSuccess(Speaker value) {
                 view.showLoginSuccess(value);
             }
 

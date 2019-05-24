@@ -12,16 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Views.activities.CreateConferenceActivity"/>
+        <activity android:name=".Views.activities.CreateConferenceActivity" />
         <activity android:name=".Views.activities.ConferenceActivity" />
         <activity android:name=".Views.activities.LandingActivity">
-        </activity>
-        <activity android:name=".Views.activities.ConferenceListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Views.activities.ConferenceListActivity"></activity>
+        <activity android:name=".Views.activities.LoginActivity"></activity>
     </application>
-
 </manifest>

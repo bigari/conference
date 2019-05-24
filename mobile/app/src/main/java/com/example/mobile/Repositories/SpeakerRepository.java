@@ -1,31 +1,31 @@
 package com.example.mobile.Repositories;
 
 import com.example.mobile.Callback;
-import com.example.mobile.Repositories.apis.PresenterApi;
-import com.example.mobile.Repositories.models.User;
+import com.example.mobile.Repositories.apis.SpeakerApi;
+import com.example.mobile.Repositories.models.Speaker;
 import com.example.mobile.RetrofitClient;
 
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class UserRepository {
+public class SpeakerRepository {
 
 
-    private final PresenterApi presenterApi;
+    private final SpeakerApi speakerApi;
 
-    public UserRepository(){
-        this.presenterApi = RetrofitClient.getRetrofit().create(PresenterApi.class);
+    public SpeakerRepository(){
+        this.speakerApi = RetrofitClient.getRetrofit().create(SpeakerApi.class);
     }
 
-    public void login(User user, final Callback<User> callback) {
-        presenterApi.login(user).enqueue(new retrofit2.Callback<User>() {
+    public void login(Speaker speaker, final Callback<Speaker> callback) {
+        speakerApi.login(speaker).enqueue(new retrofit2.Callback<Speaker>() {
             @Override
-            public void onResponse(Call<User> call, Response<User> response) {
+            public void onResponse(Call<Speaker> call, Response<Speaker> response) {
                 callback.onSuccess(response.body());
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<Speaker> call, Throwable t) {
                 callback.onError(t);
             }
         });

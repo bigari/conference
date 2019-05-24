@@ -27,21 +27,22 @@ public class ConferenceListPresenter {
 
     }
 
-    public void loadConfs(int uid){
+    public void loadConfs(int uid, String key){
 
-        if(confListCache.getActiveConfs() == null){
+        if(confListCache.getActiveConfs().isEmpty() && confListCache.getPastConfs().isEmpty()){
 
-            repository.getConferences(uid, new Callback<List<Conference>>() {
+            repository.getConferences(uid, key, new Callback<List<Conference>>() {
                 @Override
                 public void onSuccess(List<Conference> confs) {
                     List<Conference> activeConfs = new ArrayList<>();
                     List<Conference> pastConfs = new ArrayList<>();
 
-                    int confsSize = confs.size();
-                    if(confs.isEmpty()){
+                    if( confs == null || confs.isEmpty()){
                         view.showEmptyListView();
                         return;
                     }
+
+                    int confsSize = confs.size();
 
                     Date now = new Date(Calendar.getInstance().getTimeInMillis());
                     int i = 0;
@@ -74,15 +75,14 @@ public class ConferenceListPresenter {
         }
         else{
             if(confListCache.getActiveConfs().isEmpty()){
-                view.showConfs(confListCache.getPastConfs(), "active");
+                view.showConfs(confListCache.getPastConfs(), "past");
                 return;
             }
             else if(confListCache.getPastConfs().isEmpty()){
-                view.showConfs(confListCache.getActiveConfs(), "past");
+                view.showConfs(confListCache.getActiveConfs(), "active");
                 return;
             }
             view.showConfs(confListCache.getActiveConfs(), confListCache.getPastConfs());
-
         }
 
 
