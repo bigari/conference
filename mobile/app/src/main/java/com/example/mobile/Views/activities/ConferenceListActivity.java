@@ -21,7 +21,7 @@ import com.example.mobile.R;
 import com.example.mobile.Repositories.ConferenceRepository;
 import com.example.mobile.Repositories.models.Conference;
 import com.example.mobile.Views.ViewInterfaces.ConferenceListView;
-import com.example.mobile.Views.adapters.ConferenceAdapter;
+import com.example.mobile.Views.adapters.ConferenceListAdapter;
 import com.example.mobile.presenters.ConferenceListPresenter;
 
 import java.util.List;
@@ -81,11 +81,11 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
         pastListTitle.setVisibility(View.VISIBLE);
         activeListTitle.setVisibility(View.VISIBLE);
 
-        activeConfList.setAdapter(new ConferenceAdapter(activeConfs, this));
+        activeConfList.setAdapter(new ConferenceListAdapter(activeConfs, this));
         activeConfList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         activeConfList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-        pastConfList.setAdapter(new ConferenceAdapter(pastConfs, this));
+        pastConfList.setAdapter(new ConferenceListAdapter(pastConfs, this));
         pastConfList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         pastConfList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
@@ -122,14 +122,14 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
             pastListTitle.setVisibility(View.VISIBLE);
 
 
-            pastConfList.setAdapter(new ConferenceAdapter(confs, this));
+            pastConfList.setAdapter(new ConferenceListAdapter(confs, this));
             pastConfList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             pastConfList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         }else{
             activeListTitle.setVisibility(View.VISIBLE);
             pastListTitle.setVisibility(View.GONE);
 
-            activeConfList.setAdapter(new ConferenceAdapter(confs, this));
+            activeConfList.setAdapter(new ConferenceListAdapter(confs, this));
             activeConfList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             activeConfList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         }

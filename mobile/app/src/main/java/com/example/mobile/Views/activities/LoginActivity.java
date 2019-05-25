@@ -26,27 +26,31 @@ public class LoginActivity extends AppCompatActivity implements SpeakerLoginView
     private ProgressBar progressBar;
     private RelativeLayout layout;
     private RelativeLayout.LayoutParams params;
-    private  SharedPreferences prefs;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         emailInput = findViewById(R.id.login_email);
         passwordInput = findViewById(R.id.login_password);
         loginButton = findViewById(R.id.btn_login);
+
         progressBar = new ProgressBar(LoginActivity.this,null,android.R.attr.progressBarStyleLarge);
+
         params = new RelativeLayout.LayoutParams(100,100);
         params.addRule(RelativeLayout.CENTER_IN_PARENT);
         layout = findViewById(R.id.login_relative_layout);
+
         loginButton.setOnClickListener( v-> {
            authenticate();
         });
-        prefs = getSharedPreferences("prefs", MODE_PRIVATE);
 
+        prefs = getSharedPreferences("prefs", MODE_PRIVATE);
     }
 
-    protected  void authenticate () {
+    protected void authenticate() {
         SharedPreferences.Editor editor = prefs.edit();
 
         editor.putString("email", emailInput.getText().toString());
@@ -65,7 +69,6 @@ public class LoginActivity extends AppCompatActivity implements SpeakerLoginView
 
     @Override
     public void showLoginError() {
-
         progressBar.setVisibility(View.GONE);
         new AlertDialog.Builder(LoginActivity.this)
                 .setTitle("Connection failed")

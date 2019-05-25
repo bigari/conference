@@ -1,4 +1,4 @@
-package com.example.mobile.Views.adapters;
+package com.example.mobile.Views.adapters.speaker;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,10 +8,10 @@ import com.example.mobile.Views.Fragments.speaker.PollsFragment;
 import com.example.mobile.Views.Fragments.speaker.QuestionsFragment;
 import com.example.mobile.Views.Fragments.speaker.SurveysFragment;
 
-public class ConfViewPagerAdapter extends FragmentPagerAdapter {
+public class viewPagerAdapter extends FragmentPagerAdapter {
 
 
-    public ConfViewPagerAdapter(FragmentManager fm) {
+    public viewPagerAdapter(FragmentManager fm) {
         super(fm);
 
     }

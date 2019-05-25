@@ -19,12 +19,12 @@ import java.util.List;
 import java.util.Locale;
 
 
-public class ConferenceAdapter extends RecyclerView.Adapter<ConferenceAdapter.ConfViewHolder> {
+public class ConferenceListAdapter extends RecyclerView.Adapter<ConferenceListAdapter.ConfViewHolder> {
 
     private List<Conference> confs;
     private Context context;
 
-    public ConferenceAdapter(List<Conference> confs, Context context){
+    public ConferenceListAdapter(List<Conference> confs, Context context){
         this.confs = confs;
         this.context = context;
     }
@@ -65,6 +65,7 @@ public class ConferenceAdapter extends RecyclerView.Adapter<ConferenceAdapter.Co
             public void onClick(View v) {
                 Intent intent = new Intent(context, ConferenceActivity.class);
                 intent.putExtra("confId", conf.getId());
+                intent.putExtra("role", "speaker");
                 context.startActivity(intent);
             }
         });

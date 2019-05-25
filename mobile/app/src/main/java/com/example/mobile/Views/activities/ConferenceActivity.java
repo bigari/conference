@@ -7,7 +7,7 @@ import android.os.Bundle;
 
 import com.example.mobile.R;
 import com.example.mobile.Views.ViewInterfaces.ConferenceView;
-import com.example.mobile.Views.adapters.ConfViewPagerAdapter;
+
 
 public class ConferenceActivity extends AppCompatActivity implements ConferenceView {
 
@@ -18,7 +18,14 @@ public class ConferenceActivity extends AppCompatActivity implements ConferenceV
 
         ViewPager viewPager = findViewById(R.id.viewpager_conferenceinfo);
 
-        viewPager.setAdapter(new ConfViewPagerAdapter(getSupportFragmentManager()));
+        String role = getIntent().getExtras().getString("role");
+
+        if(role.equals("speaker")){
+            viewPager.setAdapter(new com.example.mobile.Views.adapters.speaker.viewPagerAdapter(getSupportFragmentManager()));
+        }
+        else{
+            viewPager.setAdapter(new com.example.mobile.Views.adapters.participant.viewPagerAdapter(getSupportFragmentManager()));
+        }
 
         TabLayout tabLayout = findViewById(R.id.tablayout_conferenceinfo);
         tabLayout.setupWithViewPager(viewPager);
