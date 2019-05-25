@@ -1,10 +1,13 @@
 package com.example.mobile.Repositories.models;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.ArrayList;
 
 public class Option {
-
+    @Expose(serialize = false, deserialize = true)
     private int id;
+    @Expose
     private String intituleOption;
     private int voteCount;
 

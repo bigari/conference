@@ -1,9 +1,12 @@
 package com.example.mobile.Repositories.models;
 
 
-public class Questionnaire {
+import com.google.gson.annotations.Expose;
 
+public class Questionnaire {
+    @Expose
     public String intituleQuestionnaire;
+    @Expose(serialize = false, deserialize = true)
     public int id;
 
 

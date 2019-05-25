@@ -2,6 +2,8 @@ package com.example.mobile.Repositories.models;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
+import com.google.gson.annotations.Expose;
+
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
@@ -9,9 +11,13 @@ import java.util.Date;
 
 
 public class Question {
+    @Expose(serialize = false, deserialize = true)
     private Integer id;
+    @Expose
     private String intitule;
+    @Expose
     private Date timestamp;
+    @Expose
     private Integer participantId;
 
 

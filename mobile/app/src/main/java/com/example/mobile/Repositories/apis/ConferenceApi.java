@@ -29,7 +29,7 @@ import retrofit2.http.Query;
 public interface ConferenceApi {
 
 
-    @GET("api/speakers/{id}/conferences?filter[order]=dateFin%20DESC")
+    @GET("api/speakers/{id}/conferences?filter[order]=dateFin%20DESC&filter[include]=enquetes&filter[include]=questionnaires&filter[include]=questions")
     Call<List<Conference>> getConferences(@Path("id") int userId,
                                           @Header("Authorization") String token);
 
@@ -57,13 +57,12 @@ public interface ConferenceApi {
     @DELETE("api/conferences/{id}/questionnaires")
     Call<Void> deleteQuestionnaires(@Path("id") int conferenceId);
 
+    @POST("api/conferences/join")
+    Call<Conference> joinConference(@Query("email") String email, @Query("codeacces") String accessCode);
+
     // TODO define in loopback
     @GET("api/conferences/{id}/participants/count")
     Call<ResponseBody> getParticipantCount(@Path("id") int conferenceId);
-
-    // TODO define in loopback
-    @POST("api/conferences/{id}/join")
-    Call<Void> joinConference(@Path("id") int conferenceId, int participantId);
 
     // TODO define in loopback
     @POST("api/conferences/{id}/leave")
