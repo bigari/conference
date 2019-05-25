@@ -19,8 +19,8 @@ public class ConferenceRepository{
         conferenceApi = RetrofitClient.getRetrofit().create(ConferenceApi.class);
     }
 
-    public void getConferences(int userId, final Callback<List<Conference>> callback) {
-        conferenceApi.getConferences(userId).enqueue(new retrofit2.Callback<List<Conference>>() {
+    public void getConferences(int userId, String key, final Callback<List<Conference>> callback) {
+        conferenceApi.getConferences(userId, key).enqueue(new retrofit2.Callback<List<Conference>>() {
             @Override
             public void onResponse(Call<List<Conference>> call, Response<List<Conference>> response) {
                 callback.onSuccess(response.body());

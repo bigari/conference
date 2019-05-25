@@ -3,6 +3,7 @@ package com.example.mobile.Repositories;
 import com.example.mobile.Repositories.models.Conference;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -18,6 +19,17 @@ public class ConfListCache {
             return instance;
         }
         return instance;
+    }
+
+    public void clear() {
+        activeConfs = new ArrayList();
+        pastConfs = new ArrayList<>();
+    }
+
+
+    public  ConfListCache () {
+        this.activeConfs = new ArrayList();
+        this.pastConfs = new ArrayList();
     }
 
     public List<Conference> getPastConfs(){
@@ -42,6 +54,7 @@ public class ConfListCache {
             i++;
         }
         activeConfs.add(i, conf);
+
     }
 
     public void setActiveConfs(List<Conference> confs){

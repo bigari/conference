@@ -2,6 +2,8 @@ package com.example.mobile.Views.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+
+import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +34,8 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
 
     private ConferenceListPresenter presenter;
 
+    private SharedPreferences prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +63,13 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
         activeConfList = findViewById(R.id.recyclerview_active_conference_list);
         pastConfList = findViewById(R.id.recyclerview_past_conference_list);
 
-        final int uid = 1;
-        presenter.loadConfs(uid);
+        //final int uid = 1;
+
+        prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        presenter.loadConfs(
+                prefs.getInt("uid", 0),
+                prefs.getString("token", "")
+        );
 
     }
 
@@ -142,9 +151,10 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
                 errorView.setVisibility(View.GONE);
                 listView.setVisibility(View.VISIBLE);
 
-                int uid = 1;
-                presenter.loadConfs(1);
-
+                presenter.loadConfs(
+                        prefs.getInt("uid", 0),
+                        prefs.getString("token", "")
+                );
             }
         });
     }

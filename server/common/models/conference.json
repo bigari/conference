@@ -33,12 +33,12 @@
     "questionnaires": {
       "type": "hasMany",
       "model": "Questionnaire",
-      "foreignKey": ""
+      "foreignKey": "conferenceId"
     },
-    "user": {
+    "speaker": {
       "type": "belongsTo",
-      "model": "User",
-      "foreignKey": ""
+      "model": "Speaker",
+      "foreignKey": "speakerId"
     },
     "attachments": {
       "type": "hasMany",

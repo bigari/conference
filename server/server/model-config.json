@@ -36,6 +36,10 @@
     "dataSource": "db",
     "public": false
   },
+  "Speaker": {
+    "dataSource": "db",
+    "public": true
+  },
   "Conference": {
     "dataSource": "db",
     "public": true

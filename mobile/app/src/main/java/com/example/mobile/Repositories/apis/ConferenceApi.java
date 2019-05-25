@@ -17,17 +17,21 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ConferenceApi {
 
-    @GET("api/users/{id}/conferences?filter[order]=dateFin%20DESC")
-    Call<List<Conference>> getConferences(@Path("id") int userId);
+
+    @GET("api/speakers/{id}/conferences?filter[order]=dateFin%20DESC")
+    Call<List<Conference>> getConferences(@Path("id") int userId,
+                                          @Header("Authorization") String token);
 
     @GET("api/conferences/{id}")
     Call<Conference> getConferenceById(@Path("id") int conferenceId);

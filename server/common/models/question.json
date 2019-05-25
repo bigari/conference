@@ -19,10 +19,10 @@
     "conference": {
       "type": "belongsTo",
       "model": "Conference",
-      "foreignKey": ""
+      "foreignKey": "conferenceId"
     },
     "participant": {
-      "type": "hasOne",
+      "type": "belongsTo",
       "model": "Participant",
       "foreignKey": ""
     }
