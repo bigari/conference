@@ -6,9 +6,6 @@ import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 
-
-// Singletons is instantiated only a single time when the conference activity starts only one instance
-// holds list of conferences, every subsequent request/operation is done via a request and direct op on datat structure
 public class ConfListCache {
 
     private List<Conference> activeConfs;
@@ -33,12 +30,17 @@ public class ConfListCache {
 
     public void addConf(Conference conf){
         Date now = new Date(Calendar.getInstance().getTimeInMillis());
-        int i = 0;
         Date endDate = conf.getEndDate();
+
+
+        if(activeConfs.isEmpty()){
+            activeConfs.add(conf);
+            return;
+        }
+        int i = 0;
         while(i < activeConfs.size() && activeConfs.get(i).getEndDate().after(endDate)){
             i++;
         }
-
         activeConfs.add(i, conf);
     }
 

@@ -38,7 +38,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Question question = questions.get(i);
-        viewHolder.intituleView.setText(question.getIntitule());
+        viewHolder.intituleView.setText(question.getContent());
     }
 
     @Override

@@ -2,6 +2,9 @@ package com.example.mobile.Repositories.models;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAccessor;
@@ -10,7 +13,10 @@ import java.util.Date;
 
 public class Question {
     private Integer id;
-    private String intitule;
+    @Expose
+    @SerializedName("contenu")
+    private String content;
+    @Expose
     private Date timestamp;
     private Integer participantId;
 
@@ -24,12 +30,12 @@ public class Question {
         this.id = id;
     }
 
-    public String getIntitule() {
-        return intitule;
+    public String getContent() {
+        return content;
     }
 
-    public void setIntitule(String intitule) {
-        this.intitule = intitule;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Date getTimestamp() {

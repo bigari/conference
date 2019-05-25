@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.mobile">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,13 +13,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Views.activities.CreateConferenceActivity"/>
+        <activity android:name=".Views.activities.CreateConferenceActivity" />
         <activity android:name=".Views.activities.ConferenceActivity" />
-        <activity android:name=".Views.activities.LandingActivity">
-        </activity>
+        <activity android:name=".Views.activities.LandingActivity" />
         <activity android:name=".Views.activities.ConferenceListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

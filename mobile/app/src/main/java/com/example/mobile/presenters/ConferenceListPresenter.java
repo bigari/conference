@@ -6,7 +6,7 @@ import com.example.mobile.Callback;
 import com.example.mobile.Repositories.ConfListCache;
 import com.example.mobile.Repositories.ConferenceRepository;
 import com.example.mobile.Repositories.models.Conference;
-import com.example.mobile.Views.ConferenceListView;
+import com.example.mobile.Views.ViewInterfaces.ConferenceListView;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class ConferenceListPresenter {
     }
 
     public void loadConfs(int uid){
-
+        // Cache vide
         if(confListCache.getActiveConfs() == null){
 
             repository.getConferences(uid, new Callback<List<Conference>>() {
@@ -37,15 +37,18 @@ public class ConferenceListPresenter {
                     List<Conference> activeConfs = new ArrayList<>();
                     List<Conference> pastConfs = new ArrayList<>();
 
-                    int confsSize = confs.size();
                     if(confs.isEmpty()){
+                        confListCache.setActiveConfs(activeConfs);
+                        confListCache.setPastConfs(pastConfs);
                         view.showEmptyListView();
                         return;
                     }
 
+                    int size = confs.size();
+
                     Date now = new Date(Calendar.getInstance().getTimeInMillis());
                     int i = 0;
-                    while(i < confsSize && confs.get(i).getEndDate().after(now)){
+                    while(i < size && confs.get(i).getEndDate().after(now)){
                         activeConfs.add(confs.get(i));
                         i++;
                     }
@@ -53,6 +56,7 @@ public class ConferenceListPresenter {
 
                     confListCache.setActiveConfs(activeConfs);
                     confListCache.setPastConfs(pastConfs);
+
 
                     if(activeConfs.isEmpty()){
                         view.showConfs(pastConfs, "past");

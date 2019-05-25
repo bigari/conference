@@ -1,20 +1,16 @@
 package com.example.mobile.Views.activities;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -23,8 +19,7 @@ import android.widget.Toast;
 
 import com.example.mobile.R;
 import com.example.mobile.Repositories.ConferenceRepository;
-import com.example.mobile.Repositories.models.Attachment;
-import com.example.mobile.Views.CreateConferenceView;
+import com.example.mobile.Views.ViewInterfaces.CreateConferenceView;
 import com.example.mobile.presenters.CreateConferencePresenter;
 
 import java.text.SimpleDateFormat;

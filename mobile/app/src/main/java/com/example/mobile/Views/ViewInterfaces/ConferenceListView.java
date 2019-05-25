@@ -1,4 +1,4 @@
-package com.example.mobile.Views;
+package com.example.mobile.Views.ViewInterfaces;
 
 import com.example.mobile.Repositories.models.Conference;
 

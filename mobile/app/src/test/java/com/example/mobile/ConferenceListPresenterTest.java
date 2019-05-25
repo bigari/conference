@@ -1,10 +1,8 @@
 package com.example.mobile;
 
-import android.telecom.Call;
-
 import com.example.mobile.Repositories.ConferenceRepository;
 import com.example.mobile.Repositories.models.Conference;
-import com.example.mobile.Views.ConferenceListView;
+import com.example.mobile.Views.ViewInterfaces.ConferenceListView;
 import com.example.mobile.presenters.ConferenceListPresenter;
 
 import org.junit.Rule;
@@ -13,21 +11,15 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ConferenceListPresenterTest {

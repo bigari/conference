@@ -1,58 +1,29 @@
 package com.example.mobile.Views.activities;
 
-import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.LinearLayout;
 
 import com.example.mobile.R;
-import com.example.mobile.Views.ConferenceView;
-import com.example.mobile.Repositories.models.Conference;
+import com.example.mobile.Views.ViewInterfaces.ConferenceView;
+import com.example.mobile.Views.adapters.ConfViewPagerAdapter;
 
 public class ConferenceActivity extends AppCompatActivity implements ConferenceView {
-    private LinearLayout surveyContainer;
-    private LinearLayout quizContainer;
-    private LinearLayout questionContainer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_conference);
-        surveyContainer = (LinearLayout) findViewById(R.id.survey_container);
-        quizContainer = (LinearLayout) findViewById(R.id.quiz_container);
-        questionContainer = (LinearLayout) findViewById(R.id.question_container);
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)
-                findViewById(R.id.conference_bottom_navigation);
+        setContentView(R.layout.activity_conference_info);
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(
-                item -> {
-                    switch (item.getItemId()) {
-                        case R.id.action_survey:
-                            surveyContainer.setVisibility(View.VISIBLE);
-                            quizContainer.setVisibility(View.GONE);
-                            questionContainer.setVisibility(View.GONE);
-                            break;
-                        case R.id.action_quiz:
-                            surveyContainer.setVisibility(View.GONE);
-                            quizContainer.setVisibility(View.VISIBLE);
-                            questionContainer.setVisibility(View.GONE);
-                            break;
-                        case R.id.action_question:
-                            surveyContainer.setVisibility(View.GONE);
-                            quizContainer.setVisibility(View.GONE);
-                            questionContainer.setVisibility(View.VISIBLE);
-                    }
-                    return true;
-                });
-    }
+        ViewPager viewPager = findViewById(R.id.viewpager_conferenceinfo);
 
-    @Override
-    public void showConference(Conference conference) {
+        viewPager.setAdapter(new ConfViewPagerAdapter(getSupportFragmentManager()));
+
+        TabLayout tabLayout = findViewById(R.id.tablayout_conferenceinfo);
+        tabLayout.setupWithViewPager(viewPager);
 
     }
 
-    @Override
-    public void showError() {
 
-    }
 }
