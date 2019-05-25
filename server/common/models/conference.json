@@ -10,7 +10,7 @@
       "type": "string",
       "required": true
     },
-    "dateDebut": {
+    "dateDebut": {  
       "type": "date",
       "required": true
     },
@@ -33,7 +33,7 @@
     "questionnaires": {
       "type": "hasMany",
       "model": "Questionnaire",
-      "foreignKey": ""
+      "foreignKey": "conferenceId"
     },
     "speaker": {
       "type": "belongsTo",
