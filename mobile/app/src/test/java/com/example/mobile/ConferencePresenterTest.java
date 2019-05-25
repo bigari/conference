@@ -2,9 +2,7 @@ package com.example.mobile;
 
 import com.example.mobile.Repositories.ConferenceRepository;
 import com.example.mobile.Repositories.models.Conference;
-import com.example.mobile.Views.ConferenceListView;
-import com.example.mobile.Views.ConferenceView;
-import com.example.mobile.presenters.ConferenceListPresenter;
+import com.example.mobile.Views.ViewInterfaces.ConferenceView;
 import com.example.mobile.presenters.ConferencePresenter;
 
 import org.junit.Rule;

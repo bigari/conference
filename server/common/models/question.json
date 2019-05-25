@@ -6,7 +6,7 @@
     "validateUpsert": true
   },
   "properties": {
-    "intitule": {
+    "contenu": {
       "type": "string",
       "required": true
     },
@@ -24,7 +24,7 @@
     "participant": {
       "type": "belongsTo",
       "model": "Participant",
-      "foreignKey": "participantId"
+      "foreignKey": ""
     }
   },
   "acls": [],

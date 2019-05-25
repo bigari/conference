@@ -1,9 +1,7 @@
 package com.example.mobile.presenters;
 
-import com.example.mobile.Callback;
 import com.example.mobile.Repositories.ConferenceRepository;
-import com.example.mobile.Repositories.models.Conference;
-import com.example.mobile.Views.ConferenceView;
+import com.example.mobile.Views.ViewInterfaces.ConferenceView;
 
 public class ConferencePresenter {
 
@@ -15,20 +13,4 @@ public class ConferencePresenter {
         this.view = view;
         this.repository = repository;
     }
-
-    public void loadConference(int id){
-        repository.getConference(id, new Callback<Conference>() {
-            @Override
-            public void onSuccess(Conference response) {
-                view.showConference(response);
-            }
-
-            @Override
-            public void onError(Throwable error) {
-                view.showError();
-            }
-        });
-    }
-
-
 }

@@ -14,4 +14,11 @@
     <string name="createconf_availability_note">Attendees are able to join your event within the dates you select.</string>
     <string name="conflist_tryagain">Try Again</string>
     <string name="conflist_error">An error has occurred while loading the conference list.</string>
+    <string name="sort_questions">Sort questions</string>
+    <string name="question_hint">Type your question</string>
+    <string name="question_username_hint">Username (defaults to Anonymous)</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="empty_questionlist_speaker">No questions yet</string>
 </resources>

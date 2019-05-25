@@ -60,10 +60,6 @@
     "dataSource": "db",
     "public": true
   },
-  "Attachment": {
-    "dataSource": "db",
-    "public": true
-  },
   "Vote": {
     "dataSource": "db",
     "public": false

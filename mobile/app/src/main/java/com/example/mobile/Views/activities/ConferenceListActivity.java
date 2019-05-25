@@ -2,6 +2,7 @@ package com.example.mobile.Views.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+
 import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
@@ -19,7 +20,7 @@ import android.widget.TextView;
 import com.example.mobile.R;
 import com.example.mobile.Repositories.ConferenceRepository;
 import com.example.mobile.Repositories.models.Conference;
-import com.example.mobile.Views.ConferenceListView;
+import com.example.mobile.Views.ViewInterfaces.ConferenceListView;
 import com.example.mobile.Views.adapters.ConferenceListAdapter;
 import com.example.mobile.presenters.ConferenceListPresenter;
 
@@ -66,9 +67,7 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
 
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         presenter.loadConfs(
-                Integer.parseInt(
-                        prefs.getString("uid", "0")
-                ),
+                prefs.getInt("uid", 0),
                 prefs.getString("token", "")
         );
 
@@ -153,9 +152,7 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
                 listView.setVisibility(View.VISIBLE);
 
                 presenter.loadConfs(
-                        Integer.parseInt(
-                                prefs.getString("uid", "0")
-                        ),
+                        prefs.getInt("uid", 0),
                         prefs.getString("token", "")
                 );
             }

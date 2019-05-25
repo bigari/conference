@@ -21,7 +21,8 @@ public class Conference {
     @SerializedName("dateFin")
     private Date endDate;
     @Expose
-    private int userId;
+    @SerializedName("speakerId")
+    private int speakerId;
     @Expose(serialize = false, deserialize = true)
     @SerializedName("codeAcces")
     private String accessCode;
@@ -44,9 +45,9 @@ public class Conference {
 
     }
 
-    public Conference(int userId, String title, Date startDate, Date endDate){
+    public Conference(int speakerId, String title, Date startDate, Date endDate){
         this.title = title;
-        this.userId = userId;
+        this.speakerId = speakerId;
         this.startDate = startDate;
         this.endDate = endDate;
         questionnaires = new ArrayList<>();
@@ -55,11 +56,11 @@ public class Conference {
     }
 
     public int getUserId() {
-        return userId;
+        return speakerId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUserId(int speakerId) {
+        this.speakerId = speakerId;
     }
 
     public int getId() {

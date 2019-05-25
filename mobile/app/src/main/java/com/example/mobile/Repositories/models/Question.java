@@ -3,6 +3,7 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
@@ -14,7 +15,8 @@ public class Question {
     @Expose(serialize = false, deserialize = true)
     private Integer id;
     @Expose
-    private String intitule;
+    @SerializedName("contenu")
+    private String content;
     @Expose
     private Date timestamp;
     @Expose
@@ -30,12 +32,12 @@ public class Question {
         this.id = id;
     }
 
-    public String getIntitule() {
-        return intitule;
+    public String getContent() {
+        return content;
     }
 
-    public void setIntitule(String intitule) {
-        this.intitule = intitule;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Date getTimestamp() {

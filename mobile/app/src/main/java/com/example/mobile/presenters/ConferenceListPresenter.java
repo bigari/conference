@@ -6,7 +6,7 @@ import com.example.mobile.Callback;
 import com.example.mobile.Repositories.ConfListCache;
 import com.example.mobile.Repositories.ConferenceRepository;
 import com.example.mobile.Repositories.models.Conference;
-import com.example.mobile.Views.ConferenceListView;
+import com.example.mobile.Views.ViewInterfaces.ConferenceListView;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -26,6 +26,7 @@ public class ConferenceListPresenter {
         this.confListCache = ConfListCache.getInstance();
 
     }
+
 
     public void loadConfs(int uid, String key){
 
@@ -54,6 +55,7 @@ public class ConferenceListPresenter {
 
                     confListCache.setActiveConfs(activeConfs);
                     confListCache.setPastConfs(pastConfs);
+
 
                     if(activeConfs.isEmpty()){
                         view.showConfs(pastConfs, "past");
