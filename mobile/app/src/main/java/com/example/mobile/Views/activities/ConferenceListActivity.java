@@ -15,6 +15,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.mobile.R;
@@ -31,6 +34,9 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
     private RecyclerView activeConfList;
     private RecyclerView pastConfList;
     private FloatingActionButton createConfBtn;
+    private ProgressBar progressBar;
+    private LinearLayout emptyListLayout;
+    private RelativeLayout confListLayout;
 
     private ConferenceListPresenter presenter;
 
@@ -47,6 +53,9 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        progressBar = findViewById(R.id.progressbar);
+        emptyListLayout = findViewById(R.id.layout_conflist_emptylist);
+        confListLayout = findViewById(R.id.layout_conflist_list);
 
         ConferenceRepository repository = new ConferenceRepository();
         presenter = new ConferenceListPresenter(this, repository);
@@ -63,8 +72,6 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
         activeConfList = findViewById(R.id.recyclerview_active_conference_list);
         pastConfList = findViewById(R.id.recyclerview_past_conference_list);
 
-        //final int uid = 1;
-
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         presenter.loadConfs(
                 prefs.getInt("uid", 0),
@@ -78,6 +85,7 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
         TextView activeListTitle = findViewById(R.id.textview_active_confs);
         TextView pastListTitle = findViewById(R.id.textview_past_confs);
 
+        confListLayout.setVisibility(View.VISIBLE);
         pastListTitle.setVisibility(View.VISIBLE);
         activeListTitle.setVisibility(View.VISIBLE);
 
@@ -94,13 +102,10 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
     @Override
     @SuppressLint("RestrictedApi")
     public void showEmptyListView(){
-        ViewGroup emptyListLayout = findViewById(R.id.layout_conflist_emptylist);
-        ViewGroup normalLayout = findViewById(R.id.layout_conflist_list);
         Button createConfBtn2 = findViewById(R.id.button_conflist_emptylist_addconf);
 
         emptyListLayout.setVisibility(View.VISIBLE);
-        normalLayout.setVisibility(View.GONE);
-        createConfBtn.setVisibility(View.GONE);
+        confListLayout.setVisibility(View.GONE);
 
         createConfBtn2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,6 +120,7 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
         TextView pastListTitle = findViewById(R.id.textview_past_confs);
         TextView activeListTitle = findViewById(R.id.textview_active_confs);
 
+        confListLayout.setVisibility(View.VISIBLE);
 
         if(type.equals("past")){
 
@@ -139,17 +145,14 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
     @Override
     public void showErrorView() {
         ViewGroup errorView = findViewById(R.id.layout_conflist_error);
-        ViewGroup listView = findViewById(R.id.layout_conflist_list);
         Button retryBtn = findViewById(R.id.button_conflist_tryagain);
 
         errorView.setVisibility(View.VISIBLE);
-        listView.setVisibility(View.GONE);
 
         retryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 errorView.setVisibility(View.GONE);
-                listView.setVisibility(View.VISIBLE);
 
                 presenter.loadConfs(
                         prefs.getInt("uid", 0),
@@ -157,6 +160,14 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
                 );
             }
         });
+    }
+
+    @Override public void showLoading() {
+        this.progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override public void hideLoading() {
+        this.progressBar.setVisibility(View.GONE);
     }
 
 

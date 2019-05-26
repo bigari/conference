@@ -30,6 +30,7 @@ public class ConferenceListPresenter {
 
     public void loadConfs(int uid, String key){
 
+        view.showLoading();
         if(confListCache.getActiveConfs().isEmpty() && confListCache.getPastConfs().isEmpty()){
 
             repository.getConferences(uid, key, new Callback<List<Conference>>() {
@@ -38,7 +39,8 @@ public class ConferenceListPresenter {
                     List<Conference> activeConfs = new ArrayList<>();
                     List<Conference> pastConfs = new ArrayList<>();
 
-                    if( confs == null || confs.isEmpty()){
+                    if(confs.isEmpty()){
+                        view.hideLoading();
                         view.showEmptyListView();
                         return;
                     }
@@ -58,32 +60,39 @@ public class ConferenceListPresenter {
 
 
                     if(activeConfs.isEmpty()){
+                        view.hideLoading();
                         view.showConfs(pastConfs, "past");
                         return;
                     }
                     else if(pastConfs.isEmpty()){
+                        view.hideLoading();
                         view.showConfs(activeConfs, "active");
                         return;
                     }
+                    view.hideLoading();
                     view.showConfs(activeConfs, pastConfs);
                 }
 
                 @Override
                 public void onError(Throwable error) {
                     Log.e("conference list", "loading conference list failed", error);
+                    view.hideLoading();
                     view.showErrorView();
                 }
             });
         }
         else{
             if(confListCache.getActiveConfs().isEmpty()){
+                view.hideLoading();
                 view.showConfs(confListCache.getPastConfs(), "past");
                 return;
             }
             else if(confListCache.getPastConfs().isEmpty()){
+                view.hideLoading();
                 view.showConfs(confListCache.getActiveConfs(), "active");
                 return;
             }
+            view.hideLoading();
             view.showConfs(confListCache.getActiveConfs(), confListCache.getPastConfs());
         }
 

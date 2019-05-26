@@ -10,4 +10,6 @@ public interface ConferenceListView {
     void showEmptyListView();
     void showConfs(List<Conference> confs, String type);
     void showErrorView();
+    void showLoading();
+    void hideLoading();
 }
