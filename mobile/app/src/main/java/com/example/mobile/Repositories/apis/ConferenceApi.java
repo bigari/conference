@@ -30,7 +30,7 @@ import retrofit2.http.QueryMap;
 public interface ConferenceApi {
 
 
-    @GET("api/speakers/{id}/conferences?filter[order]=dateFin%20DESC")
+    @GET("api/speakers/{id}/conferences?filter[order]=dateFin%20DESC&filter[include]=enquetes&filter[include]=questionnaires&filter[include]=questions")
     Call<List<Conference>> getConferences(@Path("id") int userId,
                                           @Header("Authorization") String token);
 
@@ -60,5 +60,6 @@ public interface ConferenceApi {
 
     @GET("api/conferences/join")
     Call<Conference> joinConference(@QueryMap Map<String, String> filters);
+
 
 }

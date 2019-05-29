@@ -12,12 +12,14 @@ import java.util.Date;
 
 
 public class Question {
+    @Expose(serialize = false, deserialize = true)
     private Integer id;
     @Expose
     @SerializedName("contenu")
     private String content;
     @Expose
     private Date timestamp;
+    @Expose
     private Integer participantId;
 
 

@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.sql.Date;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Conference {
@@ -26,14 +27,32 @@ public class Conference {
     @SerializedName("codeAcces")
     private String accessCode;
 
+    @Expose(serialize = true, deserialize = true)
+    @SerializedName("enquetes")
+    private List<Enquete> enquetes;
+    @Expose(serialize = true, deserialize = true)
+    @SerializedName("questionnaires")
+    private List<Questionnaire> questionnaires;
+    @Expose(serialize = true, deserialize = true)
+    @SerializedName("questions")
+    private List<Question> questions;
 
-    public Conference(){}
+
+    public Conference(){
+        questionnaires = new ArrayList<>();
+        questions = new ArrayList<>();
+        enquetes = new ArrayList<>();
+
+    }
 
     public Conference(int speakerId, String title, Date startDate, Date endDate){
         this.title = title;
         this.speakerId = speakerId;
         this.startDate = startDate;
         this.endDate = endDate;
+        questionnaires = new ArrayList<>();
+        questions = new ArrayList<>();
+        enquetes = new ArrayList<>();
     }
 
     public int getUserId() {

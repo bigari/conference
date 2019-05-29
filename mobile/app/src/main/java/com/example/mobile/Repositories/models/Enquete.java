@@ -1,15 +1,21 @@
 package com.example.mobile.Repositories.models;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by neron on 4/10/19.
  */
 
 public class Enquete {
+    @Expose(serialize = false, deserialize = true)
     private int id;
+    @Expose
     private String intituleEnquete;
-    private ArrayList<Option> options;
+    @Expose
+    private List<Option> options;
 
     public Enquete() {
         options = new ArrayList();
@@ -31,7 +37,7 @@ public class Enquete {
         this.intituleEnquete = intituleEnquete;
     }
 
-    public ArrayList<Option> getOptions() {
+    public List<Option> getOptions() {
         return options;
     }
 

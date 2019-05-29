@@ -74,7 +74,9 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
 
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         presenter.loadConfs(
-                prefs.getInt("uid", 0),
+                Integer.parseInt(
+                    prefs.getString("uid", "0")
+                ),
                 prefs.getString("token", "")
         );
 
@@ -155,7 +157,9 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
                 errorView.setVisibility(View.GONE);
 
                 presenter.loadConfs(
-                        prefs.getInt("uid", 0),
+                        Integer.parseInt(
+                                prefs.getString("uid", "0")
+                        ),
                         prefs.getString("token", "")
                 );
             }

@@ -4,11 +4,14 @@ import android.content.SharedPreferences;
 
 import com.example.mobile.utils.RandomString;
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class Participant {
-    @Expose
+    @Expose(deserialize = false)
+    @SerializedName("accessKey")
     private String accessKey;
-    @Expose
+    @Expose(serialize = false)
+    @SerializedName("id")
     private Integer id;
 
 

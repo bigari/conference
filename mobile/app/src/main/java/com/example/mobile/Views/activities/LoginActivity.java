@@ -55,8 +55,6 @@ public class LoginActivity extends AppCompatActivity implements SpeakerLoginView
 
         editor.putString("email", emailInput.getText().toString());
         editor.apply();
-        //editor.putString("email", emailInput.getText().toString());
-
         //Speaker.getCurrent().setPassword(passwordInput.getText().toString());
         layout.removeView(progressBar);
         layout.addView(progressBar, params);
@@ -93,7 +91,7 @@ public class LoginActivity extends AppCompatActivity implements SpeakerLoginView
         editor.putString("token", speaker.getToken());
         if (!prefs.getString("uid", "0").equals(speaker.getId().toString())) {
             ConfListCache.getInstance().clear();
-            editor.putInt("uid", speaker.getId());
+            editor.putString("uid", speaker.getId().toString());
         }
         editor.apply();
         System.out.println(">>>>>>>>>>>>>>>>>>>>Speaker TOKEN>>>>>>>>>>>>>>>>>>>");
