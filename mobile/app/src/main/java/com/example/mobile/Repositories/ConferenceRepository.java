@@ -5,7 +5,9 @@ import com.example.mobile.RetrofitClient;
 import com.example.mobile.Repositories.apis.ConferenceApi;
 import com.example.mobile.Repositories.models.Conference;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -53,6 +55,24 @@ public class ConferenceRepository{
 
     public void updateConference(Conference conference) {
 
+    }
+
+    public void joinConf(String email, String accesscode, Callback<Conference> cb){
+        Map<String, String> filters = new HashMap<>();
+        filters.put("email", email);
+        filters.put("accesscode", accesscode);
+
+        conferenceApi.joinConference(filters).enqueue(new retrofit2.Callback<Conference>() {
+            @Override
+            public void onResponse(Call<Conference> call, Response<Conference> response) {
+                cb.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Conference> call, Throwable t) {
+                cb.onError(t);
+            }
+        });
     }
 
 }

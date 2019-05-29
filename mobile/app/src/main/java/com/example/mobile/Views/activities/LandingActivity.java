@@ -8,15 +8,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 import com.example.mobile.R;
+import com.example.mobile.Repositories.ConferenceRepository;
+import com.example.mobile.Repositories.models.Conference;
+import com.example.mobile.Views.ViewInterfaces.LandingView;
+import com.example.mobile.presenters.ParticipantJoinPresenter;
 
-public class LandingActivity extends AppCompatActivity {
+public class LandingActivity extends AppCompatActivity implements LandingView {
 
     private Button join, login, signup, goWorkspace;
     private TextInputEditText emailEdit, codeEdit;
     private TableRow authenticationRow, workspaceRow;
     private SharedPreferences prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +40,10 @@ public class LandingActivity extends AppCompatActivity {
 
         prefs = getSharedPreferences("prefs", MODE_PRIVATE);
 
+        ParticipantJoinPresenter presenter = new ParticipantJoinPresenter(
+                new ConferenceRepository(), this
+        );
+
         if (!prefs.getString("token", "").equals("")) {
             authenticationRow.setVisibility(View.GONE);
             workspaceRow.setVisibility(View.VISIBLE);
@@ -45,7 +55,9 @@ public class LandingActivity extends AppCompatActivity {
         }
 
         join.setOnClickListener( v -> {
-            //
+            String email = emailEdit.getText().toString();
+            String code = codeEdit.getText().toString();
+            presenter.joinConf(email, code);
         });
 
         login.setOnClickListener(v-> {
@@ -63,4 +75,33 @@ public class LandingActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void navToConf(Conference conf) {
+        Intent intent = new Intent(this, ConferenceActivity.class);
+        intent.putExtra("role", "participant");
+        intent.putExtra("confTitle", conf.getTitle());
+        intent.putExtra("confId", conf.getId());
+
+        startActivity(intent);
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgresss() {
+
+    }
+
+    @Override
+    public void showError() {
+
+    }
+
+    @Override
+    public void showError(String error) {
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+    }
 }

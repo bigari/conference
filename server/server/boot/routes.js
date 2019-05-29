@@ -1,5 +1,14 @@
 module.exports = function (app) {
   app.get('/api/conferences/join', function(req, res) {
+    if(!req.query.email){
+      res.status(500).json({ error: 'The email field is required.' });
+      return;
+    }
+    if(!req.query.accesscode){
+      res.status(500).json({ error: 'The access code field is required.' });
+      return;
+    }
+
     app.models.Speaker.findOne(
     {
       where: {email: req.query.email},
@@ -7,32 +16,22 @@ module.exports = function (app) {
         relation: 'conferences',
         scope: {
           where:{
-            codeAcces: req.query.codeacces
+            codeAcces: req.query.accesscode
           },
-          include: ['enquetes', 'questionnaires', 'questions']
         }
       }
-    }, function(err, speaker) {
-        let speakerJson = speaker.toJSON()
-        if (speaker == null) {
-          res.status(404)
-          res.json({
-            status: 404,
-            error: "No speaker found with the given email"
-          })
-        } else {
-          if(speakerJson.conferences.length == 0) {
-            res.status(404)
-            res.json({
-              status: 404,
-              error: "Wrong access code"
-            })
-          } else {
-            res.json (
-              speakerJson.conferences[0]
-            )
-          }
+    }, function(err, result) {
+        if(!result){
+          res.status(404).json({ error: 'wrong email' });
+          return;
         }
+        var conferences = result.toJSON().conferences;
+        if(conferences.length == 0){
+          res.status(404).json({ error: 'wrong access code' });
+          return;
+        }
+        res.status(200).json(conferences[0]);
+        return;
     })
   });
 }

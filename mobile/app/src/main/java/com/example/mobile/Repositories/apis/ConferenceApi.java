@@ -25,6 +25,7 @@ import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 public interface ConferenceApi {
 
@@ -57,16 +58,7 @@ public interface ConferenceApi {
     @DELETE("api/conferences/{id}/questionnaires")
     Call<Void> deleteQuestionnaires(@Path("id") int conferenceId);
 
-    // TODO define in loopback
-    @GET("api/conferences/{id}/participants/count")
-    Call<ResponseBody> getParticipantCount(@Path("id") int conferenceId);
-
-    // TODO define in loopback
-    @POST("api/conferences/{id}/join")
-    Call<Void> joinConference(@Path("id") int conferenceId, int participantId);
-
-    // TODO define in loopback
-    @POST("api/conferences/{id}/leave")
-    Call<Void> leaveConference(@Path("id") int conferenceId, int participantId);
+    @GET("api/conferences/join")
+    Call<Conference> joinConference(@QueryMap Map<String, String> filters);
 
 }
