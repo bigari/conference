@@ -11,7 +11,11 @@
       "required": true
     },
     "timestamp": {
-      "type": "date"
+      "type": "date",
+      "required": true
+    },
+    "username": {
+      "type": "string"
     }
   },
   "validations": [],

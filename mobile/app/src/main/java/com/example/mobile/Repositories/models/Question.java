@@ -20,8 +20,7 @@ public class Question {
     @Expose
     private Date timestamp;
     @Expose
-    private Integer participantId;
-
+    private String username;
 
     public Question(){}
 
@@ -55,11 +54,11 @@ public class Question {
         this.timestamp = Date.from(Instant.from(accessor));
     }
 
-    public Integer getParticipantId() {
-        return participantId;
+    public String getUsername() {
+        return username;
     }
 
-    public void setParticipantId(Integer participantId) {
-        this.participantId = participantId;
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
