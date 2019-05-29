@@ -2,8 +2,10 @@ package com.example.mobile.Views.Fragments.participant;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
@@ -14,12 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.mobile.R;
 import com.example.mobile.Repositories.QuestionRepository;
 import com.example.mobile.Repositories.models.Question;
 import com.example.mobile.Views.ViewInterfaces.speaker.QuestionListView;
+import com.example.mobile.Views.activities.CreateQuestionActivity;
 import com.example.mobile.Views.adapters.speaker.QuestionAdapter;
 import com.example.mobile.presenters.speaker.QuestionListPresenter;
 
@@ -27,13 +31,15 @@ import java.util.List;
 
 public class QuestionsFragment extends Fragment implements QuestionListView {
 
-    private QuestionListPresenter presenter;
     private RecyclerView rv;
     private TextView questionCountV;
     private LinearLayout emptyListView;
     private Button reloadButton;
-    private LinearLayout listView;
+    private RelativeLayout listView;
     private SwipeRefreshLayout srl;
+    private FloatingActionButton addQuestBtn;
+
+    private QuestionListPresenter presenter;
     private Context ctx;
     private int confId;
 
@@ -55,9 +61,11 @@ public class QuestionsFragment extends Fragment implements QuestionListView {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState){
         emptyListView = view.findViewById(R.id.layout_emptylist);
-        listView = view.findViewById(R.id.layout_questionlist);
+        listView = view.findViewById(R.id.layout_questlist);
         reloadButton = view.findViewById(R.id.button_questlist_reload);
         questionCountV = view.findViewById(R.id.textview_questionlist_count);
+        addQuestBtn = view.findViewById(R.id.button_questlist_addquest);
+
         rv = view.findViewById(R.id.recyclerview_questionlist);
         srl = view.findViewById(R.id.swipecontainer_questionlist);
 
@@ -78,6 +86,13 @@ public class QuestionsFragment extends Fragment implements QuestionListView {
             @Override
             public void onClick(View v) {
                 presenter.reloadQuestions(confId);
+            }
+        });
+
+        addQuestBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ctx, CreateQuestionActivity.class));
             }
         });
 
