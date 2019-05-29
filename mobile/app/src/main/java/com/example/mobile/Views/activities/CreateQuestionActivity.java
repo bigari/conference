@@ -1,5 +1,6 @@
 package com.example.mobile.Views.activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,7 +20,9 @@ public class CreateQuestionActivity extends AppCompatActivity implements CreateQ
     private Button createQuestBtn;
     private EditText questionV;
     private EditText usernameV;
+
     private CreateQuestionPresenter presenter;
+    private int confId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,7 @@ public class CreateQuestionActivity extends AppCompatActivity implements CreateQ
         usernameV = findViewById(R.id.edittext_question_username);
         questionV = findViewById(R.id.edittext_question_content);
 
-
+        confId = getIntent().getIntExtra("confId", 0);
         QuestionRepository repo = new QuestionRepository();
         presenter = new CreateQuestionPresenter(this, repo);
 
@@ -50,6 +53,10 @@ public class CreateQuestionActivity extends AppCompatActivity implements CreateQ
         createQuestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String username = usernameV.getText().toString();
+                String question = questionV.getText().toString();
+
+                presenter.createQuestion(username, question, confId);
 
             }
         });
@@ -57,12 +64,22 @@ public class CreateQuestionActivity extends AppCompatActivity implements CreateQ
     }
 
     @Override
-    public void showErrorView() {
+    public void showErrorView(String message) {
 
     }
 
     @Override
     public void navToQuestsView() {
+        finish();
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
 
     }
 }

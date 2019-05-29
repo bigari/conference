@@ -38,8 +38,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Question quest = quests.get(i);
-        // TODO enable user to customize his username
-        viewHolder.usernameV.setText("Anonymous");
+        viewHolder.usernameV.setText(quest.getUsername());
 
         SimpleDateFormat formatter = new SimpleDateFormat("MMM dd YYYY", Locale.ENGLISH);
 

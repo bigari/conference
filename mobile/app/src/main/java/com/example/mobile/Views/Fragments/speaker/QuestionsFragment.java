@@ -27,13 +27,14 @@ import java.util.List;
 
 public class QuestionsFragment extends Fragment implements QuestionListView {
 
-    private QuestionListPresenter presenter;
     private RecyclerView rv;
     private TextView questionCountV;
     private LinearLayout emptyListView;
     private Button reloadButton;
     private LinearLayout listView;
     private SwipeRefreshLayout srl;
+
+    private QuestionListPresenter presenter;
     private Context ctx;
     private int confId;
 

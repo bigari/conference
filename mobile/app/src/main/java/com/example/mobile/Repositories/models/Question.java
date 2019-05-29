@@ -21,14 +21,14 @@ public class Question {
     private Date timestamp;
     @Expose
     private String username;
+    @Expose
+    @SerializedName("conferenceId")
+    private int confId;
 
     public Question(){}
 
     public Integer getId() {
         return id;
-    }
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getContent() {
@@ -54,11 +54,23 @@ public class Question {
         this.timestamp = Date.from(Instant.from(accessor));
     }
 
+    public void setTimestamp(){
+        this.timestamp = new Date();
+    }
+
     public String getUsername() {
         return username;
     }
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public int getConfId() {
+        return confId;
+    }
+
+    public void setConfId(int confId) {
+        this.confId = confId;
     }
 }

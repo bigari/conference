@@ -34,6 +34,19 @@ public class QuestionRepository {
         });
     }
 
+    public void create(Question quest, Callback<Void> cb){
+        questionApi.create(quest).enqueue(new retrofit2.Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                cb.onSuccess(response.body());
+            }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                cb.onError(t);
+            }
+        });
+    }
+
 
 
 }

@@ -92,7 +92,9 @@ public class QuestionsFragment extends Fragment implements QuestionListView {
         addQuestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ctx, CreateQuestionActivity.class));
+                Intent intent = new Intent(ctx, CreateQuestionActivity.class);
+                intent.putExtra("confId", confId);
+                startActivity(intent);
             }
         });
 
