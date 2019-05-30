@@ -1,5 +1,6 @@
 package com.example.mobile.presenters;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.example.mobile.Callback;
@@ -19,21 +20,22 @@ public class ConferenceListPresenter {
     private ConferenceRepository repository;
     private ConfListCache confListCache;
 
+    private int cid;
+    private int index;
+
 
     public ConferenceListPresenter(ConferenceListView view, ConferenceRepository repository){
         this.view = view;
         this.repository = repository;
         this.confListCache = ConfListCache.getInstance();
-
     }
 
-
-    public void loadConfs(int uid, String key){
+    public void loadConfs(int uid, String token){
 
         view.showLoading();
         if(confListCache.getActiveConfs().isEmpty() && confListCache.getPastConfs().isEmpty()){
 
-            repository.getConferences(uid, key, new Callback<List<Conference>>() {
+            repository.getConferences(uid, token, new Callback<List<Conference>>() {
                 @Override
                 public void onSuccess(List<Conference> confs) {
                     List<Conference> activeConfs = new ArrayList<>();
@@ -82,28 +84,79 @@ public class ConferenceListPresenter {
             });
         }
         else{
-            if(confListCache.getActiveConfs().isEmpty()){
-                view.hideLoading();
-                view.showConfs(confListCache.getPastConfs(), "past");
-                return;
-            }
-            else if(confListCache.getPastConfs().isEmpty()){
-                view.hideLoading();
-                view.showConfs(confListCache.getActiveConfs(), "active");
-                return;
-            }
-            view.hideLoading();
-            view.showConfs(confListCache.getActiveConfs(), confListCache.getPastConfs());
+            loadConfs();
         }
+    }
+
+    public void delete(int index, int cid){
+        view.showDeleteDialog();
+        this.cid = cid;
+        this.index = index;
+    }
+
+    public void loadConfs(){
+        view.showLoading();
+        if(confListCache.getActiveConfs().isEmpty() && confListCache.getPastConfs().isEmpty()){
+            view.hideLoading();
+            view.showEmptyListView();
+        }
+        else if(confListCache.getActiveConfs().isEmpty()){
+            view.hideLoading();
+            view.showConfs(confListCache.getPastConfs(), "past");
+            return;
+        }
+        else if(confListCache.getPastConfs().isEmpty()){
+            view.hideLoading();
+            view.showConfs(confListCache.getActiveConfs(), "active");
+            return;
+        }
+        view.showConfs(confListCache.getActiveConfs(), confListCache.getPastConfs());
+        view.hideLoading();
+    }
+
+    public void confirm(String token){
+        view.showLoading();
+
+        repository.deleteConference(cid, token, new Callback<Void>() {
+            @Override
+            public void onSuccess(Void value) {
+                List<Conference> activeConfs = confListCache.getActiveConfs();
+                List<Conference> pastConfs = confListCache.getPastConfs();
+
+                if(activeConfs.size() - 1 >= index && pastConfs.size() - 1 >= index){
+                    if(activeConfs.get(index).getId() == cid){
+                        activeConfs.remove(index);
+                    }
+                    else{
+                        pastConfs.remove(index);
+                    }
+                }
+                else if(pastConfs.size() - 1 >= index){
+                    pastConfs.remove(index);
+                }
+                else{
+                    activeConfs.remove(index);
+                }
+
+                loadConfs();
+
+                view.hideLoading();
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                view.showErrorView();
+                view.hideLoading();
+            }
+        });
 
 
     }
 
-
-
-
-
-
+    public void cancel(){
+        this.cid = 0;
+        this.index = 0;
+    }
 
 
 }

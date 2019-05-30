@@ -47,6 +47,20 @@ public class QuestionRepository {
         });
     }
 
+    public void delete(int questId, String token, Callback<Void> cb){
+        questionApi.deleteQuestion(questId, token).enqueue(new retrofit2.Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                cb.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                cb.onError(t);
+            }
+        });
+    }
+
 
 
 }

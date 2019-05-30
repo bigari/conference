@@ -35,8 +35,8 @@ public class ConferenceRepository{
         });
     }
 
-    public void createConference(Conference conference, Callback<Conference> cb){
-        conferenceApi.createConference(conference).enqueue(new retrofit2.Callback<Conference>() {
+    public void createConference(Conference conference, String token, Callback<Conference> cb){
+        conferenceApi.createConference(conference, token).enqueue(new retrofit2.Callback<Conference>() {
             @Override
             public void onResponse(Call<Conference> call, Response<Conference> response) {
                 cb.onSuccess(response.body());
@@ -49,8 +49,20 @@ public class ConferenceRepository{
         });
     }
 
-    public void deleteConference(int id) {
+    public void deleteConference(int cid, String token, Callback<Void> cb) {
+        conferenceApi.deleteConference(cid).enqueue(new retrofit2.Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                cb.onSuccess(response.body());
+            }
 
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                cb.onError(t);
+            }
+        });
+
+        //TODO use question and poll API too
     }
 
     public void updateConference(Conference conference) {

@@ -12,4 +12,6 @@ public interface ConferenceListView {
     void showErrorView();
     void showLoading();
     void hideLoading();
+
+    void showDeleteDialog();
 }

@@ -1,20 +1,15 @@
-package com.example.mobile.Views.adapters.speaker;
+package com.example.mobile.Views.adapters.participant;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.mobile.R;
 import com.example.mobile.Repositories.models.Question;
-import com.example.mobile.presenters.speaker.QuestionListPresenter;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -25,19 +20,17 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
 
     private List<Question> quests;
     private Context context;
-    private QuestionListPresenter presenter;
 
-    public QuestionAdapter(Context context, List<Question> quests, QuestionListPresenter presenter){
+    public QuestionAdapter(Context context, List<Question> quests){
         this.context = context;
         this.quests = quests;
-        this.presenter = presenter;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         return new ViewHolder(
-                LayoutInflater.from(context).inflate(R.layout.item_question_speaker, viewGroup, false)
+                LayoutInflater.from(context).inflate(R.layout.item_question_participant, viewGroup, false)
         );
     }
 
@@ -49,13 +42,12 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         SimpleDateFormat formatter = new SimpleDateFormat("MMM dd YYYY", Locale.ENGLISH);
 
         Calendar questTimestamp = Calendar.getInstance();
-        Calendar now = Calendar.getInstance();
-
         questTimestamp.setTimeInMillis(quest.getTimestamp().getTime());
 
-        if(now.get(Calendar.DAY_OF_MONTH) == questTimestamp.get(Calendar.DAY_OF_MONTH) &&
-                now.get(Calendar.MONTH) == questTimestamp.get(Calendar.MONTH) &&
-                now.get(Calendar.YEAR) == questTimestamp.get(Calendar.YEAR)){
+        Calendar now = Calendar.getInstance();
+        now.getTime();
+
+        if(now.get(Calendar.DAY_OF_MONTH) == questTimestamp.get(Calendar.DAY_OF_MONTH) && now.get(Calendar.MONTH) == questTimestamp.get(Calendar.MONTH) && now.get(Calendar.YEAR) == questTimestamp.get(Calendar.YEAR)){
             formatter.applyPattern("HH:mm a");
             viewHolder.timestampV.setText(formatter.format(quest.getTimestamp()));
         }
@@ -63,13 +55,6 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
             viewHolder.timestampV.setText(formatter.format(quest.getTimestamp()));
         }
 
-
-        viewHolder.deleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.deleteQuest(i, quest.getId());
-            }
-        });
 
         viewHolder.contentV.setText(quest.getContent());
     }
@@ -93,7 +78,6 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         private TextView usernameV;
         private TextView timestampV;
         private TextView contentV;
-        private ImageButton deleteBtn;
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -102,9 +86,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
             usernameV = itemView.findViewById(R.id.textview_question_username);
             timestampV = itemView.findViewById(R.id.textview_question_timestamp);
             contentV = itemView.findViewById(R.id.textview_question_content);
-            deleteBtn = itemView.findViewById(R.id.btn_question_delete);
 
         }
     }
-
 }

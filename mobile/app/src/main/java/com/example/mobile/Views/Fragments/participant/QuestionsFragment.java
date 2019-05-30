@@ -24,7 +24,7 @@ import com.example.mobile.Repositories.QuestionRepository;
 import com.example.mobile.Repositories.models.Question;
 import com.example.mobile.Views.ViewInterfaces.speaker.QuestionListView;
 import com.example.mobile.Views.activities.CreateQuestionActivity;
-import com.example.mobile.Views.adapters.speaker.QuestionAdapter;
+import com.example.mobile.Views.adapters.participant.QuestionAdapter;
 import com.example.mobile.presenters.speaker.QuestionListPresenter;
 
 import java.util.List;
@@ -132,5 +132,25 @@ public class QuestionsFragment extends Fragment implements QuestionListView {
     @Override
     public void stopRefreshingView() {
         srl.setRefreshing(false);
+    }
+
+    @Override
+    public void showDeleteDialog() {
+
+    }
+
+    @Override
+    public void hideDeleteDialog() {
+
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
     }
 }

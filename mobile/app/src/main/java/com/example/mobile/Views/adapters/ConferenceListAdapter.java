@@ -4,14 +4,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.mobile.R;
 import com.example.mobile.Repositories.models.Conference;
 import com.example.mobile.Views.activities.ConferenceActivity;
+import com.example.mobile.presenters.ConferenceListPresenter;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
@@ -23,10 +26,12 @@ public class ConferenceListAdapter extends RecyclerView.Adapter<ConferenceListAd
 
     private List<Conference> confs;
     private Context context;
+    private ConferenceListPresenter presenter;
 
-    public ConferenceListAdapter(List<Conference> confs, Context context){
+    public ConferenceListAdapter(List<Conference> confs, Context context, ConferenceListPresenter presenter){
         this.confs = confs;
         this.context = context;
+        this.presenter = presenter;
     }
 
     @NonNull
@@ -69,6 +74,13 @@ public class ConferenceListAdapter extends RecyclerView.Adapter<ConferenceListAd
                 context.startActivity(intent);
             }
         });
+
+        holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.delete(position, conf.getId());
+            }
+        });
     }
 
     @Override
@@ -81,6 +93,7 @@ public class ConferenceListAdapter extends RecyclerView.Adapter<ConferenceListAd
         private TextView titleV;
         private TextView accessCodeV;
         private TextView dateIntV;
+        private ImageButton deleteBtn;
 
 
         public ConfViewHolder(@NonNull View itemView) {
@@ -88,7 +101,7 @@ public class ConferenceListAdapter extends RecyclerView.Adapter<ConferenceListAd
             titleV = itemView.findViewById(R.id.textview_item_conf_title);
             accessCodeV = itemView.findViewById(R.id.textview_item_conf_access_code);
             dateIntV = itemView.findViewById(R.id.textview_item_date_interval);
-
+            deleteBtn = itemView.findViewById(R.id.btn_conference_delete);
 
         }
     }

@@ -1,7 +1,10 @@
 package com.example.mobile.Views.Fragments.speaker;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.mobile.R;
@@ -25,7 +29,7 @@ import com.example.mobile.presenters.speaker.QuestionListPresenter;
 
 import java.util.List;
 
-public class QuestionsFragment extends Fragment implements QuestionListView {
+public class QuestionsFragment extends Fragment implements QuestionListView{
 
     private RecyclerView rv;
     private TextView questionCountV;
@@ -33,10 +37,13 @@ public class QuestionsFragment extends Fragment implements QuestionListView {
     private Button reloadButton;
     private LinearLayout listView;
     private SwipeRefreshLayout srl;
+    private ProgressBar progressBar;
 
     private QuestionListPresenter presenter;
     private Context ctx;
     private int confId;
+    private String token;
+
 
     @Override
     public void onAttach(Activity activity){
@@ -44,6 +51,8 @@ public class QuestionsFragment extends Fragment implements QuestionListView {
 
         this.ctx = activity;
         this.confId = activity.getIntent().getExtras().getInt("confId");
+        SharedPreferences prefs = activity.getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        this.token = prefs.getString("token", "");
     }
 
     @Nullable
@@ -61,6 +70,7 @@ public class QuestionsFragment extends Fragment implements QuestionListView {
         questionCountV = view.findViewById(R.id.textview_questionlist_count);
         rv = view.findViewById(R.id.recyclerview_questionlist);
         srl = view.findViewById(R.id.swipecontainer_questionlist);
+        progressBar = view.findViewById(R.id.progressbar);
 
         rv.setLayoutManager(new LinearLayoutManager(ctx));
         rv.addItemDecoration(new DividerItemDecoration(ctx, RecyclerView.VERTICAL));
@@ -81,8 +91,6 @@ public class QuestionsFragment extends Fragment implements QuestionListView {
                 presenter.reloadQuestions(confId);
             }
         });
-
-
     }
 
     @Override
@@ -97,7 +105,7 @@ public class QuestionsFragment extends Fragment implements QuestionListView {
             questionCountV.setText(Integer.toString(size) + " questions");
         }
         rv.setAdapter(
-                new QuestionAdapter(ctx, quests)
+                new QuestionAdapter(ctx, quests, presenter)
         );
     }
 
@@ -117,4 +125,49 @@ public class QuestionsFragment extends Fragment implements QuestionListView {
     public void stopRefreshingView() {
         srl.setRefreshing(false);
     }
+
+    @Override
+    public void showDeleteDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+        builder.setTitle(getString(R.string.dialog_deletequest_title));
+        builder.setMessage(getString(R.string.dialog_deletequest_message));
+
+        String positiveText = getString(R.string.dialog_deletequest_delete);
+        builder.setPositiveButton(positiveText,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        presenter.confirmDelete(token);
+                    }
+                });
+
+        String negativeText = getString(android.R.string.cancel);
+        builder.setNegativeButton(negativeText,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        presenter.cancelDelete();
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+
+        dialog.show();
+    }
+
+    @Override
+    public void hideDeleteDialog() {
+
+    }
+
+
+
+    @Override public void showProgress() {
+        this.progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override public void hideProgress() {
+        this.progressBar.setVisibility(View.GONE);
+    }
+
 }

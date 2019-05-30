@@ -5,6 +5,9 @@ import com.example.mobile.Callback;
 import com.example.mobile.Repositories.ConferenceRepository;
 import com.example.mobile.Repositories.models.Conference;
 import com.example.mobile.Views.ViewInterfaces.LandingView;
+import com.example.mobile.utils.RandomString;
+
+import static com.example.mobile.utils.RandomString.generate;
 
 public class ParticipantJoinPresenter {
 
@@ -17,8 +20,9 @@ public class ParticipantJoinPresenter {
     }
 
     public void joinConf(String email, String accessCode){
-        // TODO- validate args
         view.showProgress();
+        // TODO- validate args
+//        String RandomString.generate(5);
         repo.joinConf(email, accessCode, new Callback<Conference>() {
             @Override
             public void onSuccess(Conference conf) {

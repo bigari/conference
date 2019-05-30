@@ -10,4 +10,8 @@ public interface QuestionListView {
     void showEmptyListView();
     void showErrorView();
     void stopRefreshingView();
+    void showDeleteDialog();
+    void hideDeleteDialog();
+    void showProgress();
+    void hideProgress();
 }

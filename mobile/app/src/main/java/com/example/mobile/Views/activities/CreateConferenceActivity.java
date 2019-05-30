@@ -140,8 +140,9 @@ public class CreateConferenceActivity extends AppCompatActivity implements Creat
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int uid = prefs.getInt("uid", 0);
-                presenter.createConference(uid);
+                int uid = Integer.parseInt(prefs.getString("uid", ""));
+                String token = prefs.getString("token", "");
+                presenter.createConference(uid, token);
             }
         });
         titleIL = findViewById(R.id.inputlayout_conference_create_title);
