@@ -44,10 +44,7 @@ public class LandingActivity extends AppCompatActivity implements LandingView {
                 new ConferenceRepository(), this
         );
 
-        if (!prefs.getString("token", "").equals("")) {
-            authenticationRow.setVisibility(View.GONE);
-            workspaceRow.setVisibility(View.VISIBLE);
-        }
+        toogleActions();
 
         if (prefs.getString("accessKey", "") == "") {
            // Participant.create(prefs);
@@ -66,6 +63,12 @@ public class LandingActivity extends AppCompatActivity implements LandingView {
             startActivity(intent);
         });
 
+        signup.setOnClickListener(v-> {
+            Intent intent = new Intent(LandingActivity.this,
+                    SignupActivity.class);
+            startActivity(intent);
+        });
+
         goWorkspace.setOnClickListener( v -> {
             Intent intent = new Intent(this,
                     ConferenceListActivity.class);
@@ -74,6 +77,27 @@ public class LandingActivity extends AppCompatActivity implements LandingView {
 
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        toogleActions();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        toogleActions();
+    }
+
+    private void toogleActions() {
+        if (!prefs.getString("token", "").equals("")) {
+            authenticationRow.setVisibility(View.GONE);
+            workspaceRow.setVisibility(View.VISIBLE);
+        } else {
+            authenticationRow.setVisibility(View.VISIBLE);
+            workspaceRow.setVisibility(View.GONE);
+        }
+    }
 
     @Override
     public void navToConf(Conference conf) {

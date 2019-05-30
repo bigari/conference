@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Views.activities.CreateQuestionActivity"></activity>
+        <activity android:name=".Views.activities.CreateQuestionActivity" />
         <activity android:name=".Views.activities.CreateConferenceActivity" />
         <activity android:name=".Views.activities.ConferenceActivity" />
         <activity android:name=".Views.activities.LandingActivity">
@@ -25,6 +25,7 @@
         </activity>
         <activity android:name=".Views.activities.ConferenceListActivity" />
         <activity android:name=".Views.activities.LoginActivity" />
+        <activity android:name=".Views.activities.SignupActivity"></activity>
     </application>
 
 </manifest>

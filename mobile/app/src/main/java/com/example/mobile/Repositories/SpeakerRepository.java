@@ -31,4 +31,18 @@ public class SpeakerRepository {
         });
     }
 
+    public void signup(Speaker speaker, final Callback<Speaker> callback) {
+        speakerApi.signup(speaker).enqueue(new retrofit2.Callback<Speaker>() {
+            @Override
+            public void onResponse(Call<Speaker> call, Response<Speaker> response) {
+                callback.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Speaker> call, Throwable t) {
+                callback.onError(t);
+            }
+        });
+    }
+
 }
