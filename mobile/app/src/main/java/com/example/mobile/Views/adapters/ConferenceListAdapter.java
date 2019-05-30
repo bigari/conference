@@ -70,6 +70,7 @@ public class ConferenceListAdapter extends RecyclerView.Adapter<ConferenceListAd
             public void onClick(View v) {
                 Intent intent = new Intent(context, ConferenceActivity.class);
                 intent.putExtra("confId", conf.getId());
+                intent.putExtra("confTitle", conf.getTitle());
                 intent.putExtra("role", "speaker");
                 context.startActivity(intent);
             }
