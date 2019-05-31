@@ -1,11 +1,14 @@
 package com.example.mobile.Views.activities;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +19,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.mobile.R;
@@ -140,6 +144,7 @@ public class CreateConferenceActivity extends AppCompatActivity implements Creat
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideKeyboard();
                 int uid = Integer.parseInt(prefs.getString("uid", ""));
                 String token = prefs.getString("token", "");
                 presenter.createConference(uid, token);
@@ -150,14 +155,16 @@ public class CreateConferenceActivity extends AppCompatActivity implements Creat
 
     @Override
     public void showProgressbar() {
+
     }
     @Override
     public void hideProgressbar() {
     }
 
     @Override
-    public void showErrorView() {
-        Toast.makeText(this, "An error has occured, please try again.", Toast.LENGTH_LONG).show();
+    public void showErrorView(String message) {
+        LinearLayout root = findViewById(R.id.layout_create_conference);
+        Snackbar.make(root, message, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
@@ -238,12 +245,11 @@ public class CreateConferenceActivity extends AppCompatActivity implements Creat
     private void setEndDate(long date){
         this.endDate = new java.sql.Date(date);
     }
-
     @Override
     public void navToConfList(){
+        finish();
         startActivity(new Intent(this, ConferenceListActivity.class));
     }
-
 }
 
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_root"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -37,6 +38,29 @@
             android:layout_height="wrap_content" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_errorview"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+        <TextView
+            android:id="@+id/textview_error"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/button_reload"
+            android:text="Reload"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/layout_questionlist"

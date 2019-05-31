@@ -20,20 +20,6 @@ public class QuestionRepository {
         questionApi = RetrofitClient.getRetrofit().create(QuestionApi.class);
     }
 
-    public void getQuestions(int confId, Callback<List<Question>> cb){
-        questionApi.getQuestions(confId).enqueue(new retrofit2.Callback<List<Question>>() {
-            @Override
-            public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
-                cb.onSuccess(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<List<Question>> call, Throwable t) {
-                cb.onError(t);
-            }
-        });
-    }
-
     public void create(Question quest, Callback<Void> cb){
         questionApi.create(quest).enqueue(new retrofit2.Callback<Void>() {
             @Override
@@ -47,8 +33,8 @@ public class QuestionRepository {
         });
     }
 
-    public void delete(int questId, String token, Callback<Void> cb){
-        questionApi.deleteQuestion(questId, token).enqueue(new retrofit2.Callback<Void>() {
+    public void delete(int confId, int questId, String token, Callback<Void> cb){
+        questionApi.deleteQuestion(confId, questId, token).enqueue(new retrofit2.Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 cb.onSuccess(response.body());

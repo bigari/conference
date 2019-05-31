@@ -7,6 +7,7 @@ import android.content.Intent;
 
 import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
     private ProgressBar progressBar;
     private LinearLayout emptyListLayout;
     private RelativeLayout confListLayout;
+    private ViewGroup root;
 
     private ConferenceListPresenter presenter;
     private String token;
@@ -58,6 +60,7 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
         progressBar = findViewById(R.id.progressbar);
         emptyListLayout = findViewById(R.id.layout_conflist_emptylist);
         confListLayout = findViewById(R.id.layout_conflist_list);
+        root = findViewById(R.id.layout_root);
 
         ConferenceRepository repository = new ConferenceRepository();
         presenter = new ConferenceListPresenter(this, repository);
@@ -143,12 +146,17 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
     }
 
     @Override
-    public void showErrorView() {
+    public void showErrorView(String message) {
         ViewGroup errorView = findViewById(R.id.layout_conflist_error);
         Button retryBtn = findViewById(R.id.button_conflist_tryagain);
+        TextView errorV = errorView.findViewById(R.id.textview_message);
 
+
+        confListLayout.setVisibility(View.GONE);
+        emptyListLayout.setVisibility(View.GONE);
         errorView.setVisibility(View.VISIBLE);
 
+        errorV.setText(message);
         retryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,5 +203,9 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
         dialog.show();
     }
 
+    @Override
+    public void showErrorSnackbar(String message){
+        Snackbar.make(root, message, Snackbar.LENGTH_LONG).show();
+    }
 
 }

@@ -16,7 +16,7 @@ module.exports = function (app) {
         relation: 'conferences',
         scope: {
           where:{
-            codeAcces: req.query.accesscode
+            codeAcces: req.query.accesscode,
           },
         }
       }

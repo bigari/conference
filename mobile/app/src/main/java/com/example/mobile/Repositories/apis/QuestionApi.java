@@ -17,13 +17,10 @@ import retrofit2.http.QueryMap;
 
 public interface QuestionApi {
 
-    @GET("api/conferences/{id}/questions?filter[order]=timestamp%20DESC")
-    Call<List<Question>> getQuestions(@Path("id") int confId);
-
     @POST("api/questions")
     Call<Void> create(@Body Question quest);
 
-    @DELETE("api/questions/{id}")
-    Call<Void> deleteQuestion(@Path("id") int questionId,
+    @DELETE("api/conferences/{confId}/questions/{questId}")
+    Call<Void> deleteQuestion(@Path("confId") int confId, @Path("questId") int questId,
                                 @Header("Authorization") String token);
 }

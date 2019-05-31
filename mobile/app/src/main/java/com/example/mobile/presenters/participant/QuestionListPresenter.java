@@ -1,6 +1,7 @@
 package com.example.mobile.presenters.participant;
 
 import com.example.mobile.Callback;
+import com.example.mobile.Repositories.ConferenceRepository;
 import com.example.mobile.Repositories.QuestionRepository;
 import com.example.mobile.Repositories.models.Question;
 import com.example.mobile.Views.ViewInterfaces.participant.QuestionListView;
@@ -10,10 +11,10 @@ import java.util.List;
 public class QuestionListPresenter {
 
     private QuestionListView view;
-    private QuestionRepository repo;
+    private ConferenceRepository repo;
     private List<Question> quests;
 
-    public QuestionListPresenter(QuestionListView view, QuestionRepository repo) {
+    public QuestionListPresenter(QuestionListView view, ConferenceRepository repo) {
         this.repo = repo;
         this.view = view;
     }
@@ -58,10 +59,4 @@ public class QuestionListPresenter {
         });
 
     }
-
-
-    public void deleteQuestion(int questId) {
-    }
-
-
 }

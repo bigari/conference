@@ -16,10 +16,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.mobile.R;
+import com.example.mobile.Repositories.ConferenceRepository;
 import com.example.mobile.Repositories.QuestionRepository;
 import com.example.mobile.Repositories.models.Question;
 import com.example.mobile.Views.ViewInterfaces.speaker.QuestionListView;
@@ -38,6 +40,10 @@ public class QuestionsFragment extends Fragment implements QuestionListView {
     private RelativeLayout listView;
     private SwipeRefreshLayout srl;
     private FloatingActionButton addQuestBtn;
+    private ProgressBar progressBar;
+    private ViewGroup errorView;
+    private TextView errorText;
+    private Button errorViewReload;
 
     private QuestionListPresenter presenter;
     private Context ctx;
@@ -65,14 +71,17 @@ public class QuestionsFragment extends Fragment implements QuestionListView {
         reloadButton = view.findViewById(R.id.button_questlist_reload);
         questionCountV = view.findViewById(R.id.textview_questionlist_count);
         addQuestBtn = view.findViewById(R.id.button_questlist_addquest);
+        progressBar = view.findViewById(R.id.progressbar);
+        errorView = view.findViewById(R.id.layout_errorview);
+        errorText = view.findViewById(R.id.textview_error);
+        errorViewReload = view.findViewById(R.id.button_reload);
 
         rv = view.findViewById(R.id.recyclerview_questionlist);
         srl = view.findViewById(R.id.swipecontainer_questionlist);
 
         rv.setLayoutManager(new LinearLayoutManager(ctx));
-        rv.addItemDecoration(new DividerItemDecoration(ctx, RecyclerView.VERTICAL));
 
-        presenter = new QuestionListPresenter(this, new QuestionRepository());
+        presenter = new QuestionListPresenter(this, new QuestionRepository(), new ConferenceRepository());
         presenter.loadQuestions(confId);
 
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -85,7 +94,7 @@ public class QuestionsFragment extends Fragment implements QuestionListView {
         reloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.reloadQuestions(confId);
+                presenter.loadQuestions(confId);
             }
         });
 
@@ -121,12 +130,22 @@ public class QuestionsFragment extends Fragment implements QuestionListView {
     public void showEmptyListView() {
         emptyListView.setVisibility(View.VISIBLE);
         listView.setVisibility(View.GONE);
-
     }
 
     @Override
-    public void showErrorView() {
+    public void showErrorView(String message) {
+        emptyListView.setVisibility(View.GONE);
+        listView.setVisibility(View.GONE);
+        errorView.setVisibility(View.VISIBLE);
+        errorText.setText(message);
 
+        errorViewReload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                errorView.setVisibility(View.GONE);
+                presenter.loadQuestions(confId);
+            }
+        });
     }
 
     @Override
@@ -140,17 +159,17 @@ public class QuestionsFragment extends Fragment implements QuestionListView {
     }
 
     @Override
-    public void hideDeleteDialog() {
-
-    }
-
-    @Override
     public void showProgress() {
-
+        this.progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgress() {
+        this.progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showErrorSnackbar(String message) {
 
     }
 }

@@ -2,11 +2,15 @@ package com.example.mobile.Views.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TableRow;
 import android.widget.Toast;
 
@@ -21,6 +25,9 @@ public class LandingActivity extends AppCompatActivity implements LandingView {
     private Button join, login, signup, goWorkspace;
     private TextInputEditText emailEdit, codeEdit;
     private TableRow authenticationRow, workspaceRow;
+    private ViewGroup root;
+    private ProgressBar progressBar;
+
     private SharedPreferences prefs;
 
     @Override
@@ -35,6 +42,8 @@ public class LandingActivity extends AppCompatActivity implements LandingView {
         signup = findViewById(R.id.landing_signup);
         emailEdit = findViewById(R.id.landing_email);
         codeEdit = findViewById(R.id.landing_code);
+        progressBar = findViewById(R.id.progressbar);
+        root = findViewById(R.id.layout_root);
 
         goWorkspace = findViewById( R.id.landing_go_workspace);
 
@@ -52,6 +61,7 @@ public class LandingActivity extends AppCompatActivity implements LandingView {
         }
 
         join.setOnClickListener( v -> {
+            hideKeyboard();
             String email = emailEdit.getText().toString();
             String code = codeEdit.getText().toString();
             presenter.joinConf(email, code);
@@ -111,12 +121,12 @@ public class LandingActivity extends AppCompatActivity implements LandingView {
 
     @Override
     public void showProgress() {
-
+        this.progressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hideProgresss() {
-
+        this.progressBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -126,6 +136,16 @@ public class LandingActivity extends AppCompatActivity implements LandingView {
 
     @Override
     public void showError(String error) {
-        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+        Snackbar.make(root, error, Snackbar.LENGTH_SHORT).show();
     }
+
+    public void hideKeyboard(){
+        InputMethodManager imm = (InputMethodManager) this.getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE);
+        View view = this.getCurrentFocus();
+        if (view == null) {
+            view = new View(this);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
 }

@@ -67,7 +67,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionAdapter.ViewHo
         viewHolder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.deleteQuest(i, quest.getId());
+                presenter.deleteQuest(i, quest.getId(), quest.getConfId());
             }
         });
 

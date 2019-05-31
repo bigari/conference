@@ -8,10 +8,10 @@ public interface QuestionListView {
 
     void showList(List<Question> question);
     void showEmptyListView();
-    void showErrorView();
+    void showErrorView(String message);
     void stopRefreshingView();
     void showDeleteDialog();
-    void hideDeleteDialog();
     void showProgress();
     void hideProgress();
+    void showErrorSnackbar(String message);
 }

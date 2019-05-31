@@ -6,9 +6,11 @@ import android.util.Log;
 import com.example.mobile.Callback;
 import com.example.mobile.Repositories.ConfListCache;
 import com.example.mobile.Repositories.ConferenceRepository;
+import com.example.mobile.Repositories.QuestionRepository;
 import com.example.mobile.Repositories.models.Conference;
 import com.example.mobile.Views.ViewInterfaces.ConferenceListView;
 
+import java.net.ConnectException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -17,16 +19,16 @@ import java.util.List;
 public class ConferenceListPresenter {
 
     private ConferenceListView view;
-    private ConferenceRepository repository;
+    private ConferenceRepository confRepo;
     private ConfListCache confListCache;
 
     private int cid;
     private int index;
 
 
-    public ConferenceListPresenter(ConferenceListView view, ConferenceRepository repository){
+    public ConferenceListPresenter(ConferenceListView view, ConferenceRepository confRepo){
         this.view = view;
-        this.repository = repository;
+        this.confRepo = confRepo;
         this.confListCache = ConfListCache.getInstance();
     }
 
@@ -35,7 +37,7 @@ public class ConferenceListPresenter {
         view.showLoading();
         if(confListCache.getActiveConfs().isEmpty() && confListCache.getPastConfs().isEmpty()){
 
-            repository.getConferences(uid, token, new Callback<List<Conference>>() {
+            confRepo.getConferences(uid, token, new Callback<List<Conference>>() {
                 @Override
                 public void onSuccess(List<Conference> confs) {
                     List<Conference> activeConfs = new ArrayList<>();
@@ -77,9 +79,13 @@ public class ConferenceListPresenter {
 
                 @Override
                 public void onError(Throwable error) {
-                    Log.e("conference list", "loading conference list failed", error);
                     view.hideLoading();
-                    view.showErrorView();
+                    if(error instanceof ConnectException){
+                        view.showErrorView("Network error, please check your internet connection.");
+                    }
+                    else{
+                        view.showErrorView("An error occurred.");
+                    }
                 }
             });
         }
@@ -116,8 +122,7 @@ public class ConferenceListPresenter {
 
     public void confirm(String token){
         view.showLoading();
-
-        repository.deleteConference(cid, token, new Callback<Void>() {
+        confRepo.deleteConference(cid, token, new Callback<Void>() {
             @Override
             public void onSuccess(Void value) {
                 List<Conference> activeConfs = confListCache.getActiveConfs();
@@ -145,12 +150,15 @@ public class ConferenceListPresenter {
 
             @Override
             public void onError(Throwable error) {
-                view.showErrorView();
+                if(error instanceof ConnectException){
+                    view.showErrorSnackbar("Network error, Check your internet connection.");
+                }
+                else{
+                    view.showErrorSnackbar("An error occurred.");
+                }
                 view.hideLoading();
             }
         });
-
-
     }
 
     public void cancel(){

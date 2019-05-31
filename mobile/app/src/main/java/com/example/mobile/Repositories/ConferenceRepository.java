@@ -1,6 +1,7 @@
 package com.example.mobile.Repositories;
 
 import com.example.mobile.Callback;
+import com.example.mobile.Repositories.models.Question;
 import com.example.mobile.RetrofitClient;
 import com.example.mobile.Repositories.apis.ConferenceApi;
 import com.example.mobile.Repositories.models.Conference;
@@ -35,6 +36,20 @@ public class ConferenceRepository{
         });
     }
 
+    public void getQuestions(int confId, Callback<List<Question>> cb){
+        conferenceApi.getQuestions(confId).enqueue(new retrofit2.Callback<List<Question>>() {
+            @Override
+            public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
+                cb.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Question>> call, Throwable t) {
+                cb.onError(t);
+            }
+        });
+    }
+
     public void createConference(Conference conference, String token, Callback<Conference> cb){
         conferenceApi.createConference(conference, token).enqueue(new retrofit2.Callback<Conference>() {
             @Override
@@ -50,7 +65,7 @@ public class ConferenceRepository{
     }
 
     public void deleteConference(int cid, String token, Callback<Void> cb) {
-        conferenceApi.deleteConference(cid).enqueue(new retrofit2.Callback<Void>() {
+        conferenceApi.deleteConference(cid, token).enqueue(new retrofit2.Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 cb.onSuccess(response.body());
@@ -61,8 +76,20 @@ public class ConferenceRepository{
                 cb.onError(t);
             }
         });
+    }
 
-        //TODO use question and poll API too
+    public void deleteQuestions(int cid, String token, Callback<Void> cb){
+        conferenceApi.deleteQuestions(cid, token).enqueue(new retrofit2.Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                cb.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                cb.onError(t);
+            }
+        });
     }
 
     public void updateConference(Conference conference) {

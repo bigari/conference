@@ -5,6 +5,8 @@ import com.example.mobile.Repositories.QuestionRepository;
 import com.example.mobile.Repositories.models.Question;
 import com.example.mobile.Views.ViewInterfaces.CreateQuestionView;
 
+import java.net.ConnectException;
+
 
 public class CreateQuestionPresenter {
     private CreateQuestionView view;
@@ -40,7 +42,12 @@ public class CreateQuestionPresenter {
             @Override
             public void onError(Throwable error) {
                 view.hideProgress();
-                view.showErrorView("Error");
+                if(error instanceof ConnectException){
+                    view.showErrorView("Network error, check your internet connection.");
+                }
+                else{
+                    view.showErrorView("An error occurred.");
+                }
             }
         });
     }

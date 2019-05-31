@@ -7,6 +7,8 @@ import com.example.mobile.Repositories.models.Conference;
 import com.example.mobile.Views.ViewInterfaces.LandingView;
 import com.example.mobile.utils.RandomString;
 
+import java.net.ConnectException;
+
 import static com.example.mobile.utils.RandomString.generate;
 
 public class ParticipantJoinPresenter {
@@ -26,17 +28,22 @@ public class ParticipantJoinPresenter {
             @Override
             public void onSuccess(Conference conf) {
                 if(conf == null){
+                    view.hideProgresss();
                     view.showError("Wrong email or access code.");
                 }else{
+                    view.hideProgresss();
                     view.navToConf(conf);
                 }
-                view.hideProgresss();
             }
-
             @Override
             public void onError(Throwable error) {
                 view.hideProgresss();
-                view.showError();
+                if(error instanceof ConnectException){
+                    view.showError("Network error, check your internet connection.");
+                }
+                else{
+                    view.showError("An error occurred.");
+                }
             }
         });
     }

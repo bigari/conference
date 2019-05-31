@@ -34,6 +34,10 @@ public interface ConferenceApi {
     Call<List<Conference>> getConferences(@Path("id") int userId,
                                           @Header("Authorization") String token);
 
+    @GET("api/conferences/{id}/questions?filter[order]=timestamp%20DESC")
+    Call<List<Question>> getQuestions(@Path("id") int confId);
+
+
     @GET("api/conferences/{id}/enquetes")
     Call<List<Enquete>> getSurveys(@Path("id") int conferenceId);
 
@@ -45,8 +49,12 @@ public interface ConferenceApi {
                                       @Header("Authorization") String token);
 
     @DELETE("api/conferences/{id}")
-    Call<Void> deleteConference(@Path("id") int conferenceId
-                               );
+    Call<Void> deleteConference(@Path("id") int conferenceId,
+                               @Header("Authorization") String token);
+
+    @DELETE("api/conferences/{id}/questions")
+    Call<Void> deleteQuestions(@Path("id") int confId,
+                                @Header("Authorization") String token);
 
     @DELETE("api/conferences/{id}/enquetes")
     Call<Void> deleteEnquetes(@Path("id") int conferenceId);

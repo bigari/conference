@@ -13,6 +13,7 @@
         android:indeterminate="false"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
+        android:layout_gravity="center"
         android:layout_height="wrap_content"/>
 
 
@@ -37,6 +38,28 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="Reload" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_errorview"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+        <TextView
+            android:id="@+id/textview_error"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/button_reload"
+            android:text="Reload"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 
@@ -88,22 +111,6 @@
         android:visibility="visible"
         app:layout_anchor="@id/layout_questlist"
         app:layout_anchorGravity="bottom|right|end" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone"
-        android:padding="20dp"
-        app:layout_behavior="@string/bottom_sheet_behavior">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/sort_questions" />
-
-
-    </LinearLayout>
 
 
 </android.support.design.widget.CoordinatorLayout>
