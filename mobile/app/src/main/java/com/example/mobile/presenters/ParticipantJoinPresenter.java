@@ -22,16 +22,15 @@ public class ParticipantJoinPresenter {
     public void joinConf(String email, String accessCode){
         view.showProgress();
         // TODO- validate args
-//        String RandomString.generate(5);
         repo.joinConf(email, accessCode, new Callback<Conference>() {
             @Override
             public void onSuccess(Conference conf) {
-                view.hideProgresss();
                 if(conf == null){
                     view.showError("Wrong email or access code.");
                 }else{
                     view.navToConf(conf);
                 }
+                view.hideProgresss();
             }
 
             @Override
