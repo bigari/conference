@@ -16,64 +16,72 @@ import com.example.mobile.R;
 import com.example.mobile.Repositories.ConfListCache;
 import com.example.mobile.Repositories.SpeakerRepository;
 import com.example.mobile.Repositories.models.Speaker;
-import com.example.mobile.Views.ViewInterfaces.speaker.SpeakerLoginView;
+import com.example.mobile.Views.ViewInterfaces.speaker.SpeakerSignupView;
 import com.example.mobile.presenters.speaker.SpeakerLoginPresenter;
+import com.example.mobile.presenters.speaker.SpeakerSignupPresenter;
 
-public class LoginActivity extends AppCompatActivity implements SpeakerLoginView {
+public class SignupActivity extends AppCompatActivity implements SpeakerSignupView {
 
-    private AppCompatButton loginButton;
-    private EditText emailInput, passwordInput;
-    private SpeakerLoginPresenter presenter;
+    private AppCompatButton signupButton;
+    private EditText emailInput, passwordInput, usernameInput;
+    private SpeakerSignupPresenter presenter;
     private ProgressBar progressBar;
     private RelativeLayout layout;
     private RelativeLayout.LayoutParams params;
     private SharedPreferences prefs;
-    private TextView signupLink;
-
+    private TextView loginLink;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_signup);
+        emailInput = findViewById(R.id.signup_email);
+        passwordInput = findViewById(R.id.signup_password);
+        usernameInput = findViewById(R.id.signup_username);
+        signupButton = findViewById(R.id.btn_signup);
+        loginLink = findViewById(R.id.signup_link_login);
+        prefs = getSharedPreferences("prefs", MODE_PRIVATE);
 
-        emailInput = findViewById(R.id.login_email);
-        passwordInput = findViewById(R.id.login_password);
-        loginButton = findViewById(R.id.btn_login);
-        signupLink = findViewById(R.id.login_link_signup);
-
-        progressBar = new ProgressBar(LoginActivity.this,null,android.R.attr.progressBarStyleLarge);
-
-        params = new RelativeLayout.LayoutParams(100,100);
-        params.addRule(RelativeLayout.CENTER_IN_PARENT);
-        layout = findViewById(R.id.login_relative_layout);
-
-        loginButton.setOnClickListener( v-> {
-           authenticate();
-        });
-
-        signupLink.setOnClickListener( v-> {
-            Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+        loginLink.setOnClickListener( v-> {
+            Intent intent = new Intent(
+                    SignupActivity.this,
+                    LoginActivity.class
+            );
             startActivity(intent);
         });
 
-        prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        progressBar = new ProgressBar(SignupActivity.this,null,android.R.attr.progressBarStyleLarge);
+
+        params = new RelativeLayout.LayoutParams(100,100);
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        layout = findViewById(R.id.signup_relative_layout);
+
+        signupButton.setOnClickListener( v-> {
+            register();
+        });
+
     }
 
-    protected void authenticate() {
-
-        //Speaker.getCurrent().setPassword(passwordInput.getText().toString());
+    private void register() {
         layout.removeView(progressBar);
         layout.addView(progressBar, params);
 
         progressBar.setVisibility(View.VISIBLE);  //To show ProgressBar
         SpeakerRepository repository = new SpeakerRepository();
-        presenter = new SpeakerLoginPresenter(LoginActivity.this, repository);
-        presenter.login( new Speaker(emailInput.getText().toString(), passwordInput.getText().toString()));
+        presenter = new SpeakerSignupPresenter(SignupActivity.this, repository);
+        presenter.signup(
+                new Speaker(
+                        emailInput.getText().toString(),
+                        usernameInput.getText().toString(),
+                        passwordInput.getText().toString()
+                )
+        );
+
     }
 
     @Override
-    public void showLoginError() {
+    public void showSignupError() {
         progressBar.setVisibility(View.GONE);
-        new AlertDialog.Builder(LoginActivity.this)
+        new AlertDialog.Builder(SignupActivity.this)
                 .setTitle("Connection failed")
                 .setMessage("Please check your internet connection")
                 .setPositiveButton(android.R.string.ok, null)
@@ -81,12 +89,12 @@ public class LoginActivity extends AppCompatActivity implements SpeakerLoginView
     }
 
     @Override
-    public void showLoginSuccess(Speaker speaker) {
+    public void showSignupSuccess(Speaker speaker) {
         progressBar.setVisibility(View.GONE);
         if (speaker == null) {
-            new AlertDialog.Builder(LoginActivity.this)
-                    .setTitle("Login Failed")
-                    .setMessage("Email or password Incorrect")
+            new AlertDialog.Builder(SignupActivity.this)
+                    .setTitle("Signup Failed")
+                    .setMessage("Email or username already in use")
                     .setPositiveButton(android.R.string.ok, null)
                     .show();
             return;
@@ -98,16 +106,15 @@ public class LoginActivity extends AppCompatActivity implements SpeakerLoginView
             ConfListCache.getInstance().clear();
             editor.putString("uid", speaker.getId().toString());
             editor.putString("email", emailInput.getText().toString());
-            editor.putString("username", speaker.getUsername());
+            editor.putString("username", usernameInput.getText().toString());
             editor.apply();
         }
-
         editor.apply();
         System.out.println(">>>>>>>>>>>>>>>>>>>>Speaker TOKEN>>>>>>>>>>>>>>>>>>>");
         System.out.println(speaker.getToken());
         System.out.println(">>>>>>>>>>>>>>>>>>>>Speaker ID>>>>>>>>>>>>>>>>>>>");
         System.out.println(speaker.getId());
-        Intent intent = new Intent(LoginActivity.this, ConferenceListActivity.class);
+        Intent intent = new Intent(SignupActivity.this, ConferenceListActivity.class);
         startActivity(intent);
     }
 }

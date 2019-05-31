@@ -15,7 +15,9 @@ public class Speaker {
     @Expose(deserialize = false)
     @SerializedName("password")
     private String password;
-    @Expose(deserialize = false)
+
+
+    @Expose
     @SerializedName("username")
     private String username;
 
@@ -40,6 +42,13 @@ public class Speaker {
         this.email = email;
         this.password = password;
     }
+
+    public Speaker(String email , String username, String password) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+    }
+
     public String getUsername() {
         return username;
     }

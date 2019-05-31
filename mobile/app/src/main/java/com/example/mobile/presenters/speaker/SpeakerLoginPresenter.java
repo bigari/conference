@@ -1,10 +1,10 @@
-package com.example.mobile.presenters;
+package com.example.mobile.presenters.speaker;
 
 
 import com.example.mobile.Callback;
 import com.example.mobile.Repositories.SpeakerRepository;
 import com.example.mobile.Repositories.models.Speaker;
-import com.example.mobile.Views.SpeakerLoginView;
+import com.example.mobile.Views.ViewInterfaces.speaker.SpeakerLoginView;
 
 /**
  * Created by neron on 5/23/19.
