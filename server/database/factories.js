@@ -29,10 +29,31 @@ app.seeder.createFactory('Speaker', {
   'password': '000000'
 });
 
+app.seeder.createFactory('Participant', {
+  'accessKey': '1234',
+});
+
 app.seeder.createFactory('Conference', {
 	'nom': '{{lorem.word}}',
     'dateDebut': '{{date.recent}}',
     'dateFin': '{{date.future}}',
     'codeAcces': genCode(5),
     'speakerId': 1
+});
+
+app.seeder.createFactory('Enquete', {
+  'intituleEnquete': '{{lorem.word}}',
+  'etat': true,
+  'conferenceId': 1
+});
+
+app.seeder.createFactory('Option', {
+  'intituleOption': '{{lorem.word}}',
+  'enqueteId': 1
+});
+
+app.seeder.createFactory('Vote', {
+	'optionId': 1,
+	'participantId': 1,
+	'enqueteId': 1
 });

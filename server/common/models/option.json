@@ -18,14 +18,10 @@
       "model": "Enquete",
       "foreignKey": "enqueteId"
     },
-    "participants": {
+    "votes": {
       "type": "hasMany",
-      "model": "Participant",
-      "foreignKey": "",
-      "options": {
-        "nestRemoting": true
-      },
-      "through": "Vote"
+      "model": "Vote",
+      "foreignKey": "optionId"
     }
   },
   "acls": [],

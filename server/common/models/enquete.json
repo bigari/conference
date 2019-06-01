@@ -10,8 +10,9 @@
       "type": "string",
       "required": true
     },
-    "etat": {
-      "type": "boolean"
+    "visible": {
+      "type": "boolean",
+      "default": false
     }
   },
   "validations": [],

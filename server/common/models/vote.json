@@ -1,13 +1,23 @@
 {
   "name": "Vote",
   "base": "PersistedModel",
-  "properties": {},
+  "idInjection": true,
+  "properties": {
+    "enqueteId": {
+      "type": "number"
+    }
+  },
   "validations": [],
   "relations": {
-    "conferences": {
-      "type": "hasMany",
-      "model": "Conferences",
-      "foreignKey": "presenterId"
+    "Participant": {
+      "type": "belongsTo",
+      "model": "Participant",
+      "foreignKey": "participantId"
+    },
+    "Option": {
+      "type": "belongsTo",
+      "model": "Option",
+      "foreignKey": "optionId"
     }
   },
   "acls": [],
