@@ -1,6 +1,7 @@
 package com.example.mobile.Views.adapters.participant;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import com.example.mobile.Repositories.models.Option;
 import com.example.mobile.Repositories.models.Participant;
 import com.example.mobile.Repositories.models.Vote;
 import com.example.mobile.presenters.participant.SurveyPresenter;
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
@@ -58,17 +60,27 @@ public class ParticipantSurveyAdapter extends RecyclerView.Adapter<ParticipantSu
             for (int j=0; j<options.size(); j++) {
                 stats.add(
                         new PieEntry(
-                                (float) (options.get(j).getVoteCount()),
+                                100 * (float) (options.get(j).getVoteCount()) / total,
                                 options.get(j).getIntituleOption()
                         )
                 );
-
             }
-            PieDataSet pieDataSet = new PieDataSet(stats, "Results");
+            PieDataSet pieDataSet = new PieDataSet(stats, "(%)");
+            pieDataSet.setValueTextColor(Color.rgb(254,254,254));
             PieData pieData = new PieData(pieDataSet);
+            pieData.setValueTextSize(18f);
             pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
             viewHolder.pieChart.setData(pieData);
-            viewHolder.pieChart.animateXY(5000, 5000);
+            viewHolder.pieChart.getDescription().setText(enquete.getIntituleEnquete());
+            viewHolder.pieChart.getDescription().setTextSize(14f);
+            viewHolder.pieChart.getLegend().setTextSize(14f);
+            viewHolder.pieChart.setEntryLabelColor(Color.rgb(0,0,0));
+           // viewHolder.pieChart.spin(500, 0, -360f, Easing.EasingOption.EaseInOutBounce);
+            if (enquete.isAnimate()) {
+                viewHolder.pieChart.animateXY(2000, 2000);
+            }
+
+            enquete.setAnimate(false);
         }
     }
 
@@ -91,6 +103,7 @@ public class ParticipantSurveyAdapter extends RecyclerView.Adapter<ParticipantSu
         });
 
         viewHolder.btnChart.setOnClickListener(v->{
+            enquete.setAnimate(true);
             showChart(viewHolder, enquete);
         });
         for (Option option : enquete.getOptions()) {

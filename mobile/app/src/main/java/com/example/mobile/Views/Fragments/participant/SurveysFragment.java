@@ -42,7 +42,7 @@ public class SurveysFragment extends Fragment implements ParticipantSurveyView {
     private Integer confId;
     private ParticipantSurveyAdapter surveyAdapter;
 
-    private static final int PERIOD = 10000;
+    private static final int PERIOD = 15000;
     Handler mHandler;
     Runnable mRunnable;
 
@@ -76,22 +76,22 @@ public class SurveysFragment extends Fragment implements ParticipantSurveyView {
         super.onViewCreated(view, savedInstanceState);
         surveyRecycleView = view.findViewById(R.id.recyclerview_surveys_participant);
         surveyRecycleView.setLayoutManager(new LinearLayoutManager(ctx));
-        srl = view.findViewById(R.id.swipecontainer_surveylist);
+        //srl = view.findViewById(R.id.swipecontainer_surveylist);
 
 
-        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        /*srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 presenter.fetchNew(confId);
             }
-        });
+        });*/
+
         presenter = new SurveyPresenter(this, new SurveyRepository());
         surveyAdapter = new ParticipantSurveyAdapter(ctx, this.surveys, presenter);
         presenter.loadSurveys(confId);
 
         mRunnable = new Runnable() {
             public void run() {
-                System.out.println("runnninng");
                 presenter.fetchNew(confId);
                 presenter.getStats(confId);
                 mHandler.postDelayed(this, PERIOD);
@@ -139,9 +139,11 @@ public class SurveysFragment extends Fragment implements ParticipantSurveyView {
 
     @Override
     public void showStats(int surveyIndex) {
+        surveys.get(surveyIndex).setAnimate(true);
         surveys.get(surveyIndex).setStatsVisible(true);
         surveyRecycleView.setAdapter(surveyAdapter);
         surveyAdapter.notifyDataSetChanged();
+
     }
 
     @Override
