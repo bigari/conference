@@ -1,5 +1,5 @@
 'use strict';
 
-module.exports = function(Presenter) {
+module.exports = function(Speaker) {
 
 };

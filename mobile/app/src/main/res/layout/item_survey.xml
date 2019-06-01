@@ -41,13 +41,13 @@
                     android:visibility="gone"
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="28dp">
 
                     <ImageButton
                         android:id="@+id/item_survey_action_chart"
                         android:src="@drawable/outline_bar_chart_24"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_width="24px"
+                        android:layout_height="24px" />
 
                 </LinearLayout>
             </LinearLayout>

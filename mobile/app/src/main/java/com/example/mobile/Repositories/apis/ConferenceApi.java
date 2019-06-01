@@ -34,11 +34,9 @@ public interface ConferenceApi {
     Call<List<Conference>> getConferences(@Path("id") int userId,
                                           @Header("Authorization") String token);
 
-    @GET("api/conferences/{id}")
-    Call<Conference> getConferenceById(@Path("id") int conferenceId);
+    @GET("api/conferences/{id}/questions?filter[order]=timestamp%20DESC")
+    Call<List<Question>> getQuestions(@Path("id") int confId);
 
-    @GET("api/conferences/{id}/attachments")
-    Call<List<Attachment>> getAttachments(@Path("id") int conferenceId);
 
     @GET("api/conferences/{id}/enquetes")
     Call<List<Enquete>> getSurveys(@Path("id") int conferenceId);
@@ -47,10 +45,16 @@ public interface ConferenceApi {
     Call<List<Questionnaire>> getQuestionnaire(@Path("id") int conferenceId);
 
     @POST("api/conferences")
-    Call<Conference> createConference(@Body Conference conference);
+    Call<Conference> createConference(@Body Conference conference,
+                                      @Header("Authorization") String token);
 
     @DELETE("api/conferences/{id}")
-    Call<Void> deleteConference(@Path("id") int conferenceId);
+    Call<Void> deleteConference(@Path("id") int conferenceId,
+                               @Header("Authorization") String token);
+
+    @DELETE("api/conferences/{id}/questions")
+    Call<Void> deleteQuestions(@Path("id") int confId,
+                                @Header("Authorization") String token);
 
     @DELETE("api/conferences/{id}/enquetes")
     Call<Void> deleteEnquetes(@Path("id") int conferenceId);

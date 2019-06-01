@@ -1,9 +1,13 @@
 package com.example.mobile.Views.Fragments.speaker;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
@@ -14,9 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.mobile.R;
+import com.example.mobile.Repositories.ConferenceRepository;
 import com.example.mobile.Repositories.QuestionRepository;
 import com.example.mobile.Repositories.models.Question;
 import com.example.mobile.Views.adapters.speaker.QuestionAdapter;
@@ -25,7 +31,7 @@ import com.example.mobile.presenters.speaker.QuestionListPresenter;
 
 import java.util.List;
 
-public class QuestionsFragment extends Fragment implements QuestionListView {
+public class QuestionsFragment extends Fragment implements QuestionListView{
 
     private RecyclerView rv;
     private TextView questionCountV;
@@ -33,10 +39,18 @@ public class QuestionsFragment extends Fragment implements QuestionListView {
     private Button reloadButton;
     private LinearLayout listView;
     private SwipeRefreshLayout srl;
+    private ProgressBar progressBar;
+    private ViewGroup errorView;
+    private TextView errorText;
+    private Button errorViewReload;
+    private ViewGroup root;
+
 
     private QuestionListPresenter presenter;
     private Context ctx;
     private int confId;
+    private String token;
+
 
     @Override
     public void onAttach(Activity activity){
@@ -44,6 +58,8 @@ public class QuestionsFragment extends Fragment implements QuestionListView {
 
         this.ctx = activity;
         this.confId = activity.getIntent().getExtras().getInt("confId");
+        SharedPreferences prefs = activity.getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        this.token = prefs.getString("token", "");
     }
 
     @Nullable
@@ -61,11 +77,16 @@ public class QuestionsFragment extends Fragment implements QuestionListView {
         questionCountV = view.findViewById(R.id.textview_questionlist_count);
         rv = view.findViewById(R.id.recyclerview_questionlist);
         srl = view.findViewById(R.id.swipecontainer_questionlist);
+        progressBar = view.findViewById(R.id.progressbar);
+        errorView = view.findViewById(R.id.layout_errorview);
+        errorText = view.findViewById(R.id.textview_error);
+        errorViewReload = view.findViewById(R.id.button_reload);
+        root = view.findViewById(R.id.layout_root);
+
 
         rv.setLayoutManager(new LinearLayoutManager(ctx));
-        rv.addItemDecoration(new DividerItemDecoration(ctx, RecyclerView.VERTICAL));
 
-        presenter = new QuestionListPresenter(this, new QuestionRepository());
+        presenter = new QuestionListPresenter(this, new QuestionRepository(), new ConferenceRepository());
         presenter.loadQuestions(confId);
 
         srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -78,11 +99,9 @@ public class QuestionsFragment extends Fragment implements QuestionListView {
         reloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.reloadQuestions(confId);
+                presenter.loadQuestions(confId);
             }
         });
-
-
     }
 
     @Override
@@ -97,7 +116,7 @@ public class QuestionsFragment extends Fragment implements QuestionListView {
             questionCountV.setText(Integer.toString(size) + " questions");
         }
         rv.setAdapter(
-                new QuestionAdapter(ctx, quests)
+                new QuestionAdapter(ctx, quests, presenter)
         );
     }
 
@@ -109,12 +128,66 @@ public class QuestionsFragment extends Fragment implements QuestionListView {
     }
 
     @Override
-    public void showErrorView() {
+    public void showErrorView(String message) {
+        emptyListView.setVisibility(View.GONE);
+        listView.setVisibility(View.GONE);
+        errorView.setVisibility(View.VISIBLE);
+        errorText.setText(message);
 
+        errorViewReload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                errorView.setVisibility(View.GONE);
+                presenter.loadQuestions(confId);
+            }
+        });
     }
 
     @Override
     public void stopRefreshingView() {
         srl.setRefreshing(false);
     }
+
+    @Override
+    public void showDeleteDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+        builder.setTitle(getString(R.string.dialog_deletequest_title));
+        builder.setMessage(getString(R.string.dialog_deletequest_message));
+
+        String positiveText = getString(R.string.dialog_deletequest_delete);
+        builder.setPositiveButton(positiveText,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        presenter.confirmDelete(token);
+                    }
+                });
+
+        String negativeText = getString(android.R.string.cancel);
+        builder.setNegativeButton(negativeText,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        presenter.cancelDelete();
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+
+        dialog.show();
+    }
+
+    @Override public void showProgress() {
+        this.progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override public void hideProgress() {
+        this.progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showErrorSnackbar(String message) {
+        Snackbar.make(root, message, Snackbar.LENGTH_LONG).show();
+    }
+
 }

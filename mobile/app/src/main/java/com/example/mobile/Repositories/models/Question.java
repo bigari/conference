@@ -24,6 +24,10 @@ public class Question {
     @Expose
     @SerializedName("conferenceId")
     private int confId;
+    @Expose
+    private int participantId;
+
+
 
     public Question(){}
 

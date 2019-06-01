@@ -5,6 +5,11 @@ import com.example.mobile.Callback;
 import com.example.mobile.Repositories.ConferenceRepository;
 import com.example.mobile.Repositories.models.Conference;
 import com.example.mobile.Views.ViewInterfaces.LandingView;
+import com.example.mobile.utils.RandomString;
+
+import java.net.ConnectException;
+
+import static com.example.mobile.utils.RandomString.generate;
 
 public class ParticipantJoinPresenter {
 
@@ -17,23 +22,28 @@ public class ParticipantJoinPresenter {
     }
 
     public void joinConf(String email, String accessCode){
-        // TODO- validate args
         view.showProgress();
+        // TODO- validate args
         repo.joinConf(email, accessCode, new Callback<Conference>() {
             @Override
             public void onSuccess(Conference conf) {
-                view.hideProgresss();
                 if(conf == null){
+                    view.hideProgresss();
                     view.showError("Wrong email or access code.");
                 }else{
+                    view.hideProgresss();
                     view.navToConf(conf);
                 }
             }
-
             @Override
             public void onError(Throwable error) {
                 view.hideProgresss();
-                view.showError();
+                if(error instanceof ConnectException){
+                    view.showError("Network error, check your internet connection.");
+                }
+                else{
+                    view.showError("An error occurred.");
+                }
             }
         });
     }

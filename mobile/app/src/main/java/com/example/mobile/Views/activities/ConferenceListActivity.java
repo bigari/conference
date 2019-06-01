@@ -1,10 +1,13 @@
 package com.example.mobile.Views.activities;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,10 +40,11 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
     private ProgressBar progressBar;
     private LinearLayout emptyListLayout;
     private RelativeLayout confListLayout;
+    private ViewGroup root;
 
     private ConferenceListPresenter presenter;
-
-    private SharedPreferences prefs;
+    private String token;
+    private int uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,7 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
         progressBar = findViewById(R.id.progressbar);
         emptyListLayout = findViewById(R.id.layout_conflist_emptylist);
         confListLayout = findViewById(R.id.layout_conflist_list);
+        root = findViewById(R.id.layout_root);
 
         ConferenceRepository repository = new ConferenceRepository();
         presenter = new ConferenceListPresenter(this, repository);
@@ -72,14 +77,11 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
         activeConfList = findViewById(R.id.recyclerview_active_conference_list);
         pastConfList = findViewById(R.id.recyclerview_past_conference_list);
 
-        prefs = getSharedPreferences("prefs", MODE_PRIVATE);
-        presenter.loadConfs(
-                Integer.parseInt(
-                    prefs.getString("uid", "0")
-                ),
-                prefs.getString("token", "")
-        );
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        this.token = prefs.getString("token", "");
+        this.uid = Integer.parseInt(prefs.getString("uid", "0"));
 
+        presenter.loadConfs(uid, token);
     }
 
     @Override
@@ -91,11 +93,11 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
         pastListTitle.setVisibility(View.VISIBLE);
         activeListTitle.setVisibility(View.VISIBLE);
 
-        activeConfList.setAdapter(new ConferenceListAdapter(activeConfs, this));
+        activeConfList.setAdapter(new ConferenceListAdapter(activeConfs, this, presenter));
         activeConfList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         activeConfList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-        pastConfList.setAdapter(new ConferenceListAdapter(pastConfs, this));
+        pastConfList.setAdapter(new ConferenceListAdapter(pastConfs, this, presenter));
         pastConfList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         pastConfList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
@@ -129,15 +131,14 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
             activeListTitle.setVisibility(View.GONE);
             pastListTitle.setVisibility(View.VISIBLE);
 
-
-            pastConfList.setAdapter(new ConferenceListAdapter(confs, this));
+            pastConfList.setAdapter(new ConferenceListAdapter(confs, this, presenter));
             pastConfList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             pastConfList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         }else{
             activeListTitle.setVisibility(View.VISIBLE);
             pastListTitle.setVisibility(View.GONE);
 
-            activeConfList.setAdapter(new ConferenceListAdapter(confs, this));
+            activeConfList.setAdapter(new ConferenceListAdapter(confs, this, presenter));
             activeConfList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
             activeConfList.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         }
@@ -145,23 +146,23 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
     }
 
     @Override
-    public void showErrorView() {
+    public void showErrorView(String message) {
         ViewGroup errorView = findViewById(R.id.layout_conflist_error);
         Button retryBtn = findViewById(R.id.button_conflist_tryagain);
+        TextView errorV = errorView.findViewById(R.id.textview_message);
 
+
+        confListLayout.setVisibility(View.GONE);
+        emptyListLayout.setVisibility(View.GONE);
         errorView.setVisibility(View.VISIBLE);
 
+        errorV.setText(message);
         retryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 errorView.setVisibility(View.GONE);
 
-                presenter.loadConfs(
-                        Integer.parseInt(
-                                prefs.getString("uid", "0")
-                        ),
-                        prefs.getString("token", "")
-                );
+                presenter.loadConfs(uid, token);
             }
         });
     }
@@ -174,5 +175,37 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
         this.progressBar.setVisibility(View.GONE);
     }
 
+    @Override
+    public void showDeleteDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(getString(R.string.dialog_deleteconf_title));
+        builder.setMessage(getString(R.string.dialog_deleteconf_message));
+
+        String positiveText = getString(R.string.dialog_deleteconf_delete);
+        builder.setPositiveButton(positiveText,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        presenter.confirm(token);
+                    }
+                });
+
+        String negativeText = getString(android.R.string.cancel);
+        builder.setNegativeButton(negativeText,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+
+        dialog.show();
+    }
+
+    @Override
+    public void showErrorSnackbar(String message){
+        Snackbar.make(root, message, Snackbar.LENGTH_LONG).show();
+    }
 
 }

@@ -21,4 +21,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="empty_questionlist_speaker">No questions yet</string>
+    <string name="dialog_deletequest_title">Delete question</string>
+    <string name="dialog_deletequest_message">Would you like to permanently delete this question?</string>
+    <string name="dialog_deletequest_delete">DELETE</string>
+    <string name="dialog_deleteconf_title">Delete event</string>
+    <string name="dialog_deleteconf_message">Would you like to permanently delete this event? All the event data will be lost.</string>
+    <string name="dialog_deleteconf_delete">DELETE</string>
 </resources>

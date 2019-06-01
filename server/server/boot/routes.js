@@ -16,7 +16,7 @@ module.exports = function (app) {
         relation: 'conferences',
         scope: {
           where:{
-            codeAcces: req.query.accesscode
+            codeAcces: req.query.accesscode,
           },
         }
       }
@@ -37,12 +37,6 @@ module.exports = function (app) {
 
 
   app.post('/api/enquetes/:enqueteId/vote', function(req, res) {
-
-
-    app.models.Enquete.findOne()
-
-
-
     app.models.Participant.findOne(
       {
         where: {

@@ -9,7 +9,9 @@ public interface ConferenceListView {
     void showConfs(List<Conference> activeConfs, List<Conference> pastConfs);
     void showEmptyListView();
     void showConfs(List<Conference> confs, String type);
-    void showErrorView();
+    void showErrorView(String message);
+    void showErrorSnackbar(String message);
     void showLoading();
     void hideLoading();
+    void showDeleteDialog();
 }
