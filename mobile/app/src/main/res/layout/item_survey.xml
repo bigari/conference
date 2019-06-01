@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:padding="16dp"
     android:layout_height="wrap_content">
 
     <android.support.design.card.MaterialCardView
@@ -14,30 +15,68 @@
         card_view:cardCornerRadius="10dp">
 
         <LinearLayout
+            android:padding="16dp"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/item_survey_intitule"
+            <LinearLayout
+                android:id="@+id/item_survey_options_container"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/item_survey_options"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginBottom="8dp"
+                    android:id="@+id/item_survey_intitule"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/item_survey_options"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                </RadioGroup>
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageButton
+                        android:id="@+id/item_survey_action_chart"
+                        android:src="@drawable/outline_bar_chart_24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/item_survey_chart_container"
+                android:visibility="gone"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
+                <com.github.mikephil.charting.charts.PieChart
+                    android:gravity="center"
+                    android:id="@+id/item_survey_chart"
+                    android:layout_width="300dp"
+                    android:layout_height="300dp" />
 
-            </RadioGroup>
-
-            <Button
-                android:id="@+id/item_survey_send"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:backgroundTint="@color/colorSecondary"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:text="Send"/>
+                <LinearLayout
+                    android:layout_gravity="center"
+                    android:id="@+id/item_survey_actions"
+                    android:visibility="gone"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageButton
+                        android:id="@+id/item_survey_action_back"
+                        android:src="@drawable/outline_arrow_back_24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
-
     </android.support.design.card.MaterialCardView>
-
 </LinearLayout>

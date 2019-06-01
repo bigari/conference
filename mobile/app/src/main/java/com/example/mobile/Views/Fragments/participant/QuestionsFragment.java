@@ -44,11 +44,16 @@ public class QuestionsFragment extends Fragment implements QuestionListView {
     private int confId;
 
     @Override
-    public void onAttach(Activity activity){
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
-        this.ctx = activity;
-        this.confId = activity.getIntent().getExtras().getInt("confId");
+        Activity a;
+
+        if (context instanceof Activity){
+            a=(Activity) context;
+            this.ctx = a;
+            this.confId = a.getIntent().getExtras().getInt("confId");
+        }
     }
 
     @Nullable

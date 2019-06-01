@@ -1,48 +1,40 @@
 package com.example.mobile.Repositories;
 
 import com.example.mobile.Callback;
-import com.example.mobile.Repositories.apis.SpeakerApi;
-import com.example.mobile.Repositories.models.Speaker;
+import com.example.mobile.Repositories.apis.ParticipantApi;
+import com.example.mobile.Repositories.apis.ParticipantApi;
+import com.example.mobile.Repositories.models.Participant;
+import com.example.mobile.Repositories.models.Participant;
 import com.example.mobile.RetrofitClient;
 
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class SpeakerRepository {
+public class ParticipantRepository {
 
 
-    private final SpeakerApi speakerApi;
+    private final ParticipantApi participantApi;
 
-    public SpeakerRepository(){
-        this.speakerApi = RetrofitClient.getRetrofit().create(SpeakerApi.class);
+    public ParticipantRepository(){
+        this.participantApi = RetrofitClient.getRetrofit().create(ParticipantApi.class);
     }
 
-    public void login(Speaker speaker, final Callback<Speaker> callback) {
-        speakerApi.login(speaker).enqueue(new retrofit2.Callback<Speaker>() {
+    public void create(Participant participant, final Callback<Participant> callback) {
+        System.out.println(">>>>>>>>>>>Creating: "+ participant.getAccessKey());
+        participantApi.createParticipant(participant).enqueue(new retrofit2.Callback<Participant>() {
             @Override
-            public void onResponse(Call<Speaker> call, Response<Speaker> response) {
+            public void onResponse(Call<Participant> call, Response<Participant> response) {
+                System.out.println(">>>>>>>>>>>Participant Created: "+ participant.getId()+ " :: "+ participant.getAccessKey());
                 callback.onSuccess(response.body());
             }
 
             @Override
-            public void onFailure(Call<Speaker> call, Throwable t) {
+            public void onFailure(Call<Participant> call, Throwable t) {
                 callback.onError(t);
             }
         });
     }
 
-    public void signup(Speaker speaker, final Callback<Speaker> callback) {
-        speakerApi.signup(speaker).enqueue(new retrofit2.Callback<Speaker>() {
-            @Override
-            public void onResponse(Call<Speaker> call, Response<Speaker> response) {
-                callback.onSuccess(response.body());
-            }
-
-            @Override
-            public void onFailure(Call<Speaker> call, Throwable t) {
-                callback.onError(t);
-            }
-        });
-    }
+    
 
 }

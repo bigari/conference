@@ -38,12 +38,19 @@ public class Participant {
         current.accessKey =  RandomString.generate(32);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("accessKey", current.accessKey).apply();
-
         // send to server and get Id
     }
 
     public static void retrieve (SharedPreferences prefs) {
         current.accessKey =  prefs.getString("accessKey", "");
+        current.id = Integer.parseInt(
+                prefs.getString
+                (
+                    "participantId",
+                    "0"
+                )
+        );
+
         if(current.accessKey == "") {
             create(prefs);
             return;

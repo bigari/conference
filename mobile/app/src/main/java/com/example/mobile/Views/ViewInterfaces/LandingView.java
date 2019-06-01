@@ -8,4 +8,5 @@ public interface LandingView {
     void hideProgresss();
     void showError();
     void showError(String error);
+    void setParticipantId(Integer id);
 }

@@ -12,9 +12,12 @@ import android.widget.Toast;
 
 import com.example.mobile.R;
 import com.example.mobile.Repositories.ConferenceRepository;
+import com.example.mobile.Repositories.ParticipantRepository;
 import com.example.mobile.Repositories.models.Conference;
+import com.example.mobile.Repositories.models.Participant;
 import com.example.mobile.Views.ViewInterfaces.LandingView;
 import com.example.mobile.presenters.ParticipantJoinPresenter;
+import com.example.mobile.presenters.participant.ParticipantPresenter;
 
 public class LandingActivity extends AppCompatActivity implements LandingView {
 
@@ -22,6 +25,8 @@ public class LandingActivity extends AppCompatActivity implements LandingView {
     private TextInputEditText emailEdit, codeEdit;
     private TableRow authenticationRow, workspaceRow;
     private SharedPreferences prefs;
+
+    private ParticipantPresenter participantPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +50,16 @@ public class LandingActivity extends AppCompatActivity implements LandingView {
         );
 
         toogleActions();
+        participantPresenter = new  ParticipantPresenter(
+                this,
+                new ParticipantRepository()
+        );
 
         if (prefs.getString("accessKey", "") == "") {
-           // Participant.create(prefs);
-            //uncomment once request to server is implemented
+           Participant.create(prefs);
+           participantPresenter.create(Participant.current);
+        } else {
+            Participant.retrieve(prefs);
         }
 
         join.setOnClickListener( v -> {
@@ -101,11 +112,14 @@ public class LandingActivity extends AppCompatActivity implements LandingView {
 
     @Override
     public void navToConf(Conference conf) {
+        if (prefs.getString("participantId", "") != "") {
+            participantPresenter.create(Participant.current);
+        }
+
         Intent intent = new Intent(this, ConferenceActivity.class);
         intent.putExtra("role", "participant");
         intent.putExtra("confTitle", conf.getTitle());
         intent.putExtra("confId", conf.getId());
-
         startActivity(intent);
     }
 
@@ -127,5 +141,12 @@ public class LandingActivity extends AppCompatActivity implements LandingView {
     @Override
     public void showError(String error) {
         Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setParticipantId(Integer id) {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("participantId", id.toString());
+        System.out.println(">>>>>>>>>>>"+ "Participant("+id+", "+ Participant.current.getAccessKey()+ ") >>>>>>>>>");
     }
 }

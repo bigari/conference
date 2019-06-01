@@ -1,32 +1,42 @@
 package com.example.mobile.presenters.participant;
 
 import com.example.mobile.Callback;
-import com.example.mobile.Repositories.QuestionRepository;
-import com.example.mobile.Repositories.models.Question;
-import com.example.mobile.Views.ViewInterfaces.participant.QuestionListView;
+import com.example.mobile.Repositories.SurveyRepository;
+import com.example.mobile.Repositories.models.Enquete;
+import com.example.mobile.Repositories.models.Vote;
+import com.example.mobile.Views.ViewInterfaces.participant.ParticipantSurveyView;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class QuestionListPresenter {
+import okhttp3.ResponseBody;
 
-    private QuestionListView view;
-    private QuestionRepository repo;
-    private List<Question> quests;
+public class SurveyPresenter {
 
-    public QuestionListPresenter(QuestionListView view, QuestionRepository repo) {
+    private ParticipantSurveyView view;
+    private SurveyRepository repo;
+    private List<Enquete> surveys;
+
+    public SurveyPresenter(ParticipantSurveyView view, SurveyRepository repo) {
         this.repo = repo;
         this.view = view;
+        surveys = new ArrayList();
     }
 
-    public void loadQuestions(int confId) {
-        repo.getQuestions(confId, new Callback<List<Question>>() {
+    public void loadSurveys(int confId) {
+        repo.getVisibleEnquetes(confId, new Callback<List<Enquete>>() {
             @Override
-            public void onSuccess(List<Question> questions) {
-                quests = questions;
-                if (questions.isEmpty()) {
+            public void onSuccess(List<Enquete> result) {
+                surveys = result;
+                if (surveys == null) {
+                    System.out.println(">>>>>>>>>>>>NO SURVEYS>>>>>>>>>>>>");
+                }
+                else if (surveys.isEmpty()) {
+                    System.out.println(">>>>>>>>>>>>EMPTY "+ confId+ "  "+ surveys.size()+ " >>>>>>>>>>>>");
                     view.showEmptyListView();
                 } else {
-                    view.showList(questions);
+                    System.out.println(">>>>>>>>>>>>SURVEYS: "+ surveys.get(0).getOptions().size()+" >>>>>>>>>>>>");
+                    view.showList(surveys);
                 }
             }
 
@@ -37,31 +47,87 @@ public class QuestionListPresenter {
         });
     }
 
-    public void reloadQuestions(int confId) {
-        repo.getQuestions(confId, new Callback<List<Question>>() {
+    public void reloadSurveys(int confId) {
+        repo.getVisibleEnquetes(confId, new Callback<List<Enquete>>() {
             @Override
-            public void onSuccess(List<Question> questList) {
-                quests = questList;
-                if (quests.isEmpty()) {
+            public void onSuccess(List<Enquete> surveyList) {
+                surveys = surveyList;
+                if (surveys == null){
+                    System.out.println(">>>>>>>>>>>>NO SURVEYS>>>>>>>>>>>>");
+                }
+                else if (surveys.isEmpty()) {
+                    System.out.println(">>>>>>>>>>>>EMPTY>>>>>>>>>>>>");
                     view.showEmptyListView();
                 } else {
-                    view.showList(quests);
+                    System.out.println(">>>>>>>>>>>>SURVEYS: "+ surveys.get(0).getOptions().size()+" >>>>>>>>>>>>");
+                    view.showList(surveys);
                 }
                 view.stopRefreshingView();
             }
 
             @Override
             public void onError(Throwable error) {
-                view.showList(quests);
+                view.showList(surveys);
                 view.stopRefreshingView();
             }
         });
 
     }
 
+    public void fetchNew(int confId) {
+        System.out.println(">>>>>>>>>>>Fetching new >>>>>>>>>>>");
+        repo.getVisibleEnquetes(confId, new Callback<List<Enquete>>() {
+            @Override
+            public void onSuccess(List<Enquete> result) {
+                if (result == null ) {
+                    return;
+                }
+                int n = surveys.size();
+                Enquete.appendNew(surveys, result);
 
-    public void deleteQuestion(int questId) {
+                if (n == surveys.size()) {
+                    System.out.println(">>>>>>>>>>>Nothing found>>>>>>>>>>>");
+                } else {
+                    System.out.println(">>>>>>>>>>>Found new>>>>>>>>>>>");
+                    view.appendNew(surveys);
+                }
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                view.showErrorView();
+            }
+        });
     }
 
+    public void vote(int enqueteIndex, Vote vote) {
+        repo.vote(surveys.get(enqueteIndex).getId(), vote, new Callback<ResponseBody>() {
+            @Override
+            public void onSuccess(ResponseBody result) {
+                view.showStats(enqueteIndex);
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                view.showErrorView();
+            }
+        });
+    }
+
+    public void getStats(int confId) {
+        repo.getStats(confId, new Callback<List<Enquete>>() {
+            @Override
+            public void onSuccess(List<Enquete> value) {
+                if (value != null) {
+                    view.updateStats(value);
+                }
+            }
+
+            @Override
+            public void onError(Throwable error) {
+                    //Pass
+            }
+        });
+    }
 
 }

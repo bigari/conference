@@ -1,4 +1,4 @@
-package com.example.mobile.Views.adapters;
+package com.example.mobile.Views.adapters.participant;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -7,21 +7,37 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.mobile.R;
 import com.example.mobile.Repositories.models.Enquete;
+import com.example.mobile.Repositories.models.Option;
+import com.example.mobile.Repositories.models.Participant;
+import com.example.mobile.Repositories.models.Vote;
+import com.example.mobile.presenters.participant.SurveyPresenter;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.ViewHolder> {
+public class ParticipantSurveyAdapter extends RecyclerView.Adapter<ParticipantSurveyAdapter.ViewHolder> {
 
-    private ArrayList<Enquete> enquetes;
+    private List<Enquete> enquetes;
     private Context context;
+    private SurveyPresenter presenter;
     
-    public SurveyAdapter(Context context, ArrayList<Enquete> enquetes){
+    public ParticipantSurveyAdapter(Context context, List<Enquete> enquetes, SurveyPresenter presenter){
         this.enquetes = enquetes;
         this.context = context;
+        this.presenter = presenter;
     }
 
     @NonNull
@@ -31,15 +47,69 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.ViewHolder
         return new ViewHolder(view);
     }
 
+    private void showChart(ViewHolder viewHolder, Enquete enquete) {
+        enquete.setStatsVisible(true);
+        viewHolder.chartContainer.setVisibility(View.VISIBLE);
+        viewHolder.optionsContainer.setVisibility(View.GONE);
+        int total = enquete.getTotalVoteCount();
+        if (total != 0) {
+            ArrayList<PieEntry> stats = new ArrayList();
+            List<Option> options = enquete.getOptions();
+            for (int j=0; j<options.size(); j++) {
+                stats.add(
+                        new PieEntry(
+                                (float) (options.get(j).getVoteCount()),
+                                options.get(j).getIntituleOption()
+                        )
+                );
+
+            }
+            PieDataSet pieDataSet = new PieDataSet(stats, "Results");
+            PieData pieData = new PieData(pieDataSet);
+            pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+            viewHolder.pieChart.setData(pieData);
+            viewHolder.pieChart.animateXY(5000, 5000);
+        }
+    }
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Enquete enquete = enquetes.get(i);
         viewHolder.intituleView.setText(enquete.getIntituleEnquete());
-        viewHolder.sendButton.setOnClickListener(
-                v -> {
-                    // TODO send Answer
-                }
-        );
+        if (enquete.isStatsVisible()) {
+            showChart(viewHolder, enquete);
+        } else {
+            viewHolder.chartContainer.setVisibility(View.GONE);
+            viewHolder.optionsContainer.setVisibility(View.VISIBLE);
+        }
+
+        viewHolder.btnBack.setOnClickListener(v->{
+            enquete.setStatsVisible(false);
+            viewHolder.chartContainer.setVisibility(View.GONE);
+            viewHolder.optionsContainer.setVisibility(View.VISIBLE);
+
+        });
+
+        viewHolder.btnChart.setOnClickListener(v->{
+            showChart(viewHolder, enquete);
+        });
+        for (Option option : enquete.getOptions()) {
+            RadioButton optionRadio = new RadioButton(context);
+            optionRadio.setText(option.getIntituleOption());
+            optionRadio.setId(option.getId());
+            viewHolder.optionGroup.addView(optionRadio);
+
+
+            optionRadio.setOnClickListener(v-> {
+                this.presenter.vote(
+                        i,
+                        new Vote(Participant.current.getId(),
+                        Participant.current.getAccessKey(),
+                        option.getId()
+                    )
+                );
+            });
+        }
 
     }
 
@@ -50,16 +120,27 @@ public class SurveyAdapter extends RecyclerView.Adapter<SurveyAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView intituleView;
+        private RadioGroup optionGroup;
+        private LinearLayout optionsContainer, chartContainer;
+        private ImageButton btnChart, btnBack;
 
         private Button sendButton;
+
+        private PieChart pieChart;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             intituleView = itemView.findViewById(R.id.item_survey_intitule);
-            sendButton = itemView.findViewById(R.id.item_survey_send);
+            optionGroup = itemView.findViewById(R.id.item_survey_options);
+            optionsContainer = itemView.findViewById(R.id.item_survey_options_container);
+            chartContainer = itemView.findViewById(R.id.item_survey_chart_container);
+            btnBack = itemView.findViewById(R.id.item_survey_action_back);
+            btnChart = itemView.findViewById(R.id.item_survey_action_chart);
+            pieChart = itemView.findViewById(R.id.item_survey_chart);
+
         }
+
 
         public String getChosenOption () {
             return "";
