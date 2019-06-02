@@ -19,9 +19,12 @@ public class ConferenceActivity extends AppCompatActivity implements ConferenceV
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
+        toolbar.setSubtitle("");
         setSupportActionBar(toolbar);
         String title = getIntent().getExtras().getString("confTitle", "Event");
+        String accessCode = getIntent().getExtras().getString("accessCode", "");
         toolbar.setTitle(title);
+        toolbar.setSubtitle("#" + accessCode);
 
         ViewPager viewPager = findViewById(R.id.viewpager_conferenceinfo);
 

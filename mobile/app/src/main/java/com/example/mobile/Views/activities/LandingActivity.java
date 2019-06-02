@@ -129,6 +129,7 @@ public class LandingActivity extends AppCompatActivity implements LandingView {
         Intent intent = new Intent(this, ConferenceActivity.class);
         intent.putExtra("role", "participant");
         intent.putExtra("confTitle", conf.getTitle());
+        intent.putExtra("accessCode", conf.getAccessCode());
         intent.putExtra("confId", conf.getId());
         startActivity(intent);
     }
