@@ -72,6 +72,11 @@ public class CreateConferenceActivity extends AppCompatActivity implements Creat
         startDateV  = findViewById(R.id.edittext_conference_create_start_date);
         endDateV  = findViewById(R.id.edittext_conference_create_end_date);
         submitBtn = findViewById(R.id.button_conference_create_submit);
+        titleIL = findViewById(R.id.til_title);
+        startDateIL = findViewById(R.id.til_startdate);
+        endDateIL = findViewById(R.id.til_enddate);
+
+
 
 
         final StartDatePickerListener startDatePickerListener = new StartDatePickerListener();
@@ -150,7 +155,6 @@ public class CreateConferenceActivity extends AppCompatActivity implements Creat
                 presenter.createConference(uid, token);
             }
         });
-        titleIL = findViewById(R.id.inputlayout_conference_create_title);
     }
 
     @Override
@@ -165,6 +169,18 @@ public class CreateConferenceActivity extends AppCompatActivity implements Creat
     public void showErrorView(String message) {
         LinearLayout root = findViewById(R.id.layout_create_conference);
         Snackbar.make(root, message, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showFieldError(String field, String error) {
+        switch(field){
+            case "title":
+                titleIL.setError(error);
+            case "start date":
+                startDateIL.setError(error);
+            case "end date":
+                endDateIL.setError(error);
+        }
     }
 
     @Override

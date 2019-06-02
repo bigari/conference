@@ -9,6 +9,7 @@ public interface CreateConferenceView {
     void showProgressbar();
     void hideProgressbar();
     void showErrorView(String message);
+    void showFieldError(String field, String error);
     void navToConfList();
 
     String getConfTitle();

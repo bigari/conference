@@ -32,6 +32,15 @@ public class CreateConferencePresenter {
         Date endDate = view.getConfEndDate();
         int speakerId = uid;
 
+        if(title.isEmpty()){
+            view.showFieldError("title", "This field is required.");
+            return;
+        }
+        if(title.length() > 20){
+            view.showFieldError("title", "This field cannot exceed 20 characters in length.");
+            return;
+        }
+
 
         Conference conference = new Conference(speakerId, title, startDate, endDate);
         view.showProgressbar();

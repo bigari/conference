@@ -14,4 +14,5 @@ public interface ConferenceListView {
     void showLoading();
     void hideLoading();
     void showDeleteDialog();
+    void navToLandingView();
 }

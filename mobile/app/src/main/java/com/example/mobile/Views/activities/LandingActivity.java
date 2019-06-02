@@ -73,8 +73,8 @@ public class LandingActivity extends AppCompatActivity implements LandingView {
 
         join.setOnClickListener( v -> {
             hideKeyboard();
-            String email = emailEdit.getText().toString();
-            String code = codeEdit.getText().toString();
+            String email = emailEdit.getText().toString().trim();
+            String code = codeEdit.getText().toString().trim();
             presenter.joinConf(email, code);
         });
 
@@ -129,6 +129,7 @@ public class LandingActivity extends AppCompatActivity implements LandingView {
         Intent intent = new Intent(this, ConferenceActivity.class);
         intent.putExtra("role", "participant");
         intent.putExtra("confTitle", conf.getTitle());
+        intent.putExtra("accessCode", conf.getAccessCode());
         intent.putExtra("confId", conf.getId());
         startActivity(intent);
     }

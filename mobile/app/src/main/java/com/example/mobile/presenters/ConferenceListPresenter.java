@@ -7,6 +7,7 @@ import com.example.mobile.Callback;
 import com.example.mobile.Repositories.ConfListCache;
 import com.example.mobile.Repositories.ConferenceRepository;
 import com.example.mobile.Repositories.QuestionRepository;
+import com.example.mobile.Repositories.SpeakerRepository;
 import com.example.mobile.Repositories.models.Conference;
 import com.example.mobile.Views.ViewInterfaces.ConferenceListView;
 
@@ -20,15 +21,17 @@ public class ConferenceListPresenter {
 
     private ConferenceListView view;
     private ConferenceRepository confRepo;
+    private SpeakerRepository speakerRepo;
     private ConfListCache confListCache;
 
     private int cid;
     private int index;
 
 
-    public ConferenceListPresenter(ConferenceListView view, ConferenceRepository confRepo){
+    public ConferenceListPresenter(ConferenceListView view, ConferenceRepository confRepo, SpeakerRepository speakerRepo){
         this.view = view;
         this.confRepo = confRepo;
+        this.speakerRepo = speakerRepo;
         this.confListCache = ConfListCache.getInstance();
     }
 
@@ -166,5 +169,24 @@ public class ConferenceListPresenter {
         this.index = 0;
     }
 
+    public void logout(String token){
+        view.showLoading();
+        speakerRepo.logout(token, new Callback<Void>() {
+            @Override
+            public void onSuccess(Void value) {
+                view.hideLoading();
+                view.navToLandingView();
+            }
 
+            @Override
+            public void onError(Throwable error) {
+                view.hideLoading();
+                view.showErrorSnackbar("Network error, check your internet connection.");
+            }
+        });
+    }
+
+    public void clearSharedPrefs(SharedPreferences sp){
+        sp.edit().clear().apply();
+    }
 }

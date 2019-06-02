@@ -21,11 +21,20 @@ public class CreateQuestionPresenter {
     public void createQuestion(String username, String question, int confId){
         view.showProgress();
         if(question.isEmpty()){
-            view.showErrorView("Error");
+            view.showFieldError("question", "This field is required.");
             return;
         }
+        if(question.length() > 140){
+            view.showFieldError("question", "The question cannot cannot exceed 140 characters.");
+            return;
+        }
+        if(username.length() > 20){
+            view.showFieldError("username", "The username cannot exceed 20 characters.");
+            return;
+        }
+
+
         Question quest = new Question();
-        //TODO- validate args
         if(username.isEmpty()){quest.setUsername("Anonymous");}
         else{quest.setUsername(username);}
         quest.setTimestamp();
