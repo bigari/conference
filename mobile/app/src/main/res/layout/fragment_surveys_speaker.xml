@@ -39,33 +39,34 @@
 
     </LinearLayout>-->
 
-    <LinearLayout
-        android:id="@+id/layout_surveylist_emptylist"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:gravity="center"
-        android:visibility="gone"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/empty_survey_list"/>
-
-        <Button
-            android:id="@+id/button_surveylist_emptylist_addsurvey"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/surveylist_emptylist_addsurvey"/>
-
-    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/layout_surveylist_list"
-        android:layout_below="@id/layout_surveylist_emptylist"
+        android:layout_below="@id/surver_progressbar"
         android:layout_width="match_parent"
         android:visibility="visible"
         android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/layout_surveylist_emptylist"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/empty_survey_list"/>
+
+            <Button
+                android:id="@+id/button_surveylist_emptylist_addsurvey"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/surveylist_emptylist_addsurvey"/>
+
+        </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerview_survey_speaker"

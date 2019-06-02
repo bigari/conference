@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.mobile.R;
 import com.example.mobile.Repositories.SurveyRepository;
@@ -38,6 +39,8 @@ public class SurveysFragment extends Fragment implements ParticipantSurveyView {
     private Context ctx;
     private Integer confId;
     private ParticipantSurveyAdapter surveyAdapter;
+
+    private LinearLayout emptyView;
 
     private static final int PERIOD = 15000;
     Handler mHandler;
@@ -83,6 +86,8 @@ public class SurveysFragment extends Fragment implements ParticipantSurveyView {
             }
         });*/
 
+        emptyView = view.findViewById(R.id.layout_surveylist_emptylist);
+
         presenter = new ParticipantSurveyPresenter(this, new SurveyRepository());
         surveyAdapter = new ParticipantSurveyAdapter(ctx, this.surveys, presenter);
         presenter.loadSurveys(confId);
@@ -106,6 +111,8 @@ public class SurveysFragment extends Fragment implements ParticipantSurveyView {
 
     @Override
     public void showList(List<Enquete> surveys) {
+        surveyRecycleView.setVisibility(View.VISIBLE);
+        emptyView.setVisibility(View.GONE);
         this.surveys = surveys;
         surveyAdapter = new ParticipantSurveyAdapter(ctx, this.surveys, presenter);
         surveyRecycleView.setAdapter(surveyAdapter);
@@ -114,7 +121,8 @@ public class SurveysFragment extends Fragment implements ParticipantSurveyView {
 
     @Override
     public void showEmptyListView() {
-
+        surveyRecycleView.setVisibility(View.GONE);
+        emptyView.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -129,6 +137,8 @@ public class SurveysFragment extends Fragment implements ParticipantSurveyView {
 
     @Override
     public void appendNew(List<Enquete> surveys) {
+        surveyRecycleView.setVisibility(View.VISIBLE);
+        emptyView.setVisibility(View.GONE);
         Enquete.appendNew(this.surveys, surveys);
         surveyRecycleView.setAdapter(surveyAdapter);
         surveyAdapter.notifyDataSetChanged();

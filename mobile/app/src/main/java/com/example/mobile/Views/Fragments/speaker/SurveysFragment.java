@@ -15,6 +15,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.example.mobile.R;
 import com.example.mobile.Repositories.SurveyRepository;
@@ -42,6 +44,9 @@ public class SurveysFragment extends Fragment implements SpeakerSurveyView {
     private Context ctx;
     private Integer confId;
     private SpeakerSurveyAdapter surveyAdapter;
+
+    private LinearLayout emptyView;
+    private Button btnAddSurveyIfEmpty;
 
     private static final int PERIOD = 15000;
     Handler mHandler;
@@ -80,16 +85,19 @@ public class SurveysFragment extends Fragment implements SpeakerSurveyView {
         surveyRecycleView = view.findViewById(R.id.recyclerview_survey_speaker);
         surveyRecycleView.setLayoutManager(new LinearLayoutManager(ctx));
         btnAddSurvey = view.findViewById(R.id.button_surveylist_addsurvey);
+        btnAddSurveyIfEmpty = view.findViewById(R.id.button_surveylist_emptylist_addsurvey);
+
+        emptyView = view.findViewById(R.id.layout_surveylist_emptylist);
 
 
 
         btnAddSurvey.setOnClickListener(v->{
-            Intent intent = new Intent(ctx, ManageSurveyActivity.class);
-            intent.putExtra("confId", confId);
-            intent.putExtra("type", "create");
-            startActivity(intent);
+            navToCreateSurvey();
         });
 
+        btnAddSurveyIfEmpty.setOnClickListener(v->{
+            navToCreateSurvey();
+        });
 
 
         presenter = new SpeakerSurveyPresenter(this, new SurveyRepository());
@@ -104,6 +112,13 @@ public class SurveysFragment extends Fragment implements SpeakerSurveyView {
         };
     }
 
+    private void navToCreateSurvey(){
+        Intent intent = new Intent(ctx, ManageSurveyActivity.class);
+        intent.putExtra("confId", confId);
+        intent.putExtra("type", "create");
+        startActivity(intent);
+    }
+
     private void periodicFetchSurveyStats() {
         mHandler.post(mRunnable);
     }
@@ -114,6 +129,8 @@ public class SurveysFragment extends Fragment implements SpeakerSurveyView {
 
     @Override
     public void showList(List<Enquete> surveys) {
+        surveyRecycleView.setVisibility(View.VISIBLE);
+        emptyView.setVisibility(View.GONE);
         this.surveys = surveys;
         surveyAdapter = new SpeakerSurveyAdapter(ctx, this.surveys, presenter);
         surveyRecycleView.setAdapter(surveyAdapter);
@@ -122,7 +139,8 @@ public class SurveysFragment extends Fragment implements SpeakerSurveyView {
 
     @Override
     public void showEmptyListView() {
-
+        surveyRecycleView.setVisibility(View.GONE);
+        emptyView.setVisibility(View.VISIBLE);
     }
 
 
