@@ -53,7 +53,10 @@ public class Option {
 
     public int getVoteCount(){return voteCount;}
 
-    public void setVoteCount(int voteCount){this.voteCount = voteCount;}
+    public void setVoteCount(int voteCount){
+        System.out.println(">>>>>setting vote count: " + this.id +  ":::" + voteCount);
+        this.voteCount = voteCount;
+    }
 
     @Override
     public boolean equals(Object obj) {

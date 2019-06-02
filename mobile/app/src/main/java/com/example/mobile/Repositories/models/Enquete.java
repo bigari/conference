@@ -23,12 +23,15 @@ public class Enquete {
 
     private boolean statsVisible;
 
+    private boolean animate;
+
     @Expose
     private boolean visible;
 
     public Enquete() {
         options = new ArrayList();
         statsVisible = false;
+        animate = true;
     }
 
     public int getId() {
@@ -57,6 +60,14 @@ public class Enquete {
 
     public void addOptions (ArrayList<Option> options) {
         this.options.addAll(options);
+    }
+
+    public boolean isAnimate() {
+        return animate;
+    }
+
+    public void setAnimate(boolean animate) {
+        this.animate = animate;
     }
 
     public int getTotalVoteCount () {
@@ -106,6 +117,7 @@ public class Enquete {
         for (Enquete enquete : l2) {
             index = l1.indexOf(enquete);
             if (index != -1) {
+                l1.get(index).setAnimate(false);
                 Option.updateStats(
                         l1.get(index).getOptions(),
                         enquete.getOptions()
