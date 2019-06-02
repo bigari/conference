@@ -102,6 +102,7 @@ module.exports = function (app) {
         include: {
           relation: 'enquetes',
           scope: {
+            where: {visible: true},
             include: {
               relation: 'options',
               scope: {

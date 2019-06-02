@@ -92,6 +92,13 @@
       "principalId": "$owner",
       "permission": "ALLOW",
       "property": ["__destroyById__questions", "__delete__questions"]
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$owner",
+      "permission": "ALLOW",
+      "property": "__create__enquetes"
     }
   ],
   "methods": {}
