@@ -2,7 +2,6 @@ package com.example.mobile.Views.Fragments.participant;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -18,21 +17,19 @@ import android.view.ViewGroup;
 import com.example.mobile.R;
 import com.example.mobile.Repositories.SurveyRepository;
 import com.example.mobile.Repositories.models.Enquete;
-import com.example.mobile.Repositories.models.Option;
 import com.example.mobile.Views.ViewInterfaces.participant.ParticipantSurveyView;
 import com.example.mobile.Views.adapters.participant.ParticipantSurveyAdapter;
-import com.example.mobile.presenters.participant.SurveyPresenter;
+import com.example.mobile.presenters.participant.ParticipantSurveyPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 public class SurveysFragment extends Fragment implements ParticipantSurveyView {
 
     private RecyclerView surveyRecycleView;
-    private SurveyPresenter presenter;
+    private ParticipantSurveyPresenter presenter;
     private List<Enquete> surveys = new ArrayList<>();
     private SwipeRefreshLayout srl;
     private final ScheduledExecutorService newSurveyScheduler =
@@ -86,7 +83,7 @@ public class SurveysFragment extends Fragment implements ParticipantSurveyView {
             }
         });*/
 
-        presenter = new SurveyPresenter(this, new SurveyRepository());
+        presenter = new ParticipantSurveyPresenter(this, new SurveyRepository());
         surveyAdapter = new ParticipantSurveyAdapter(ctx, this.surveys, presenter);
         presenter.loadSurveys(confId);
 

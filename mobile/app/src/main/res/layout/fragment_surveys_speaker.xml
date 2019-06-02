@@ -1,6 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_root"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Views.activities.ConferenceListActivity">
+    <ProgressBar
+        android:id="@+id/surver_progressbar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:visibility="gone"
+        android:indeterminate="false"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
-</android.support.constraint.ConstraintLayout>
+
+    <!--<LinearLayout
+        android:id="@+id/layout_conflist_error"
+        android:layout_below="@id/toolbar_conference_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textview_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/conflist_error"/>
+
+        <Button
+            android:id="@+id/button_conflist_tryagain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/conflist_tryagain"/>
+
+    </LinearLayout>-->
+
+    <LinearLayout
+        android:id="@+id/layout_surveylist_emptylist"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/empty_survey_list"/>
+
+        <Button
+            android:id="@+id/button_surveylist_emptylist_addsurvey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/surveylist_emptylist_addsurvey"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/layout_surveylist_list"
+        android:layout_below="@id/layout_surveylist_emptylist"
+        android:layout_width="match_parent"
+        android:visibility="visible"
+        android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerview_survey_speaker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/button_surveylist_addsurvey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_baseline_add_24px"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+</RelativeLayout>

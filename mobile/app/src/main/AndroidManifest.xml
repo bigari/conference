@@ -25,7 +25,8 @@
         </activity>
         <activity android:name=".Views.activities.ConferenceListActivity" />
         <activity android:name=".Views.activities.LoginActivity" />
-        <activity android:name=".Views.activities.SignupActivity"></activity>
+        <activity android:name=".Views.activities.SignupActivity" />
+        <activity android:name=".Views.activities.ManageSurveyActivity"></activity>
     </application>
 
 </manifest>

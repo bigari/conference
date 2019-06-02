@@ -36,7 +36,7 @@
                     android:orientation="vertical">
 
                 </RadioGroup>
-                <LinearLayout
+                <!--<LinearLayout
                     android:layout_gravity="center"
                     android:visibility="gone"
                     android:orientation="horizontal"
@@ -49,7 +49,7 @@
                         android:layout_width="24px"
                         android:layout_height="24px" />
 
-                </LinearLayout>
+                </LinearLayout>-->
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/item_survey_chart_container"
@@ -63,7 +63,7 @@
                     android:layout_width="300dp"
                     android:layout_height="300dp" />
 
-                <LinearLayout
+                <!--<LinearLayout
                     android:layout_gravity="center"
                     android:id="@+id/item_survey_actions"
                     android:visibility="gone"
@@ -75,7 +75,7 @@
                         android:src="@drawable/outline_arrow_back_24"
                         android:layout_width="24px"
                         android:layout_height="24px" />
-                </LinearLayout>
+                </LinearLayout>-->
             </LinearLayout>
         </LinearLayout>
     </android.support.design.card.MaterialCardView>

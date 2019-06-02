@@ -11,13 +11,13 @@ import java.util.List;
 
 import okhttp3.ResponseBody;
 
-public class SurveyPresenter {
+public class ParticipantSurveyPresenter {
 
     private ParticipantSurveyView view;
     private SurveyRepository repo;
     private List<Enquete> surveys;
 
-    public SurveyPresenter(ParticipantSurveyView view, SurveyRepository repo) {
+    public ParticipantSurveyPresenter(ParticipantSurveyView view, SurveyRepository repo) {
         this.repo = repo;
         this.view = view;
         surveys = new ArrayList();

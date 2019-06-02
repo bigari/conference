@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_create_conference"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Views.activities.CreateConferenceActivity">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:navigationIcon="@drawable/ic_baseline_arrow_back_24px"
+        style="@style/ThemeOverlay.AppCompat.Dark"
+        android:background="?colorPrimary"
+        app:title="Create a survey"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fitsSystemWindows="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:paddingVertical="18dp"
+            android:paddingHorizontal="18dp"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputlayout_survey_create_title"
+                android:layout_width="match_parent"
+                app:errorEnabled="true"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edittext_survey_create_title"
+                    android:layout_width="match_parent"
+                    android:hint="@string/survey_title_hint"
+                    android:layout_height="wrap_content" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.v7.widget.AppCompatButton
+                android:visibility="gone"
+                android:id="@+id/button_survey_change_title"
+                android:layout_marginVertical="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Update Title"
+                android:layout_gravity="center_horizontal"
+                android:backgroundTint="@color/colorSecondary"
+                android:textColor="@color/colorTextDark"
+                />
+
+            <TextView
+                android:textFontWeight="8dp"
+                android:layout_marginVertical="12dp"
+                android:text="Options"
+                android:textSize="18dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:id="@+id/survey_create_options"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/button_survey_create_more_options"
+                android:background="@drawable/button_rounded"
+                android:src="@drawable/ic_baseline_add_dark_24px"
+                android:backgroundTint="@color/colorBackgroundLight"
+                android:textColor="@color/colorTextDark"
+                android:layout_marginVertical="8dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                />
+
+            <android.support.v7.widget.AppCompatButton
+                android:backgroundTint="@color/colorSecondary"
+                android:textColor="@color/colorTextDark"
+                android:id="@+id/button_survey_create_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                android:layout_gravity="center_horizontal"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
+
+
+
+

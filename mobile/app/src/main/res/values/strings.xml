@@ -18,6 +18,12 @@
     <string name="question_hint">Type your question</string>
     <string name="question_username_hint">Username (defaults to Anonymous)</string>
 
+
+    <string name="surveylist_emptylist_addsurvey">create a survey</string>
+    <string name="empty_survey_list">no survey yet</string>
+    <string name="survey_title_hint">Title</string>
+
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="empty_questionlist_speaker">No questions yet</string>

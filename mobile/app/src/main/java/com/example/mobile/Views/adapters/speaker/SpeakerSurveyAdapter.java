@@ -1,41 +1,45 @@
-package com.example.mobile.Views.adapters.participant;
+package com.example.mobile.Views.adapters.speaker;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.mobile.R;
 import com.example.mobile.Repositories.models.Enquete;
 import com.example.mobile.Repositories.models.Option;
-import com.example.mobile.Repositories.models.Participant;
-import com.example.mobile.Repositories.models.Vote;
-import com.example.mobile.presenters.participant.ParticipantSurveyPresenter;
+import com.example.mobile.Views.activities.ManageSurveyActivity;
+import com.example.mobile.presenters.speaker.SpeakerSurveyPresenter;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParticipantSurveyAdapter extends RecyclerView.Adapter<ParticipantSurveyAdapter.ViewHolder> {
+public class SpeakerSurveyAdapter extends RecyclerView.Adapter<SpeakerSurveyAdapter.ViewHolder> {
 
     private List<Enquete> enquetes;
     private Context context;
-    private ParticipantSurveyPresenter presenter;
-    
-    public ParticipantSurveyAdapter(Context context, List<Enquete> enquetes, ParticipantSurveyPresenter presenter){
+    private SpeakerSurveyPresenter presenter;
+
+    public SpeakerSurveyAdapter(Context context, List<Enquete> enquetes, SpeakerSurveyPresenter presenter){
         this.enquetes = enquetes;
         this.context = context;
         this.presenter = presenter;
@@ -44,7 +48,7 @@ public class ParticipantSurveyAdapter extends RecyclerView.Adapter<ParticipantSu
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view  = LayoutInflater.from(context).inflate(R.layout.item_survey, viewGroup, false);
+        View view  = LayoutInflater.from(context).inflate(R.layout.item_survey_speaker, viewGroup, false);
         return new ViewHolder(view);
     }
 
@@ -94,34 +98,54 @@ public class ParticipantSurveyAdapter extends RecyclerView.Adapter<ParticipantSu
             viewHolder.optionsContainer.setVisibility(View.VISIBLE);
         }
 
-       /* viewHolder.btnBack.setOnClickListener(v->{
+        viewHolder.btnChart.setOnClickListener(v->{
+            enquete.setAnimate(true);
+           showChart(viewHolder, enquete);
+        });
+
+        viewHolder.btnDetails.setOnClickListener(v->{
             enquete.setStatsVisible(false);
             viewHolder.chartContainer.setVisibility(View.GONE);
             viewHolder.optionsContainer.setVisibility(View.VISIBLE);
-
         });
 
-        viewHolder.btnChart.setOnClickListener(v->{
-            enquete.setAnimate(true);
-            showChart(viewHolder, enquete);
-        });*/
+        viewHolder.btnEdit.setOnClickListener(v->{
+            Gson gson = new Gson();
+            String optionsJson = gson.toJson(enquete.getOptions());
+            String enqueteJson = gson.toJson(enquete);
+            Intent intent = new Intent(context, ManageSurveyActivity.class);
+            intent.putExtra("confId", enquete.getConferenceId());
+            intent.putExtra("type", "update");
+            intent.putExtra("survey", enqueteJson);
+            intent.putExtra("options", optionsJson);
+            context.startActivity(intent);
+        });
+
+       // viewHolder.visibilitySwitch.setActivated(enquete.isVisible());
+
+        viewHolder.visibilitySwitch.setChecked(enquete.isVisible());
+
+        viewHolder.visibilitySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            enquete.setVisible(isChecked);
+            presenter.updateSurvey(enquete);
+        });
+
 
         for (Option option : enquete.getOptions()) {
-            RadioButton optionRadio = new RadioButton(context);
-            optionRadio.setText(option.getIntituleOption());
-            optionRadio.setId(option.getId());
-            viewHolder.optionGroup.addView(optionRadio);
 
+            LinearLayout layout = new LinearLayout(this.context);
+            layout.setOrientation(LinearLayout.HORIZONTAL);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
 
-            optionRadio.setOnClickListener(v-> {
-                this.presenter.vote(
-                        i,
-                        new Vote(Participant.current.getId(),
-                        Participant.current.getAccessKey(),
-                        option.getId()
-                    )
-                );
-            });
+           // layout.setGravity(Gravity.CENTER);
+            layout.setLayoutParams(lp);
+
+            TextView tv = new TextView(this.context);
+            tv.setText(option.getIntituleOption());
+            layout.addView(tv);
+            viewHolder.optionsContainer.addView(layout);
         }
 
     }
@@ -135,23 +159,24 @@ public class ParticipantSurveyAdapter extends RecyclerView.Adapter<ParticipantSu
         private TextView intituleView;
         private RadioGroup optionGroup;
         private LinearLayout optionsContainer, chartContainer;
-        private ImageButton btnChart, btnBack;
+        private ImageButton btnChart, btnDetails, btnEdit;
+        private Switch visibilitySwitch;
 
-        private Button sendButton;
+        private Button sendButton, btnAddOption;
 
         private PieChart pieChart;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            intituleView = itemView.findViewById(R.id.item_survey_intitule);
-            optionGroup = itemView.findViewById(R.id.item_survey_options);
-            optionsContainer = itemView.findViewById(R.id.item_survey_options_container);
-            chartContainer = itemView.findViewById(R.id.item_survey_chart_container);
-            //btnBack = itemView.findViewById(R.id.item_survey_action_back);
-            //btnChart = itemView.findViewById(R.id.item_survey_action_chart);
-            pieChart = itemView.findViewById(R.id.item_survey_chart);
-
+            intituleView = itemView.findViewById(R.id.item_survey_speaker_intitule);
+            optionsContainer = itemView.findViewById(R.id.item_survey_speaker_options);
+            chartContainer = itemView.findViewById(R.id.item_survey_speaker_chart_container);
+            btnChart = itemView.findViewById(R.id.item_survey_speaker_action_chart);
+            btnEdit = itemView.findViewById(R.id.item_survey_speaker_action_edit);
+            btnDetails = itemView.findViewById(R.id.item_survey_speaker_action_details);
+            pieChart = itemView.findViewById(R.id.item_survey_speaker_chart);
+            visibilitySwitch = itemView.findViewById(R.id.item_survey_speaker_public);
         }
 
 

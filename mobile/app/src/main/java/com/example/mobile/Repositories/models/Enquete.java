@@ -20,6 +20,8 @@ public class Enquete {
     @Expose(serialize = false, deserialize = true)
     private List<Option> options;
 
+    @Expose(serialize = true, deserialize = true)
+    private int conferenceId;
 
     private boolean statsVisible;
 
@@ -84,6 +86,14 @@ public class Enquete {
             return this.id == ((Enquete) obj).getId();
         }
         return super.equals(obj);
+    }
+
+    public int getConferenceId() {
+        return conferenceId;
+    }
+
+    public void setConferenceId(int conferenceId) {
+        this.conferenceId = conferenceId;
     }
 
     public boolean isStatsVisible() {

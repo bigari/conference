@@ -14,11 +14,18 @@ public class Option {
     private int voteCount;
 
 
+
     private boolean isChosen;
 
 
     public Option() {
 //        this.votes = new ArrayList();
+        this.isChosen = false;
+        voteCount = 0;
+    }
+
+    public Option (String intituleOption) {
+        this.intituleOption = intituleOption;
         this.isChosen = false;
         voteCount = 0;
     }

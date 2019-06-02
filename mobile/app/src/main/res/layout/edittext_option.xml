@@ -1,0 +1,12 @@
+<android.support.design.widget.TextInputLayout android:id="@+id/inputlayout_survey_create_option3"
+    android:layout_width="match_parent"
+    app:errorEnabled="true"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.design.widget.TextInputEditText
+        android:id="@+id/edittext_survey_create_option3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</android.support.design.widget.TextInputLayout>
+

@@ -11,6 +11,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -36,13 +37,17 @@ public interface EnqueteApi {
     Call<Enquete> createEnquete(@Body Enquete enquete);
 
     @POST("api/conferences/{id}/enquetes")
-    Call<Enquete> createConfEnquete(@Path("id") int conferenceId, @Body Enquete enquete);
+    Call<Enquete> createConfEnquete(@Path("id") int conferenceId, @Body Enquete enquete,
+                                    @Header("Authorization") String token);
 
     @DELETE("api/enquetes/{id}")
     Call<Void> deleteEnquete(@Path("id") int enqueteId);
 
+    @DELETE("api/enquetes/{id}/options")
+    Call<Void> deleteEnqueteOptions(@Path("id") int enqueteId);
+
     @PUT("api/enquetes/{id}")
-    Call<Void> updateEnquetes(@Path("id") int enqueteId, @Body Enquete enquete);
+    Call<Void> updateEnquete(@Path("id") int enqueteId, @Body Enquete enquete);
 
     // TODO define in loopback
     @POST("api/enquetes/{id}/start")
