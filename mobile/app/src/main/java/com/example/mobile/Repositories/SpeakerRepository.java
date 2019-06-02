@@ -1,5 +1,7 @@
 package com.example.mobile.Repositories;
 
+import android.util.Log;
+
 import com.example.mobile.Callback;
 import com.example.mobile.Repositories.apis.SpeakerApi;
 import com.example.mobile.Repositories.models.Speaker;
@@ -44,5 +46,21 @@ public class SpeakerRepository {
             }
         });
     }
+
+    public void logout(String token, final Callback<Void> callback) {
+        speakerApi.logout(token).enqueue(new retrofit2.Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Log.d("Logout:", "Logged out");
+                callback.onSuccess(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                callback.onError(t);
+            }
+        });
+    }
+
 
 }

@@ -15,6 +15,9 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,6 +28,7 @@ import android.widget.TextView;
 
 import com.example.mobile.R;
 import com.example.mobile.Repositories.ConferenceRepository;
+import com.example.mobile.Repositories.SpeakerRepository;
 import com.example.mobile.Repositories.models.Conference;
 import com.example.mobile.Views.ViewInterfaces.ConferenceListView;
 import com.example.mobile.Views.adapters.ConferenceListAdapter;
@@ -41,6 +45,7 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
     private LinearLayout emptyListLayout;
     private RelativeLayout confListLayout;
     private ViewGroup root;
+    private SharedPreferences prefs;
 
     private ConferenceListPresenter presenter;
     private String token;
@@ -57,13 +62,14 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
+
         progressBar = findViewById(R.id.progressbar);
         emptyListLayout = findViewById(R.id.layout_conflist_emptylist);
         confListLayout = findViewById(R.id.layout_conflist_list);
         root = findViewById(R.id.layout_root);
 
-        ConferenceRepository repository = new ConferenceRepository();
-        presenter = new ConferenceListPresenter(this, repository);
+        prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        presenter = new ConferenceListPresenter(this, new ConferenceRepository(), new SpeakerRepository());
 
         createConfBtn = findViewById(R.id.button_conflist_addconf);
 
@@ -206,6 +212,35 @@ public class ConferenceListActivity extends AppCompatActivity implements Confere
     @Override
     public void showErrorSnackbar(String message){
         Snackbar.make(root, message, Snackbar.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void navToLandingView(){
+        Intent intent = new Intent(this, LandingActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                presenter.clearSharedPrefs(prefs);
+                presenter.logout(token);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
     }
 
 }

@@ -8,6 +8,7 @@ import com.example.mobile.Repositories.models.Speaker;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 
@@ -17,4 +18,7 @@ public interface SpeakerApi {
 
     @POST("api/speakers")
     Call<Speaker> signup(@Body Speaker speaker);
+
+    @POST("api/speakers/logout")
+    Call<Void> logout(@Header("Authorization") String token);
 }

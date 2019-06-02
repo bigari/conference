@@ -73,8 +73,8 @@ public class LandingActivity extends AppCompatActivity implements LandingView {
 
         join.setOnClickListener( v -> {
             hideKeyboard();
-            String email = emailEdit.getText().toString();
-            String code = codeEdit.getText().toString();
+            String email = emailEdit.getText().toString().trim();
+            String code = codeEdit.getText().toString().trim();
             presenter.joinConf(email, code);
         });
 

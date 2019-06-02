@@ -24,6 +24,7 @@ public class ParticipantJoinPresenter {
     public void joinConf(String email, String accessCode){
         view.showProgress();
         // TODO- validate args
+
         repo.joinConf(email, accessCode, new Callback<Conference>() {
             @Override
             public void onSuccess(Conference conf) {

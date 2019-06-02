@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity implements SpeakerLoginView
         progressBar.setVisibility(View.VISIBLE);  //To show ProgressBar
         SpeakerRepository repository = new SpeakerRepository();
         presenter = new SpeakerLoginPresenter(LoginActivity.this, repository);
-        presenter.login( new Speaker(emailInput.getText().toString(), passwordInput.getText().toString()));
+        presenter.login( new Speaker(emailInput.getText().toString().trim(), passwordInput.getText().toString().trim()));
     }
 
     @Override

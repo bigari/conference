@@ -81,7 +81,7 @@ public class CreateQuestionActivity extends AppCompatActivity implements CreateQ
 
     @Override
     public void navToQuestsView() {
-        finish();
+        startActivity(new Intent(this, ConferenceActivity.class));
     }
 
     public void hideKeyboard() {
