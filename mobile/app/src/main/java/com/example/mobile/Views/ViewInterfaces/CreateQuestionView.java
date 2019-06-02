@@ -5,4 +5,5 @@ public interface CreateQuestionView {
     void navToQuestsView();
     void showProgress();
     void hideProgress();
+    void showFieldError(String field, String error);
 }

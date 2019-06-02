@@ -27,5 +27,4 @@ module.exports = function(Conference) {
 		console.log(ctx.args);
 		next();
 	});
-
 };
